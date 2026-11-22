@@ -17,7 +17,7 @@
 |---|---|---|
 | Characters（NPC） | 8,000 | Humanoid |
 | Enemies | 8,000 | Humanoid（共用骨架，换武器/贴图） |
-| Bosses | 15,000 | Generic |
+| Bosses | 15,000 | Humanoid（复用人形动画） |
 | Props | 3,000 | 无 |
 | Buildings | 20,000 / 模块 | 无 |
 | Environments | 40,000 / 块 | 无 |

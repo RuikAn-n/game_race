@@ -9,7 +9,8 @@ namespace Rupu.EditorTools
     {
         static bool IsArt(string p) => p.StartsWith("Assets/Art/");
         static bool IsHumanoid(string p) =>
-            p.StartsWith("Assets/Art/Characters/") || p.StartsWith("Assets/Art/Enemies/");
+            p.StartsWith("Assets/Art/Characters/") || p.StartsWith("Assets/Art/Enemies/") ||
+            p.StartsWith("Assets/Art/Bosses/");   // 赤焰/鬼倭都是人形：复用人形动画，特殊招式再单做
 
         void OnPreprocessModel()
         {
@@ -27,11 +28,6 @@ namespace Rupu.EditorTools
                 // Mixamo / 标准人形骨架 -> Humanoid，动画可在 NPC 与敌人之间复用
                 mi.animationType = ModelImporterAnimationType.Human;
                 mi.avatarSetup = ModelImporterAvatarSetup.CreateFromThisModel;
-            }
-            else if (assetPath.StartsWith("Assets/Art/Bosses/"))
-            {
-                // Boss 体型非人，默认 Generic
-                mi.animationType = ModelImporterAnimationType.Generic;
             }
             else
             {
