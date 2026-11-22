@@ -41,17 +41,14 @@ Builds/Windows/Rupu.exe  ──(VMware 共享文件夹 RupuBuilds)──▶  Win
 
 ## 1. 安装团结引擎（一次性）
 
-1. 下载团结 Hub（macOS）：<https://unity.cn/tuanjie/releases>，登录团结账号。个人版免费。
-2. Hub > 安装：选择与队友 A **完全相同**的团结版本，勾选模块 **Windows Build Support (Mono)**。
-3. Hub > 新建项目：模板选 **Universal 3D**，位置填本仓库根目录，项目名填 `Project_rupu`。
-4. 拷入管线脚本：
+工程已经建好并提交，团结版本 **2022.3.62t18**（团结 1.11.1），渲染管线 URP 14.2.0-t1。新成员只需要：
 
-   ```bash
-   Tools/mac/seed_unity_project.sh
-   ```
+1. 安装 Tuanjie Cowork（团结 Hub），登录后在 Hub「项目」页右上角的「许可证」图标里激活**免费个人版**。
+2. 安装编辑器 2022.3.62t18，并勾选模块 **Windows Build Support (Mono)**。
+3. `git lfs install && git clone`，然后在 Hub 中添加并打开 `Project_rupu`。
+4. 运行 `Tools/mac/check_env.sh`，确认所有项都是 ✓。
 
-5. 在团结编辑器里依次点菜单 **入谱 > 初始化工程**、**入谱 > 创建美术测试场景**。
-6. 运行 `Tools/mac/check_env.sh`，确认所有项都是 ✓。
+`Tools/unity_seed/` 是管线脚本的源。修改后运行 `Tools/mac/seed_unity_project.sh` 同步到工程里。
 
 ## 2. Blender 建模
 
