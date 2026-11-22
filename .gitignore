@@ -1,0 +1,43 @@
+# ---- 内部资料：仓库是 PUBLIC，策划案标注"请勿外传" ----
+Docs/private/
+
+# ---- 构建产物（通过 VM 共享文件夹测试，不进仓库）----
+Builds/
+
+# ---- Unity / 团结引擎 生成目录 ----
+Project_rupu/[Ll]ibrary/
+Project_rupu/[Tt]emp/
+Project_rupu/[Oo]bj/
+Project_rupu/[Bb]uild/
+Project_rupu/[Bb]uilds/
+Project_rupu/[Ll]ogs/
+Project_rupu/[Uu]ser[Ss]ettings/
+Project_rupu/[Mm]emoryCaptures/
+Project_rupu/[Rr]ecordings/
+Project_rupu/.vs/
+Project_rupu/.idea/
+Project_rupu/*.csproj
+Project_rupu/*.sln
+Project_rupu/*.suo
+Project_rupu/*.user
+Project_rupu/*.pidb
+Project_rupu/*.booproj
+Project_rupu/*.svd
+Project_rupu/*.pdb
+Project_rupu/*.mdb
+Project_rupu/*.opendb
+Project_rupu/*.VC.db
+Project_rupu/sysinfo.txt
+Project_rupu/crashlytics-build.properties
+Project_rupu/Assets/StreamingAssets/aa/*
+Project_rupu/Assets/AddressableAssetsData/*/*.bin*
+
+# ---- Blender ----
+*.blend1
+*.blend2
+*.blend@
+
+# ---- 系统 ----
+.DS_Store
+Thumbs.db
+desktop.ini
