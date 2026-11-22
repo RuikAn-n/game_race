@@ -5,6 +5,8 @@ using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Rupu.EditorTools
 {
@@ -34,9 +36,56 @@ namespace Rupu.EditorTools
             PlayerSettings.resizableWindow = true;
             PlayerSettings.SetScriptingBackend(NamedBuildTarget.Standalone, ScriptingImplementation.Mono2x);
             EditorSettings.serializationMode = SerializationMode.ForceText;
+            SetupURP();
 
             AssetDatabase.Refresh();
-            Debug.Log("[Rupu] 初始化完成：目录、PlayerSettings（1920x1080 窗口 / Linear / Mono）。");
+            Debug.Log("[Rupu] 初始化完成：目录、URP、PlayerSettings（1920x1080 窗口 / Linear / Mono）。");
+        }
+
+        const string SettingsDir = "Assets/_Rupu/Settings";
+
+        // 创建 URP 资源并设为所有画质等级的渲染管线（已有则跳过）
+        public static void SetupURP()
+        {
+            if (!AssetDatabase.IsValidFolder(SettingsDir)) AssetDatabase.CreateFolder("Assets/_Rupu", "Settings");
+            var assetPath = SettingsDir + "/URP_Asset.asset";
+            var urp = AssetDatabase.LoadAssetAtPath<UniversalRenderPipelineAsset>(assetPath);
+            if (urp == null)
+            {
+                var data = ScriptableObject.CreateInstance<UniversalRendererData>();
+                AssetDatabase.CreateAsset(data, SettingsDir + "/URP_Renderer.asset");
+                urp = UniversalRenderPipelineAsset.Create(data);
+                urp.shadowDistance = 60f;
+                AssetDatabase.CreateAsset(urp, assetPath);
+                AssetDatabase.SaveAssets();
+            }
+            // CreateInstance 出来的 RendererData 着色器引用为空，显式补全（重复执行也安全）
+            const string urpPkg = "Packages/com.unity.render-pipelines.universal";
+            foreach (var rd in AssetDatabase.LoadAllAssetsAtPath(SettingsDir + "/URP_Renderer.asset").OfType<UniversalRendererData>())
+            {
+                ResourceReloader.ReloadAllNullIn(rd, urpPkg);
+                if (rd.postProcessData == null)
+                    rd.postProcessData = AssetDatabase.LoadAssetAtPath<PostProcessData>(urpPkg + "/Runtime/Data/PostProcessData.asset");
+                EditorUtility.SetDirty(rd);
+            }
+            GraphicsSettings.defaultRenderPipeline = urp;
+            int current = QualitySettings.GetQualityLevel();
+            for (int i = 0; i < QualitySettings.names.Length; i++)
+            {
+                QualitySettings.SetQualityLevel(i, false);
+                QualitySettings.renderPipeline = urp;
+            }
+            QualitySettings.SetQualityLevel(current, false);
+            AssetDatabase.SaveAssets();
+        }
+
+        // 命令行一次性初始化：-executeMethod Rupu.EditorTools.RupuProjectSetup.InitCLI
+        public static void InitCLI()
+        {
+            Init();
+            CreateArtTestScene();
+            AssetDatabase.SaveAssets();
+            EditorApplication.Exit(0);
         }
 
         [MenuItem("入谱/创建美术测试场景", priority = 1)]
