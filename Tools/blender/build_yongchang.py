@@ -14,6 +14,7 @@ Project_rupu/Assets/Art/<分类>/<资产名>/。已存在的 .blend 默认跳过
   通用（两个年代共用几何，只换材质）：城墙、敌台、角台、城门台、水门、马道、瓮城、桥、河埠头
   民国（BLD_ROC_*）：民居、店屋、西式店面、合院、祠堂、庙、仓、城楼、环海楼、哨卡、码头、盐舍
   环境（ENV_*）：地面（按布局切出河道/护城河/道路）、水面、田、罗山
+  人物（CH_/NPC_，见 rupu_char.py）：王砚 1941/1560、王沛、王叔杲、王德、王秉之 + 共用 Idle/Walk/Run 动画 + 枪/拐/算盘
 明代（BLD_MING_*）以后按同一 kind 和同一占地尺寸另做，布局不用动（见 Data/map/era_kits.json）。
 
 坐标：模型正面朝 Blender -Y。地形按团结世界坐标 (x东, z北) 生成，换算 Blender (X, Y) = (-x, -z)，
@@ -1029,6 +1030,11 @@ def r_env_hills():
         bx, by, _ = u2b(x, z)
         trees.cyl(bx, by, h - 0.5, h + tall, r, "M_Leaf_Far", seg=5, r_top=0.05)
     trees.to_object("NOCOL_HillTrees", uv_scale=6.0)
+
+
+# ====================================================================== 人物（rupu_char.py）
+import rupu_char  # noqa: E402
+RECIPES.update(rupu_char.recipes())
 
 
 # ====================================================================== 驱动

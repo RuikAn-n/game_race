@@ -194,5 +194,86 @@
   "ENV_Yongchang_FieldsIn",
   "ENV_Yongchang_FieldsOut",
   "ENV_Luoshan_Hills"
+ ],
+ "_doc_cast": "人物摆放：role=player 为玩家（王砚，带测试用双视角控制器）；npc 站在剧情位置。anchor 优先于 x/z；prop 摆在人物局部 (px,pz)。",
+ "cast": [
+  {
+   "era": "ROC",
+   "role": "player",
+   "asset": "CH_WangYan_1941",
+   "anchor": "spawn_1941",
+   "x": 0,
+   "z": 0,
+   "rot": 270,
+   "prop": "",
+   "px": 0,
+   "pz": 0,
+   "note": "1941 归堡：码头下船"
+  },
+  {
+   "era": "ROC",
+   "role": "npc",
+   "asset": "NPC_WangBingzhi",
+   "anchor": "",
+   "x": -20,
+   "z": 19.5,
+   "rot": 180,
+   "prop": "PROP_Cane_Bingzhi",
+   "px": 0.45,
+   "pz": 0.1,
+   "note": "祖祠前"
+  },
+  {
+   "era": "MING",
+   "role": "player",
+   "asset": "CH_WangYan_1560",
+   "anchor": "spawn_1560",
+   "x": 0,
+   "z": 0,
+   "rot": 0,
+   "prop": "",
+   "px": 0,
+   "pz": 0,
+   "note": "1560 祖祠前庭"
+  },
+  {
+   "era": "MING",
+   "role": "npc",
+   "asset": "NPC_WangShugao",
+   "anchor": "",
+   "x": -17.5,
+   "z": 21,
+   "rot": 200,
+   "prop": "",
+   "px": 0,
+   "pz": 0,
+   "note": "祖祠前庭·报数"
+  },
+  {
+   "era": "MING",
+   "role": "npc",
+   "asset": "NPC_WangPei",
+   "anchor": "",
+   "x": 4,
+   "z": 168,
+   "rot": 0,
+   "prop": "PROP_Spear_Pei",
+   "px": 0.5,
+   "pz": 0.15,
+   "note": "北门看船"
+  },
+  {
+   "era": "MING",
+   "role": "npc",
+   "asset": "NPC_WangDe",
+   "anchor": "",
+   "x": 2.2,
+   "z": 167.2,
+   "rot": 10,
+   "prop": "",
+   "px": 0,
+   "pz": 0,
+   "note": "北门·随王沛"
+  }
  ]
 }

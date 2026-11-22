@@ -121,18 +121,23 @@ namespace Rupu.EditorTools
             var ctrl = player.AddComponent<Rupu.ArtTestController>();
             ctrl.cam = Camera.main;
 
-            // 把 Assets/Art 下所有模型排成一排，便于检查比例/朝向/材质
+            // 把人物/敌人/Boss/道具排成一排，便于检查比例/朝向/材质（建筑和地形看 永昌堡 场景；动画文件 @ 不排）
             var guids = AssetDatabase.FindAssets("t:Model", new[] { "Assets/Art" });
             float x = 0;
             var lineup = new GameObject("ArtLineup").transform;
+            var ac = RupuCharacters.EnsureController();
             foreach (var g in guids)
             {
                 var path = AssetDatabase.GUIDToAssetPath(g);
+                if (path.Contains("/Buildings/") || path.Contains("/Environments/") || path.Contains("@")) continue;
                 var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(path);
                 if (prefab == null) continue;
                 var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab, lineup);
                 go.transform.position = new Vector3(x, 0, 4);
-                x += 3f;
+                go.transform.rotation = Quaternion.Euler(0, 180, 0);
+                var anim = go.GetComponent<Animator>();
+                if (anim != null) anim.runtimeAnimatorController = ac;
+                x += 2f;
             }
 
             var path0 = RupuBuild.ArtTestScene;

@@ -46,6 +46,11 @@ namespace Rupu
             }
             if (Input.GetKeyDown(KeyCode.Escape)) Cursor.lockState = CursorLockMode.None;
             if (Input.GetMouseButtonDown(0) && mode == Mode.ThirdPerson) Cursor.lockState = CursorLockMode.Locked;
+            // 测试用：F1 民国 / F2 明代 / F3 美术测试场景；T 依次传送到主要地点
+            if (Input.GetKeyDown(KeyCode.F1)) LoadIfExists("Map_Yongchang_ROC");
+            if (Input.GetKeyDown(KeyCode.F2)) LoadIfExists("Map_Yongchang_MING");
+            if (Input.GetKeyDown(KeyCode.F3)) LoadIfExists("ArtTest");
+            if (Input.GetKeyDown(KeyCode.T)) TeleportNext();
 
             var move = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
             move = Vector3.ClampMagnitude(move, 1f);
@@ -88,6 +93,36 @@ namespace Rupu
         void OnEnable() { Debug.LogWarning("[Rupu] ArtTestController 需要 Player Settings > Active Input Handling 包含 Input Manager (Old) 或 Both。"); }
 #endif
 
+        static readonly string[] TeleportIds =
+        {
+            "spawn_1941", "spawn_1560", "anchor_zuci_door", "anchor_gate_N", "anchor_muster_huanhai",
+            "anchor_wengcheng_arena", "anchor_watergate_arena", "anchor_temple_front", "anchor_granary", "anchor_dock",
+        };
+        int tpIndex = -1;
+        string tpLabel = "";
+
+        void TeleportNext()
+        {
+            for (int k = 0; k < TeleportIds.Length; k++)
+            {
+                tpIndex = (tpIndex + 1) % TeleportIds.Length;
+                var a = MapAnchor.Find(TeleportIds[tpIndex]);
+                if (a == null) continue;
+                cc.enabled = false;
+                transform.position = a.transform.position + Vector3.up * 0.2f + a.transform.forward * 2f;
+                cc.enabled = true;
+                yaw = a.transform.eulerAngles.y;
+                tdFocus = transform.position;
+                tpLabel = a.note;
+                return;
+            }
+        }
+
+        static void LoadIfExists(string scene)
+        {
+            if (Application.CanStreamedLevelBeLoaded(scene)) UnityEngine.SceneManagement.SceneManager.LoadScene(scene);
+        }
+
         void Blend(Vector3 pos, Quaternion rot)
         {
             float t = 1f - Mathf.Exp(-blendSpeed * Time.deltaTime);
@@ -100,6 +135,7 @@ namespace Rupu
             GUI.Label(new Rect(12, 10, 900, 22), mode == Mode.ThirdPerson
                 ? "第三人称 | WASD 移动  Shift 跑  鼠标视角  滚轮距离  Tab 切俯视  Esc 释放鼠标"
                 : "俯视/策略 | WASD 平移  Q/E 旋转  滚轮缩放  Tab 回第三人称");
+            GUI.Label(new Rect(12, 50, 900, 22), "F1 民国场景  F2 明代场景  F3 美术测试  T 传送到下一个地点" + (tpLabel != "" ? $"（{tpLabel}）" : ""));
             GUI.Label(new Rect(12, 30, 600, 22), $"FPS {1f / Mathf.Max(Time.smoothDeltaTime, 1e-5f):0}  |  {SystemInfo.graphicsDeviceType}  |  {SystemInfo.graphicsDeviceName}");
         }
     }

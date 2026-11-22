@@ -44,7 +44,8 @@ namespace Rupu.EditorTools
         }
         [Serializable] public class Kit { public string kind; public string[] roc; public string[] ming; }
         [Serializable] public class NeutralKit { public string kind, asset; }
-        [Serializable] public class Kits { public Kit[] kits; public NeutralKit[] neutral; public string[] env; }
+        [Serializable] public class CastEntry { public string era, role, asset, anchor, prop, note; public float x, z, rot, px, pz; }
+        [Serializable] public class Kits { public Kit[] kits; public NeutralKit[] neutral; public string[] env; public CastEntry[] cast; }
         [Serializable] public class MatDef { public string name, roc, ming; public float smooth; }
         [Serializable] public class Mats { public MatDef[] materials; }
 
@@ -74,7 +75,7 @@ namespace Rupu.EditorTools
         {
             RunCLI(() =>
             {
-                Build("MING", false); Capture(ScenePath("MING"), "MING_", 3);
+                Build("MING", false); Capture(ScenePath("MING"), "MING_", 99, new[] { "02", "03", "13", "14" });
                 Build("ROC", false); Capture(ScenePath("ROC"));
                 Validate(ScenePath("ROC"));
             });
@@ -171,8 +172,8 @@ namespace Rupu.EditorTools
 
             BuildBounds(lay, gBounds);
             SetupLighting(era);
-            var spawn = lay.anchors.FirstOrDefault(a => a.id == (roc ? "spawn_1941" : "spawn_1560"));
-            SetupPlayer(spawn);
+            var cam = SetupCamera();
+            PlaceCast(lay, kits, era, root, cam);
             CheckAxes(gEnv);
 
             Directory.CreateDirectory(SceneDir);
@@ -440,7 +441,7 @@ namespace Rupu.EditorTools
             }
         }
 
-        static void SetupPlayer(Anchor spawn)
+        static Camera SetupCamera()
         {
             var camGo = new GameObject("Main Camera");
             camGo.tag = "MainCamera";
@@ -450,18 +451,52 @@ namespace Rupu.EditorTools
             cam.farClipPlane = 2000f;
             cam.nearClipPlane = 0.2f;
             camGo.AddComponent<AudioListener>();
+            return cam;
+        }
 
-            var player = GameObject.CreatePrimitive(PrimitiveType.Capsule);
-            player.name = "Player_REF_1.75m";
-            player.transform.localScale = new Vector3(0.6f, 0.875f, 0.6f);
-            var p = spawn != null ? new Vector3(spawn.x, spawn.y + 1.0f, spawn.z) : new Vector3(0, 1, 0);
-            player.transform.SetPositionAndRotation(p, Quaternion.Euler(0, spawn != null ? spawn.rot : 0, 0));
-            UnityEngine.Object.DestroyImmediate(player.GetComponent<CapsuleCollider>());
-            var cc = player.AddComponent<CharacterController>();
-            cc.height = 2f; cc.radius = 0.5f; cc.stepOffset = 0.35f; cc.slopeLimit = 50f;
-            var ctrl = player.AddComponent<ArtTestController>();
-            ctrl.cam = cam;
-            camGo.transform.position = p + new Vector3(0, 3, -5);
+        // 人物：era_kits.json 的 cast 表（玩家 = 王砚，NPC 站在剧情位置）
+        static void PlaceCast(Layout lay, Kits kits, string era, Transform root, Camera cam)
+        {
+            var ac = RupuCharacters.EnsureController();
+            var gCast = new GameObject("Cast").transform;
+            gCast.SetParent(root, false);
+            bool hasPlayer = false;
+            foreach (var c in (kits.cast ?? new CastEntry[0]).Where(c => c.era == era))
+            {
+                var pos = new Vector3(c.x, 0, c.z);
+                if (!string.IsNullOrEmpty(c.anchor))
+                {
+                    var a = lay.anchors.FirstOrDefault(x => x.id == c.anchor);
+                    if (a != null) pos = new Vector3(a.x, a.y, a.z);
+                }
+                if (c.role == "player")
+                {
+                    var p = RupuCharacters.CreatePlayer(c.asset, pos, c.rot, cam, ac);
+                    cam.transform.position = pos + Quaternion.Euler(0, c.rot, 0) * new Vector3(0, 2.5f, -5f);
+                    cam.transform.LookAt(pos + Vector3.up * 1.5f);
+                    hasPlayer = p != null;
+                }
+                else
+                {
+                    var npc = RupuCharacters.PlaceNPC(c.asset, gCast, pos, c.rot, ac);
+                    if (npc != null && !string.IsNullOrEmpty(c.note)) npc.name = $"{c.asset}（{c.note}）";
+                }
+                if (!string.IsNullOrEmpty(c.prop))
+                {
+                    var pr = AssetDatabase.LoadAssetAtPath<GameObject>(RupuCharacters.ModelPath(c.prop));
+                    if (pr != null)
+                    {
+                        var g = (GameObject)PrefabUtility.InstantiatePrefab(pr, gCast);
+                        g.transform.position = pos + Quaternion.Euler(0, c.rot, 0) * new Vector3(c.px, 0, c.pz);
+                        g.transform.rotation = Quaternion.Euler(0, c.rot, 0);
+                    }
+                }
+            }
+            if (!hasPlayer)
+            {
+                var spawn = lay.anchors.FirstOrDefault(a => a.id.StartsWith("spawn_"));
+                RupuCharacters.CreatePlayer("CH_WangYan_1941", spawn != null ? new Vector3(spawn.x, 0, spawn.z) : Vector3.zero, 0, cam, ac);
+            }
         }
 
         // 轴向自检：罗山在堡西，团结里山体包围盒中心应在 x<0
@@ -539,7 +574,7 @@ namespace Rupu.EditorTools
         // ------------------------------------------------------------ 截图
         public struct Shot { public string name; public Vector3 pos, look; public float fov; public bool noFog; }
 
-        public static void Capture(string scenePath, string prefix = "", int maxShots = 99)
+        public static void Capture(string scenePath, string prefix = "", int maxShots = 99, string[] only = null)
         {
             EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
             var outDir = Path.Combine(RepoRoot, "Builds", "screens");
@@ -559,6 +594,9 @@ namespace Rupu.EditorTools
                 new Shot { name = "10_tonshi_gate_outside", pos = new Vector3(4, 1.7f, 232), look = new Vector3(4, 7, 185), fov = 60 },
                 new Shot { name = "11_wengcheng_top", pos = new Vector3(150, 30, 70), look = new Vector3(118, 4, 40), fov = 55 },
                 new Shot { name = "12_west_gate_hills", pos = new Vector3(-100, 1.7f, 12), look = new Vector3(-200, 15, 12), fov = 60 },
+                new Shot { name = "13_cast_zuci", pos = new Vector3(-17, 1.6f, 12.5f), look = new Vector3(-20, 1.0f, 19.5f), fov = 45 },
+                new Shot { name = "14_cast_north_gate", pos = new Vector3(4.5f, 1.7f, 174), look = new Vector3(3, 1.0f, 167.5f), fov = 45 },
+                new Shot { name = "15_player_dock", pos = new Vector3(217, 2.0f, 44), look = new Vector3(222, 1.0f, 40), fov = 45 },
             };
             var go = new GameObject("CaptureCam");
             var cam = go.AddComponent<Camera>();
@@ -569,7 +607,7 @@ namespace Rupu.EditorTools
             var rt = new RenderTexture(1920, 1080, 24, RenderTextureFormat.ARGB32) { antiAliasing = 4 };
             cam.targetTexture = rt;
             var tex = new Texture2D(1920, 1080, TextureFormat.RGB24, false);
-            foreach (var s in shots.Take(maxShots))
+            foreach (var s in shots.Take(maxShots).Where(x => only == null || only.Any(o => x.name.StartsWith(o))))
             {
                 go.transform.position = s.pos;
                 go.transform.LookAt(s.look);

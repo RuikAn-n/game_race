@@ -41,3 +41,15 @@ BLD_Bridge_6n,Buildings,Assets/Art/Buildings/BLD_Bridge_6n/BLD_Bridge_6n.fbx,,,,
 BLD_Bridge_6w,Buildings,Assets/Art/Buildings/BLD_Bridge_6w/BLD_Bridge_6w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
 BLD_Bridge_10w,Buildings,Assets/Art/Buildings/BLD_Bridge_10w/BLD_Bridge_10w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
 BLD_Bridge_18w,Buildings,Assets/Art/Buildings/BLD_Bridge_18w/BLD_Bridge_18w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+CH_WangYan_1941,Characters,Assets/Art/Characters/CH_WangYan_1941/CH_WangYan_1941.fbx,,,,玩家 王砚 1941；脚底原点，面朝+Z；Humanoid；动画用 AC_Humanoid_Locomotion,白模（程序化）,B
+CH_WangYan_1560,Characters,Assets/Art/Characters/CH_WangYan_1560/CH_WangYan_1560.fbx,,,,玩家 王砚 1560（同脸）；Humanoid,白模（程序化）,B
+NPC_WangPei,Characters,Assets/Art/Characters/NPC_WangPei/NPC_WangPei.fbx,,,,王沛；北门（1560）；枪 PROP_Spear_Pei 立在身旁,白模（程序化）,B
+NPC_WangShugao,Characters,Assets/Art/Characters/NPC_WangShugao/NPC_WangShugao.fbx,,,,王叔杲；祖祠前庭（1560）；算盘 PROP_Abacus,白模（程序化）,B
+NPC_WangDe,Characters,Assets/Art/Characters/NPC_WangDe/NPC_WangDe.fbx,,,,王德；北门随王沛（1560）,白模（程序化）,B
+NPC_WangBingzhi,Characters,Assets/Art/Characters/NPC_WangBingzhi/NPC_WangBingzhi.fbx,,,,王秉之；祖祠前（1941）；拐 PROP_Cane_Bingzhi,白模（程序化）,B
+CH_WangYan_1941@Idle,Characters,Assets/Art/Characters/CH_WangYan_1941@Idle/CH_WangYan_1941@Idle.fbx,,Assets/Art/Characters/CH_WangYan_1941@Idle/CH_WangYan_1941@Idle.fbx,,共用 Humanoid 待机（循环）,白模（程序化）,B
+CH_WangYan_1941@Walk,Characters,Assets/Art/Characters/CH_WangYan_1941@Walk/CH_WangYan_1941@Walk.fbx,,Assets/Art/Characters/CH_WangYan_1941@Walk/CH_WangYan_1941@Walk.fbx,,共用 Humanoid 走（循环，约 1.8 m/s）,白模（程序化）,B
+CH_WangYan_1941@Run,Characters,Assets/Art/Characters/CH_WangYan_1941@Run/CH_WangYan_1941@Run.fbx,,Assets/Art/Characters/CH_WangYan_1941@Run/CH_WangYan_1941@Run.fbx,,共用 Humanoid 跑（循环，约 5 m/s）,白模（程序化）,B
+PROP_Spear_Pei,Props,Assets/Art/Props/PROP_Spear_Pei/PROP_Spear_Pei.fbx,,,,王沛长枪 2.6 m，原点=枪尾,白模（程序化）,B
+PROP_Cane_Bingzhi,Props,Assets/Art/Props/PROP_Cane_Bingzhi/PROP_Cane_Bingzhi.fbx,,,,王秉之木拐，原点=拐底,白模（程序化）,B
+PROP_Abacus,Props,Assets/Art/Props/PROP_Abacus/PROP_Abacus.fbx,,,,王叔杲十三档算盘，原点=底面中心,白模（程序化）,B

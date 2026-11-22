@@ -83,6 +83,7 @@ Tools/mac/serve_build.sh               # 在 VMware 内网发布 zip，VM 里用
 - 年代切换只改 `Data/map/era_kits.json`（kind → `BLD_ROC_*` / `BLD_MING_*`）和 `era_materials.json`（语义材质名 → 年代颜色）。明代模型必须与同 kind 的民国模型占地一致。
 - 程序化白模由 `Tools/blender/build_yongchang.py` 生成，已存在的 .blend 默认跳过（保护手改）；`--force` 会覆盖。
 - 碰撞约定：`COL_*` 只做碰撞，`NOCOL_*` 不加碰撞。
+- 人物（见 Docs/characters.md）：`Tools/blender/rupu_char.py` 程序化生成，骨骼用团结 Humanoid 标准名；共用动画 `CH_WangYan_1941@Idle/Walk/Run` + 控制器 `AC_Humanoid_Locomotion`（Speed 参数）；场景摆放在 `era_kits.json` 的 `cast`。
 
 ## 注意事项（踩过的坑）
 
