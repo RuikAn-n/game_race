@@ -17,10 +17,12 @@ game_race/
 │  ├─ mac/                构建、虚拟机、批量导出脚本
 │  ├─ windows/            VM 内运行脚本
 │  └─ unity_seed/         要拷进工程的团结编辑器脚本
-├─ Docs/                  资产规格、清单、授权记录（Docs/private/ 不入库）
+├─ Docs/                  日常用法、资产规格、清单、授权记录、策划案（Docs/private/）
 ├─ Data/asset_manifest.csv
 └─ Builds/                构建输出（不入库，挂进 VM 作为共享文件夹）
 ```
+
+> 每天怎么用：见 **[Docs/日常用法.md](Docs/日常用法.md)**
 
 ## 工作流总览
 
@@ -83,4 +85,4 @@ security add-generic-password -s rupu-vm -a '<Windows 用户名>' -w '<Windows �
 
 - 分支：B 在 `b/content` 上工作，每天合入 `main`。
 - 二进制资产（blend/fbx/png/wav 等）走 Git LFS，规则见 `.gitattributes`。
-- **本仓库是公开的**：策划案、内部资料放 `Docs/private/`，该目录已被 gitignore。
+- 本仓库按比赛要求开源公开，所有文档一并入库。
