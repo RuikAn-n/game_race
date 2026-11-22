@@ -21,8 +21,10 @@ find_editor() {
   if [[ -n "$want" ]]; then pick="$(echo "$apps" | grep -F "$want" | head -1 || true)"; fi
   [[ -z "$pick" ]] && pick="$(echo "$apps" | sort -V | tail -1)"
   local bin
-  bin="$(find "$pick/Contents/MacOS" -maxdepth 1 -type f -perm -u+x | head -1)"
-  [[ -n "$bin" ]] && echo "$bin"
+  for bin in "$pick/Contents/MacOS/Tuanjie" "$pick/Contents/MacOS/Unity"; do
+    [[ -x "$bin" ]] && { echo "$bin"; return 0; }
+  done
+  return 1
 }
 
 # 加密 VM（Win11 + TPM）需要 VM 加密密码：export RUPU_VM_ENC_PASS=... 或
