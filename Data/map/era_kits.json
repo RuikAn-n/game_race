@@ -1,0 +1,198 @@
+{
+ "_doc": "年代建筑套件表。布局里每个建筑只有 kind；这里决定每个年代用哪个模型（多个则按建筑 id 稳定随机）。ming 为空时用 roc 的模型占位并在日志里提示。只在某年代出现的建筑由布局的 eras 字段控制（如哨卡、电线杆只在 ROC）。明代模型必须与民国同 kind 的占地尺寸一致（见 Tools/map/gen_layout.py 的 SIZES）。",
+ "kits": [
+  {
+   "kind": "house_s",
+   "roc": [
+    "BLD_ROC_House_S_A",
+    "BLD_ROC_House_S_B"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "house_l",
+   "roc": [
+    "BLD_ROC_House_L_A",
+    "BLD_ROC_House_L_B"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "shop",
+   "roc": [
+    "BLD_ROC_Shop_A",
+    "BLD_ROC_Shop_B"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "shop_west",
+   "roc": [
+    "BLD_ROC_ShopWest"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "courtyard",
+   "roc": [
+    "BLD_ROC_Courtyard"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "hall_small",
+   "roc": [
+    "BLD_ROC_HallSmall"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "ancestral_hall",
+   "roc": [
+    "BLD_ROC_AncestralHall"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "temple",
+   "roc": [
+    "BLD_ROC_Temple"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "granary",
+   "roc": [
+    "BLD_ROC_Granary"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "gate_tower",
+   "roc": [
+    "BLD_ROC_GateTower"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "gate_tower_huanhai",
+   "roc": [
+    "BLD_ROC_HuanhaiLou"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "checkpoint",
+   "roc": [
+    "BLD_ROC_Checkpoint"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "dock",
+   "roc": [
+    "BLD_ROC_Dock"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "salt_shed",
+   "roc": [
+    "BLD_ROC_SaltShed"
+   ],
+   "ming": []
+  },
+  {
+   "kind": "pole",
+   "roc": [
+    "PROP_ROC_TelegraphPole"
+   ],
+   "ming": []
+  }
+ ],
+ "neutral": [
+  {
+   "kind": "wall_seg",
+   "asset": "BLD_Wall_Seg"
+  },
+  {
+   "kind": "ditai",
+   "asset": "BLD_Wall_DiTai"
+  },
+  {
+   "kind": "corner_tower",
+   "asset": "BLD_Wall_Corner"
+  },
+  {
+   "kind": "gate_base",
+   "asset": "BLD_Wall_GateBase"
+  },
+  {
+   "kind": "gate_base_l",
+   "asset": "BLD_Wall_GateBaseL"
+  },
+  {
+   "kind": "watergate",
+   "asset": "BLD_Wall_WaterGate"
+  },
+  {
+   "kind": "wall_ramp",
+   "asset": "BLD_Wall_Ramp"
+  },
+  {
+   "kind": "wengcheng",
+   "asset": "BLD_Wall_Wengcheng"
+  },
+  {
+   "kind": "canal_steps",
+   "asset": "BLD_CanalSteps"
+  },
+  {
+   "kind": "tree_camphor",
+   "asset": "PROP_Tree_Camphor"
+  },
+  {
+   "kind": "tree_small",
+   "asset": "PROP_Tree_Small"
+  },
+  {
+   "kind": "bridge_3n",
+   "asset": "BLD_Bridge_3n"
+  },
+  {
+   "kind": "bridge_3w",
+   "asset": "BLD_Bridge_3w"
+  },
+  {
+   "kind": "bridge_4n",
+   "asset": "BLD_Bridge_4n"
+  },
+  {
+   "kind": "bridge_4w",
+   "asset": "BLD_Bridge_4w"
+  },
+  {
+   "kind": "bridge_6n",
+   "asset": "BLD_Bridge_6n"
+  },
+  {
+   "kind": "bridge_6w",
+   "asset": "BLD_Bridge_6w"
+  },
+  {
+   "kind": "bridge_10w",
+   "asset": "BLD_Bridge_10w"
+  },
+  {
+   "kind": "bridge_18w",
+   "asset": "BLD_Bridge_18w"
+  }
+ ],
+ "env": [
+  "ENV_Yongchang_Ground",
+  "ENV_Yongchang_Water",
+  "ENV_Yongchang_FieldsIn",
+  "ENV_Yongchang_FieldsOut",
+  "ENV_Luoshan_Hills"
+ ]
+}

@@ -71,10 +71,18 @@ $T -batchmode -nographics -quit -projectPath "$PWD/Project_rupu" -executeMethod 
 #   可用方法：Rupu.EditorTools.RupuProjectSetup.InitCLI（初始化工程 + 重建 ArtTest 场景）
 #             Rupu.EditorTools.RupuProjectSetup.SetupURP
 Tools/mac/build_win.sh [--release]     # 交叉编译 Win64（Mono 后端），输出 Builds/Windows/Rupu.exe
+Tools/mac/build_yongchang.sh [--scene-only|--force]   # 永昌堡总地图：布局 → Blender 白模/地形 → 团结场景 + 截图 + 可走性自检
 Tools/mac/serve_build.sh               # 在 VMware 内网发布 zip，VM 里用浏览器下载
 ```
 
 在 VM 里测试的步骤：在 VM 的 Edge 打开 `http://172.16.52.1:8624/Rupu_Windows.zip`（另一个可用地址是 192.168.214.1），解压后运行 `Rupu.exe`。
+
+## 永昌堡总地图（见 Docs/map_yongchang.md）
+
+- 唯一数据源 `Data/map/yongchang_layout.json`（由 `Tools/map/gen_layout.py` 生成，不手改）；坐标为团结世界坐标 x=东 z=北，平面压缩 0.5，高度真实。
+- 年代切换只改 `Data/map/era_kits.json`（kind → `BLD_ROC_*` / `BLD_MING_*`）和 `era_materials.json`（语义材质名 → 年代颜色）。明代模型必须与同 kind 的民国模型占地一致。
+- 程序化白模由 `Tools/blender/build_yongchang.py` 生成，已存在的 .blend 默认跳过（保护手改）；`--force` 会覆盖。
+- 碰撞约定：`COL_*` 只做碰撞，`NOCOL_*` 不加碰撞。
 
 ## 注意事项（踩过的坑）
 

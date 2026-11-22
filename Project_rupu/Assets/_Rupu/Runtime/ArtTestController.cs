@@ -73,8 +73,8 @@ namespace Rupu
             {
                 if (Input.GetKey(KeyCode.Q)) tdYaw -= 90f * Time.deltaTime;
                 if (Input.GetKey(KeyCode.E)) tdYaw += 90f * Time.deltaTime;
-                tdHeight = Mathf.Clamp(tdHeight - scroll * 20f, 6f, 60f);
-                tdFocus += Quaternion.Euler(0, tdYaw, 0) * move * tdPanSpeed * Time.deltaTime;
+                tdHeight = Mathf.Clamp(tdHeight - scroll * tdHeight * 0.8f, 6f, 300f);   // 可拉远到看全图
+                tdFocus += Quaternion.Euler(0, tdYaw, 0) * move * tdPanSpeed * Mathf.Max(1f, tdHeight / 22f) * Time.deltaTime;
                 var rot = Quaternion.Euler(tdPitch, tdYaw, 0);
                 float back = tdHeight / Mathf.Tan(tdPitch * Mathf.Deg2Rad);
                 var pos = tdFocus + Vector3.up * tdHeight - Quaternion.Euler(0, tdYaw, 0) * Vector3.forward * back;

@@ -1,0 +1,233 @@
+{
+ "_doc": "语义材质 -> 年代颜色。团结里 入谱/永昌堡 生成场景时按名字替换 FBX 里的同名材质，生成到 Assets/Art/Materials/<ROC|MING>/。改颜色只改这里再重新生成场景。",
+ "materials": [
+  {
+   "name": "M_Roof_Tile",
+   "roc": "#3d4241",
+   "ming": "#3b3a38",
+   "smooth": 0.15
+  },
+  {
+   "name": "M_Roof_Ridge",
+   "roc": "#2a2e2d",
+   "ming": "#2e2b28",
+   "smooth": 0.15
+  },
+  {
+   "name": "M_Plaster",
+   "roc": "#bdb8a6",
+   "ming": "#e3dccb",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Plaster_Lower",
+   "roc": "#85867c",
+   "ming": "#9a8f7e",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Wood",
+   "roc": "#5e4b3a",
+   "ming": "#8A5A3B",
+   "smooth": 0.12
+  },
+  {
+   "name": "M_Wood_Dark",
+   "roc": "#352c25",
+   "ming": "#4e3424",
+   "smooth": 0.12
+  },
+  {
+   "name": "M_Window",
+   "roc": "#211f1c",
+   "ming": "#2a211a",
+   "smooth": 0.1
+  },
+  {
+   "name": "M_Stone_Base",
+   "roc": "#7f8078",
+   "ming": "#958d7c",
+   "smooth": 0.08
+  },
+  {
+   "name": "M_Brick_Grey",
+   "roc": "#63655f",
+   "ming": "#6f6b63",
+   "smooth": 0.06
+  },
+  {
+   "name": "M_Brick_Red",
+   "roc": "#7a5043",
+   "ming": "#8f4e3a",
+   "smooth": 0.06
+  },
+  {
+   "name": "M_Wall_Stone",
+   "roc": "#6d7068",
+   "ming": "#8a8578",
+   "smooth": 0.06
+  },
+  {
+   "name": "M_Wall_Top",
+   "roc": "#8f8e82",
+   "ming": "#a69f8d",
+   "smooth": 0.06
+  },
+  {
+   "name": "M_Wall_Red",
+   "roc": "#7b4a3e",
+   "ming": "#9a4632",
+   "smooth": 0.06
+  },
+  {
+   "name": "M_Red_Lacquer",
+   "roc": "#6c3a2f",
+   "ming": "#a2412c",
+   "smooth": 0.3
+  },
+  {
+   "name": "M_Sign",
+   "roc": "#2a2925",
+   "ming": "#2b2018",
+   "smooth": 0.2
+  },
+  {
+   "name": "M_Plaque",
+   "roc": "#33291f",
+   "ming": "#3a2414",
+   "smooth": 0.3
+  },
+  {
+   "name": "M_Paper",
+   "roc": "#d9cfbb",
+   "ming": "#E8DCC8",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Sandbag",
+   "roc": "#8e8566",
+   "ming": "#8e8566",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Metal_Roof",
+   "roc": "#525a59",
+   "ming": "#525a59",
+   "smooth": 0.35
+  },
+  {
+   "name": "M_Thatch",
+   "roc": "#7d704f",
+   "ming": "#9a8556",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Leaf",
+   "roc": "#4b5f44",
+   "ming": "#56703f",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Leaf_Far",
+   "roc": "#46553f",
+   "ming": "#4d5f3c",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Bark",
+   "roc": "#423629",
+   "ming": "#4a3726",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Flag",
+   "roc": "#bdb6a5",
+   "ming": "#C4552E",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Metal",
+   "roc": "#363838",
+   "ming": "#3b352e",
+   "smooth": 0.4
+  },
+  {
+   "name": "M_Ground_Town",
+   "roc": "#968e7a",
+   "ming": "#a5927a",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Ground_Grass",
+   "roc": "#6f7b5b",
+   "ming": "#7c8656",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Bank_Stone",
+   "roc": "#686a63",
+   "ming": "#7a7468",
+   "smooth": 0.08
+  },
+  {
+   "name": "M_Mud",
+   "roc": "#3f3c32",
+   "ming": "#463d2f",
+   "smooth": 0.3
+  },
+  {
+   "name": "M_Road_Stone",
+   "roc": "#93908a",
+   "ming": "#a49d8e",
+   "smooth": 0.12
+  },
+  {
+   "name": "M_Road_Earth",
+   "roc": "#80766a",
+   "ming": "#8e7c64",
+   "smooth": 0.03
+  },
+  {
+   "name": "M_Water",
+   "roc": "#4F6B6A",
+   "ming": "#4F6B6A",
+   "smooth": 0.85
+  },
+  {
+   "name": "M_Paddy_Water",
+   "roc": "#647c6f",
+   "ming": "#6c876f",
+   "smooth": 0.75
+  },
+  {
+   "name": "M_Dike",
+   "roc": "#6b6e52",
+   "ming": "#747450",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Salt",
+   "roc": "#d4d1c6",
+   "ming": "#E8DCC8",
+   "smooth": 0.2
+  },
+  {
+   "name": "M_Hill",
+   "roc": "#5f6c50",
+   "ming": "#68744c",
+   "smooth": 0.02
+  },
+  {
+   "name": "M_Fire",
+   "roc": "#C4552E",
+   "ming": "#C4552E",
+   "smooth": 0.1
+  },
+  {
+   "name": "M_Wire",
+   "roc": "#141414",
+   "ming": "#141414",
+   "smooth": 0.0
+  }
+ ]
+}

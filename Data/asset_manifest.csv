@@ -1,1 +1,43 @@
 assetId,类型,prefabPath,texturePath,animPath,audioPath,anchorHint,状态,负责人
+BLD_Wall_Seg,Buildings,Assets/Art/Buildings/BLD_Wall_Seg/BLD_Wall_Seg.fbx,,,,城墙 8m 一段；正面=城外；走道面 y=7.08,白模（程序化）,B
+BLD_Wall_DiTai,Buildings,Assets/Art/Buildings/BLD_Wall_DiTai/BLD_Wall_DiTai.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Wall_Corner,Buildings,Assets/Art/Buildings/BLD_Wall_Corner/BLD_Wall_Corner.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Wall_GateBase,Buildings,Assets/Art/Buildings/BLD_Wall_GateBase/BLD_Wall_GateBase.fbx,,,,城门台 16m；城楼 gate_tower 摆在其顶 y=7；anchor_gate_*,白模（程序化）,B
+BLD_Wall_GateBaseL,Buildings,Assets/Art/Buildings/BLD_Wall_GateBaseL/BLD_Wall_GateBaseL.fbx,,,,环海门台 24m；顶上摆环海楼,白模（程序化）,B
+BLD_Wall_WaterGate,Buildings,Assets/Art/Buildings/BLD_Wall_WaterGate/BLD_Wall_WaterGate.fbx,,,,水门；闸门挂点 anchor_watergate_*,白模（程序化）,B
+BLD_Wall_Ramp,Buildings,Assets/Art/Buildings/BLD_Wall_Ramp/BLD_Wall_Ramp.fbx,,,,马道：贴内墙面，向团结局部 +X 升高；COL_Ramp 斜面碰撞,白模（程序化）,B
+BLD_Wall_Wengcheng,Buildings,Assets/Art/Buildings/BLD_Wall_Wengcheng/BLD_Wall_Wengcheng.fbx,,,,瓮城：原点=主墙外皮中点；Boss 鬼倭场地 anchor_wengcheng_arena,白模（程序化）,B
+BLD_CanalSteps,Buildings,Assets/Art/Buildings/BLD_CanalSteps/BLD_CanalSteps.fbx,,,,河埠头：正面朝水；取水点；COL_Steps,白模（程序化）,B
+PROP_Tree_Camphor,Props,Assets/Art/Props/PROP_Tree_Camphor/PROP_Tree_Camphor.fbx,,,,原点=脚底中心；COL_* 为碰撞体,白模（程序化）,B
+PROP_Tree_Small,Props,Assets/Art/Props/PROP_Tree_Small/PROP_Tree_Small.fbx,,,,原点=脚底中心；COL_* 为碰撞体,白模（程序化）,B
+PROP_ROC_TelegraphPole,Props,Assets/Art/Props/PROP_ROC_TelegraphPole/PROP_ROC_TelegraphPole.fbx,,,,"电线杆；团结里按链自动拉线（瓷瓶局部 ±0.8/±0.35, 6.78）",白模（程序化）,B
+BLD_ROC_House_S_A,Buildings,Assets/Art/Buildings/BLD_ROC_House_S_A/BLD_ROC_House_S_A.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_House_S_B,Buildings,Assets/Art/Buildings/BLD_ROC_House_S_B/BLD_ROC_House_S_B.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_House_L_A,Buildings,Assets/Art/Buildings/BLD_ROC_House_L_A/BLD_ROC_House_L_A.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_House_L_B,Buildings,Assets/Art/Buildings/BLD_ROC_House_L_B/BLD_ROC_House_L_B.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_Shop_A,Buildings,Assets/Art/Buildings/BLD_ROC_Shop_A/BLD_ROC_Shop_A.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_Shop_B,Buildings,Assets/Art/Buildings/BLD_ROC_Shop_B/BLD_ROC_Shop_B.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_ShopWest,Buildings,Assets/Art/Buildings/BLD_ROC_ShopWest/BLD_ROC_ShopWest.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_Courtyard,Buildings,Assets/Art/Buildings/BLD_ROC_Courtyard/BLD_ROC_Courtyard.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_HallSmall,Buildings,Assets/Art/Buildings/BLD_ROC_HallSmall/BLD_ROC_HallSmall.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_AncestralHall,Buildings,Assets/Art/Buildings/BLD_ROC_AncestralHall/BLD_ROC_AncestralHall.fbx,,,,王氏祖祠 20x36；anchor_zuci_door / anchor_sandtable,白模（程序化）,B
+BLD_ROC_Temple,Buildings,Assets/Art/Buildings/BLD_ROC_Temple/BLD_ROC_Temple.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_Granary,Buildings,Assets/Art/Buildings/BLD_ROC_Granary/BLD_ROC_Granary.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_GateTower,Buildings,Assets/Art/Buildings/BLD_ROC_GateTower/BLD_ROC_GateTower.fbx,,,,城楼；原点=城墙走道面；底层柱廊可穿行,白模（程序化）,B
+BLD_ROC_HuanhaiLou,Buildings,Assets/Art/Buildings/BLD_ROC_HuanhaiLou/BLD_ROC_HuanhaiLou.fbx,,,,环海楼（东门城楼）；原点=城墙走道面,白模（程序化）,B
+BLD_ROC_Checkpoint,Buildings,Assets/Art/Buildings/BLD_ROC_Checkpoint/BLD_ROC_Checkpoint.fbx,,,,日伪哨卡，只在 1941 场景出现,白模（程序化）,B
+BLD_ROC_Dock,Buildings,Assets/Art/Buildings/BLD_ROC_Dock/BLD_ROC_Dock.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_ROC_SaltShed,Buildings,Assets/Art/Buildings/BLD_ROC_SaltShed/BLD_ROC_SaltShed.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+ENV_Yongchang_Ground,Environments,Assets/Art/Environments/ENV_Yongchang_Ground/ENV_Yongchang_Ground.fbx,,,,"原点=世界原点，按 Data/map/yongchang_layout.json 生成，摆在 (0,0,0)",白模（程序化）,B
+ENV_Yongchang_Water,Environments,Assets/Art/Environments/ENV_Yongchang_Water/ENV_Yongchang_Water.fbx,,,,"原点=世界原点，按 Data/map/yongchang_layout.json 生成，摆在 (0,0,0)",白模（程序化）,B
+ENV_Yongchang_FieldsIn,Environments,Assets/Art/Environments/ENV_Yongchang_FieldsIn/ENV_Yongchang_FieldsIn.fbx,,,,"原点=世界原点，按 Data/map/yongchang_layout.json 生成，摆在 (0,0,0)",白模（程序化）,B
+ENV_Yongchang_FieldsOut,Environments,Assets/Art/Environments/ENV_Yongchang_FieldsOut/ENV_Yongchang_FieldsOut.fbx,,,,"原点=世界原点，按 Data/map/yongchang_layout.json 生成，摆在 (0,0,0)",白模（程序化）,B
+ENV_Luoshan_Hills,Environments,Assets/Art/Environments/ENV_Luoshan_Hills/ENV_Luoshan_Hills.fbx,,,,"原点=世界原点，按 Data/map/yongchang_layout.json 生成，摆在 (0,0,0)",白模（程序化）,B
+BLD_Bridge_3n,Buildings,Assets/Art/Buildings/BLD_Bridge_3n/BLD_Bridge_3n.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_3w,Buildings,Assets/Art/Buildings/BLD_Bridge_3w/BLD_Bridge_3w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_4n,Buildings,Assets/Art/Buildings/BLD_Bridge_4n/BLD_Bridge_4n.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_4w,Buildings,Assets/Art/Buildings/BLD_Bridge_4w/BLD_Bridge_4w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_6n,Buildings,Assets/Art/Buildings/BLD_Bridge_6n/BLD_Bridge_6n.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_6w,Buildings,Assets/Art/Buildings/BLD_Bridge_6w/BLD_Bridge_6w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_10w,Buildings,Assets/Art/Buildings/BLD_Bridge_10w/BLD_Bridge_10w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
+BLD_Bridge_18w,Buildings,Assets/Art/Buildings/BLD_Bridge_18w/BLD_Bridge_18w.fbx,,,,原点=地面中心，正面(-Y→团结+Z)朝街/朝城外；按布局 kind 摆放,白模（程序化）,B
