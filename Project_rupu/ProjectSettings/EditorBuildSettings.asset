@@ -14,6 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Rupu/Scenes/Map_Yongchang_MING.unity
     guid: 4d41d22edd0f7470f9f7e419827e894d
+  - enabled: 1
+    path: Assets/Scenes/Act1_ROC.unity
+    guid: 278e0898af6bb0f4e87160b8899f1c6d
+  - enabled: 1
+    path: Assets/Scenes/Act1_1941.unity
+    guid: a1369650d1637b64eb7dcb80341aefeb
   m_BuildProfiles: []
   m_configObjects: {}
   m_SlimFeaturesWeixinMiniGame:
