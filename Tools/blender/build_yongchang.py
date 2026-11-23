@@ -1036,6 +1036,10 @@ def r_env_hills():
 import rupu_char  # noqa: E402
 RECIPES.update(rupu_char.recipes())
 
+# ====================================================================== 第一幕道具 / 街市（rupu_act1.py）
+import rupu_act1  # noqa: E402
+RECIPES.update(rupu_act1.recipes())
+
 
 # ====================================================================== 驱动
 def render_preview(path, name):

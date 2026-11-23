@@ -10,6 +10,11 @@ namespace Rupu
         public float speed = 0.09f;
         public float phase;
         public float smoothTime = 0.85f;
+        // 模型机头朝向修正：旧灰盒方块飞机沿 X 摆放用 90；PROP_JapanesePlane 机头朝 +Z，生成器设 0
+        public float modelYawOffset = 90f;
+
+        // 螺旋桨绕机身轴转（世界空间），不依赖 FBX 子物体的本地轴向
+        private Vector3 spinAxis() => Quaternion.Euler(0f, -modelYawOffset, 0f) * transform.forward;
 
         private float angle;
         private Rigidbody body;
@@ -28,7 +33,7 @@ namespace Rupu
             body.useGravity = false;
             body.interpolation = RigidbodyInterpolation.Interpolate;
             body.position = OrbitPoint(angle);
-            body.rotation = Quaternion.LookRotation(Tangent(angle)) * Quaternion.Euler(0f, 90f, 0f);
+            body.rotation = Quaternion.LookRotation(Tangent(angle)) * Quaternion.Euler(0f, modelYawOffset, 0f);
             propeller = transform.Find("Propeller");
 
             BuildEngineAudio();
@@ -55,14 +60,14 @@ namespace Rupu
             Vector3 direction = target - body.position;
             if (direction.sqrMagnitude > 0.01f)
             {
-                Quaternion desired = Quaternion.LookRotation(direction.normalized, Vector3.up) * Quaternion.Euler(0f, 90f, 0f);
+                Quaternion desired = Quaternion.LookRotation(direction.normalized, Vector3.up) * Quaternion.Euler(0f, modelYawOffset, 0f);
                 float bank = Mathf.Clamp(Vector3.SignedAngle(transform.forward, direction, Vector3.up) * 0.35f, -18f, 18f);
                 desired *= Quaternion.Euler(0f, 0f, -bank);
                 body.MoveRotation(Quaternion.Slerp(body.rotation, desired, Time.deltaTime * 1.6f));
             }
             body.MovePosition(next);
 
-            if (propeller != null) propeller.Rotate(0f, 0f, 1800f * Time.deltaTime, Space.Self);
+            if (propeller != null) propeller.Rotate(spinAxis(), 1800f * Time.deltaTime, Space.World);
         }
 
         private Vector3 OrbitPoint(float a)

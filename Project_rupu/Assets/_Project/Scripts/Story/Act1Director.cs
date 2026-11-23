@@ -47,6 +47,12 @@ namespace Rupu
         public Transform streetExit;
         public Vector3 factionCenter = new Vector3(0f, 1f, -4f);
         public Vector3 clanStop = new Vector3(0f, 1.2f, -3f);
+        // 军官和士兵从哪个方向进门/出门（相对站定位置）。灰盒默认 +Z；ROC 祠堂门朝南，生成器设为 (0,0,-6)。
+        public Vector3 officerEntryOffset = new Vector3(0f, 0f, 6f);
+        // 道具状态切换（可为空）：上香时点亮的香；拼合残谱后出现/隐藏的物件（半本谱摊开、散页 → 整页）
+        public GameObject[] showOnIncense = new GameObject[0];
+        public GameObject[] showOnPagesMended = new GameObject[0];
+        public GameObject[] hideOnPagesMended = new GameObject[0];
         public Act1Player player;
         public Act1Voice voice;
         private bool argumentVisible;
@@ -123,18 +129,21 @@ namespace Rupu
                     {
                         ShowDialogue("族老", "“跟我来。进祠堂说，别站在门口让日本人看见。”", () =>
                         {
-                            StartCoroutine(ElderLeadIntoHall());
+                            Act1ClanActor guide = elder != null ? elder.GetComponent<Act1ClanActor>() : null;
+                            if (guide != null) guide.PlayFor("Beckon", 1.5f);
+                            StartCoroutine(ElderLeadIntoHall(guide != null ? 1.3f : 0f));
                         });
                     });
                 });
             });
         }
 
-        private IEnumerator ElderLeadIntoHall()
+        private IEnumerator ElderLeadIntoHall(float beckonDelay = 0f)
         {
             stage = Stage.Clan;
             Objective = "跟着族老进祠堂";
             if (clanPoint != null) clanPoint.gameObject.SetActive(false);
+            if (beckonDelay > 0f) yield return new WaitForSeconds(beckonDelay);   // 先招手「跟我来」，再转身走
 
             Vector3 start = elder != null ? elder.position : new Vector3(-20f, 0f, 17.5f);
             Vector3 target = elderStop != null
@@ -252,6 +261,8 @@ namespace Rupu
             if (id == "memorial" && stage == Stage.Memorial)
             {
                 if (player != null && memorialPoint != null) player.LookAt(memorialPoint.transform.position + Vector3.up * 1.4f, 3f);
+                SetAll(showOnIncense, true);
+                StartCoroutine(PlayerGesture("IncenseBow", 4.2f));
                 ShowDialogue("王砚", "爹，我回来了。");
                 ShowDialogue("族老", "“上面供奉的两位，是王沛公、王叔杲公。一个守过堡，一个建过堡。你父亲在下面这一排。你小时候，我抱你认过他们的牌位。”");
                 ShowDialogue("王砚", "我记得。谱里见过他们的名字。");
@@ -262,6 +273,8 @@ namespace Rupu
             if (id == "pages" && stage == Stage.Pages)
             {
                 PagesMended = true;
+                SetAll(hideOnPagesMended, false);
+                SetAll(showOnPagesMended, true);
                 stage = Stage.Factions;
                 Objective = "在祠堂里听三拨人说话（0/3）";
                 ShowDialogue("王砚", "三张散页拼回去了。父亲王世清的名字被墨涂黑，墨还没干。");
@@ -301,6 +314,7 @@ namespace Rupu
             if (id == "flag" && stage == Stage.Street)
             {
                 FlagTouched = true;
+                if (player != null) Act1ClanActor.PlayOn(player.GetComponentInChildren<Animator>(), "TouchFlag");
                 stage = Stage.Fading;
                 Objective = "";
                 ShowDialogue("王砚", "旗杆斜倒在石阶上，旗面沾着旧血。指尖一碰，血还是温的。");
@@ -316,7 +330,7 @@ namespace Rupu
             if (player != null)
             {
                 Vector3 entry = shrineOfficer != null
-                    ? shrineOfficer.position + Vector3.forward * 6f + Vector3.up * 2f
+                    ? shrineOfficer.position + officerEntryOffset + Vector3.up * 2f
                     : new Vector3(0f, 2f, 33f);
                 player.LookAt(entry, 4f);
             }
@@ -345,7 +359,7 @@ namespace Rupu
             }
 
             shrineOfficer.gameObject.SetActive(true);
-            Vector3 officerEntry = officerTarget + Vector3.forward * 6f;
+            Vector3 officerEntry = officerTarget + officerEntryOffset;
             shrineOfficer.position = officerEntry;
             if (shrineGuards != null)
             {
@@ -353,7 +367,7 @@ namespace Rupu
                 {
                     if (shrineGuards[i] == null) continue;
                     shrineGuards[i].gameObject.SetActive(true);
-                    shrineGuards[i].position = guardTargets[i] + Vector3.forward * 6f;
+                    shrineGuards[i].position = guardTargets[i] + officerEntryOffset;
                 }
             }
 
@@ -377,6 +391,9 @@ namespace Rupu
                 yield return null;
             }
 
+            // 站定后才开口：军官和士兵改为立正
+            SetAmbient(shrineOfficer, "AttentionLoop");
+            if (shrineGuards != null) foreach (Transform g in shrineGuards) SetAmbient(g, "AttentionLoop");
             if (player != null) player.LookAt(shrineOfficer.position + Vector3.up * 1.4f, 4f);
             ShowOfficerLines();
         }
@@ -408,7 +425,7 @@ namespace Rupu
             }
 
             Vector3 officerStart = shrineOfficer.position;
-            Vector3 officerExit = officerStart + Vector3.forward * 6f;
+            Vector3 officerExit = officerStart + officerEntryOffset;
             Vector3[] guardStarts = new Vector3[2];
             Vector3[] guardExits = new Vector3[2];
             if (shrineGuards != null)
@@ -417,7 +434,7 @@ namespace Rupu
                 {
                     if (shrineGuards[i] == null) continue;
                     guardStarts[i] = shrineGuards[i].position;
-                    guardExits[i] = guardStarts[i] + Vector3.forward * 6f;
+                    guardExits[i] = guardStarts[i] + officerEntryOffset;
                 }
             }
 
@@ -519,6 +536,12 @@ namespace Rupu
                 if (factionActors[i] != null) starts[i] = factionActors[i].position;
             }
 
+            foreach (Transform f in factionActors)
+            {
+                Act1ClanActor a = f != null ? f.GetComponent<Act1ClanActor>() : null;
+                if (a != null) a.Hold("ArgueLoop");
+            }
+
             float elapsed = 0f;
             while (elapsed < 10f)
             {
@@ -542,6 +565,11 @@ namespace Rupu
 
             argumentVisible = false;
             if (voice != null) voice.Stop();
+            foreach (Transform f in factionActors)
+            {
+                Act1ClanActor a = f != null ? f.GetComponent<Act1ClanActor>() : null;
+                if (a != null) a.Release();
+            }
         }
 
         private void ShowDialogue(string title, string body, Action onDone = null)
@@ -555,7 +583,32 @@ namespace Rupu
 
             currentLine = line;
             dialogueActive = true;
+            Act1ClanActor.Speak(line.title);
             if (voice != null) voice.PlayFor(line.title, line.body);
+        }
+
+        private static void SetAll(GameObject[] objects, bool active)
+        {
+            if (objects == null) return;
+            foreach (GameObject o in objects)
+            {
+                if (o != null) o.SetActive(active);
+            }
+        }
+
+        private static void SetAmbient(Transform t, string state)
+        {
+            Act1ClanActor a = t != null ? t.GetComponent<Act1ClanActor>() : null;
+            if (a != null) a.ambient = state;
+        }
+
+        /// <summary>王砚做一段动作（上香三拜），seconds 秒后回到走跑。</summary>
+        private IEnumerator PlayerGesture(string state, float seconds)
+        {
+            Animator anim = player != null ? player.GetComponentInChildren<Animator>() : null;
+            Act1ClanActor.PlayOn(anim, state);
+            yield return new WaitForSeconds(seconds);
+            Act1ClanActor.PlayOn(anim, null);
         }
 
         private void AdvanceDialogue()
@@ -571,10 +624,12 @@ namespace Rupu
             {
                 currentLine = dialogueQueue.Dequeue();
                 dialogueActive = true;
+                Act1ClanActor.Speak(currentLine.title);
                 if (voice != null) voice.PlayFor(currentLine.title, currentLine.body);
             }
             else
             {
+                Act1ClanActor.Speak(null);
                 done?.Invoke();
             }
         }

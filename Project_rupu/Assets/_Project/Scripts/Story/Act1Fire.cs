@@ -6,6 +6,8 @@ namespace Rupu
     {
         public float radius = 3f;
         public float height = 5f;
+        // ROC 场景改用 PF_VFX_Fire / PF_VFX_FireSmoke（URP 粒子材质），这里只保留火光和哭喊声
+        public bool buildFlames = true;
 
         private Light fireLight;
         private AudioSource source;
@@ -27,7 +29,7 @@ namespace Rupu
             source.maxDistance = 24f;
             source.volume = 0.55f;
 
-            BuildFlames();
+            if (buildFlames) BuildFlames();
             nextCry = Time.time + 1f;
         }
 

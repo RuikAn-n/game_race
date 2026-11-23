@@ -100,7 +100,7 @@ namespace Rupu.EditorTools
             var mats = Load<Mats>("era_materials.json");
             prefabCache = new Dictionary<string, GameObject>();
             missingCount = 0;
-            matLib = BuildMaterialLibrary(mats, era);
+            matLib = BuildMaterialLibrary(mats, era); matLibEra = era;
             bool roc = era == "ROC";
 
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -203,6 +203,23 @@ namespace Rupu.EditorTools
             prefabCache[asset] = go;
             return go;
         }
+
+        /// <summary>
+        /// 给剧情场景生成器用（如第一幕）：按地图同一套规则摆一个资产——年代材质库换色、COL_*/NOCOL_* 碰撞约定。
+        /// pos/rot 为 parent 下的局部坐标；era = "ROC" / "MING"。
+        /// </summary>
+        public static GameObject PlaceForStory(string asset, Transform parent, Vector3 pos, float rot, string name, string era = "ROC",
+                                               bool setStatic = true)
+        {
+            if (prefabCache == null) prefabCache = new Dictionary<string, GameObject>();
+            if (matLib == null || matLibEra != era)
+            {
+                matLib = BuildMaterialLibrary(Load<Mats>("era_materials.json"), era);
+                matLibEra = era;
+            }
+            return Place(asset, parent, pos, rot, name, setStatic);
+        }
+        static string matLibEra;
 
         static GameObject Place(string asset, Transform parent, Vector3 pos, float rot, string name, bool setStatic)
         {

@@ -33,7 +33,9 @@ ArtSource/<分类>/<资产名>.blend   Blender 源文件（LFS），不要放进
 Tools/blender/rupu_pipeline.py   Blender 插件和命令行：规格检查 + FBX 导出
 Tools/mac/               new_asset / blender_export_all / build_win / serve_build / check_env
 Docs/                    日常用法.md（给人看的操作手册）、asset_spec.md、licenses.md、vo_manifest.csv、characters.md、map_yongchang.md
-                         策划/文本：入谱_第二幕_筑堡_策划案_v1.md、入谱_第一幕_人物文本.md、入谱_美术建模清单.md、第一幕_队友README.md
+                         interiors.md、act1_assets.md（第一幕 P0 资产与场景接入）
+                         策划/文本：入谱_第二幕_筑堡_策划案_v1.md、入谱_第一幕_人物文本.md、入谱_美术建模清单.md、
+                         入谱_当前建模缺口清单.md、第一幕_队友README.md
   Docs/private/          原始策划案 PDF、B 执行手册（只读原件，同样公开入库）
 Data/asset_manifest.csv  资产总表
 Builds/                  构建输出（忽略）
@@ -92,6 +94,7 @@ Tools/mac/serve_build.sh               # 在 VMware 内网发布 zip，VM 里用
 - 程序化白模由 `Tools/blender/build_yongchang.py` 生成，已存在的 .blend 默认跳过（保护手改）；`--force` 会覆盖。
 - 碰撞约定：`COL_*` 只做碰撞，`NOCOL_*` 不加碰撞。
 - 人物（见 Docs/characters.md）：`Tools/blender/rupu_char.py` 程序化生成，骨骼用团结 Humanoid 标准名；共用动画 `CH_WangYan_1941@Idle/Walk/Run` + 控制器 `AC_Humanoid_Locomotion`（Speed 参数）；场景摆放在 `era_kits.json` 的 `cast`。
+- 第一幕（见 Docs/act1_assets.md）：道具/街市 `Tools/blender/rupu_act1.py`；共用动作 `CH_WangYan_1941@<动作>` 是控制器里的同名状态，脚本 `CrossFade` 进入；NPC 挂 `Act1ClanActor`；特效 `RupuVfx`（`PF_VFX_*`，URP 粒子材质存成资产）；场景 `Act1RocSceneBuilder.Create`。人形动作片段的根运动一律烘进姿势。
 
 ## 注意事项（踩过的坑）
 

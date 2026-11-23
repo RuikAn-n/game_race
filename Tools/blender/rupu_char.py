@@ -52,15 +52,15 @@ CHAR_PALETTE = {
     "M_CH_GM_Ao": "#3e4a57", "M_CH_GM_Skirt": "#2b2a28", "M_CH_GM_Band": "#1e1e1e",
     "M_CH_BY_Coat": "#8a7a5a", "M_CH_BY_Pants": "#4a4438",
     "M_CH_GL_Ao": "#7a4a40", "M_CH_GL_Pants": "#3a3f44", "M_CH_GL_Ribbon": "#8a3a30",
-    # 1941 族亲（第一幕祠堂）
-    "M_CH_EL_Robe": "#3a2f27", "M_CH_EL_Magua": "#1f1d1b", "M_CH_EL_Shoe": "#1a1a1a", "M_CH_Beads": "#5a2a22",
-    "M_CH_JP_Robe": "#4a5560", "M_CH_JP_Sash": "#2a2c2e", "M_CH_Ledger": "#7a6a4a", "M_CH_Glasses": "#1a1614",
-    "M_CH_SP_Coat": "#2f3236", "M_CH_SP_Pants": "#3d3b36", "M_CH_SP_Sash": "#6e3b32", "M_CH_Torch": "#9a5238",
-    "M_CH_CP_Ao": "#34423d", "M_CH_CP_Skirt": "#262629", "M_CH_CP_Bundle": "#5e6b5a", "M_CH_ClothShoe": "#2a2724",
-    "M_CH_UC_Coat": "#5a5a50", "M_CH_UC_Pants": "#33312d", "M_CH_UC_Hat": "#3a332b",
-    "M_CH_GM_Ao": "#3e4a57", "M_CH_GM_Skirt": "#2b2a28", "M_CH_GM_Band": "#1e1e1e",
-    "M_CH_BY_Coat": "#8a7a5a", "M_CH_BY_Pants": "#4a4438",
-    "M_CH_GL_Ao": "#7a4a40", "M_CH_GL_Pants": "#3a3f44", "M_CH_GL_Ribbon": "#8a3a30",
+    # 1941 日军（土黄军服，低饱和；JA = Japanese Army，与交谱派 JP 区分）
+    "M_CH_JA_Khaki": "#6b6446", "M_CH_JA_KhakiDark": "#57513a", "M_CH_JA_Leather": "#4a3524", "M_CH_JA_Boot": "#1f1b17",
+    "M_CH_JA_Glove": "#d9d4c6", "M_CH_JA_Red": "#8a2e26", "M_CH_JA_Helmet": "#545a42", "M_CH_JA_Gold": "#8f7a44",
+    "M_CH_JA_Wrap": "#7a7256", "M_CH_JA_Steel": "#4a4d4f",
+    # 1941 小贩 / 街坊
+    "M_CH_VD_Coat": "#6e6a5c", "M_CH_VD_Pants": "#3e3b34", "M_CH_VD_Apron": "#4a5560", "M_CH_StrawHat": "#a08a5a",
+    "M_CH_VG_Coat": "#3d4650", "M_CH_TW_Ao": "#5a4e5c", "M_CH_TW_Scarf": "#6e6a5c", "M_CH_TO_Robe": "#5a5248",
+    "M_CH_TI_Coat": "#585c56", "M_CH_Bandage": "#d6d0c0", "M_CH_Blood": "#5e1f1a", "M_CH_TR_Coat": "#6a5a44",
+    "M_CH_Bedroll": "#7a6a52",
     # 道具
     "M_PR_Wood": "#6b5039", "M_PR_WoodDark": "#3e2f24", "M_PR_Iron": "#5a5d5e", "M_PR_Tassel": "#9a4a3a",
     "M_PR_Bead": "#2b211a",
@@ -370,11 +370,12 @@ def build_body(S, J, H, c):
         cuff = c.get("cuff", 1.0)
         S.add(*tube(J["elbow" + s], J["wrist" + s] + Vector((sg * 0.005 * h, 0, 0)), 0.028 * h * bulk, 0.023 * h * cuff),
               c.get("sleeve", top), W(side + "LowerArm"))
-        # 手：掌 + 拇指
+        # 手：掌 + 拇指（glove：军官白手套）
+        hand = c.get("glove", skin)
         wc = J["wrist" + s] + Vector((sg * 0.045 * h, 0, 0))
-        S.add(*box(wc, (0.085 * h, 0.042 * h, 0.022 * h)), skin, W(side + "Hand"))
+        S.add(*box(wc, (0.085 * h, 0.042 * h, 0.022 * h)), hand, W(side + "Hand"))
         S.add(*box(J["wrist" + s] + Vector((sg * 0.03 * h, -0.026 * h, -0.004 * h)), (0.035 * h, 0.015 * h, 0.014 * h)),
-              skin, W(side + "Hand"))
+              hand, W(side + "Hand"))
 
         # 腿
         S.add(*tube(J["hip" + s] + Vector((0, 0, 0.02 * h)), J["knee" + s], 0.05 * h * bulk, 0.035 * h), pants, W(side + "UpperLeg"))
@@ -469,6 +470,58 @@ def brim_hat(S, hc, r, mat, h):
                        (hc + Vector((0, 0.004 * h, rz * 0.37)), rx * 1.75, ry * 1.6)], seg=12), mat, W("Head"))
 
 
+def helmet(S, hc, r, mat, h):
+    """九〇式钢盔：圆顶 + 窄檐 + 顶上一点星徽。"""
+    rx, ry, rz = r
+    S.add(*ellipsoid(hc + Vector((0, 0.004 * h, rz * 0.12)), rx * 1.22, ry * 1.18, rz * 1.05, seg=10, rings=4, zmin=0.0),
+          mat, W("Head"))
+    S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, rz * 0.08)), rx * 1.32, ry * 1.28),
+                       (hc + Vector((0, 0.004 * h, rz * 0.14)), rx * 1.3, ry * 1.26)], seg=12), mat, W("Head"))
+    S.add(*box(hc + Vector((0, -ry * 1.1, rz * 0.6)), (0.012 * h, 0.004 * h, 0.012 * h)), "M_CH_JA_Gold", W("Head"))
+
+
+def field_cap(S, hc, r, mat, h, neck_flaps=False):
+    """战斗帽（略帽）：低平帽身 + 短帽舌 + 星徽，可带护颈布。"""
+    rx, ry, rz = r
+    S.add(*ellipsoid(hc + Vector((0, 0.006 * h, rz * 0.3)), rx * 1.08, ry * 1.06, rz * 0.78, seg=10, rings=3, zmin=0.0),
+          mat, W("Head"))
+    S.add(*box(hc + Vector((0, -ry * 1.12, rz * 0.32)), (rx * 1.3, ry * 0.45, 0.006 * h), rot=_eu(-12, 0, 0)), mat, W("Head"))
+    S.add(*box(hc + Vector((0, -ry * 1.05, rz * 0.62)), (0.012 * h, 0.004 * h, 0.012 * h)), "M_CH_JA_Gold", W("Head"))
+    if neck_flaps:
+        for sx in (-1, 0, 1):
+            S.add(*box(hc + Vector((sx * rx * 0.75, ry * (0.75 if sx else 1.05), -rz * 0.25)),
+                       (0.004 * h if sx else rx * 1.3, ry * 0.9 if sx else 0.004 * h, rz * 0.9)), mat,
+                  lambda p: {"Head": 0.7, "Neck": 0.3})
+
+
+def peaked_cap(S, hc, r, mat, h):
+    """军官大檐帽：帽墙 + 红帽箍 + 顶 + 黑漆帽檐。"""
+    rx, ry, rz = r
+    S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, rz * 0.3)), rx * 1.06, ry * 1.04),
+                       (hc + Vector((0, 0.004 * h, rz * 0.55)), rx * 1.07, ry * 1.05)], seg=12), "M_CH_JA_Red", W("Head"))
+    S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, rz * 0.55)), rx * 1.07, ry * 1.05),
+                       (hc + Vector((0, 0.01 * h, rz * 0.98)), rx * 1.18, ry * 1.2)], seg=12, cap1=False), mat, W("Head"))
+    S.add(*ellipsoid(hc + Vector((0, 0.01 * h, rz * 0.97)), rx * 1.18, ry * 1.2, 0.012 * h, seg=12, rings=2, zmin=0.0),
+          mat, W("Head"))
+    S.add(*box(hc + Vector((0, -ry * 1.14, rz * 0.3)), (rx * 1.4, ry * 0.55, 0.006 * h), rot=_eu(-18, 0, 0)), "M_CH_JA_Boot", W("Head"))
+    S.add(*box(hc + Vector((0, -ry * 1.07, rz * 0.43)), (0.014 * h, 0.004 * h, 0.014 * h)), "M_CH_JA_Gold", W("Head"))
+
+
+def straw_hat(S, hc, r, mat, h):
+    """斗笠：压低的宽圆锥。"""
+    rx, ry, rz = r
+    S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, rz * 0.35)), rx * 3.0, ry * 2.7),
+                       (hc + Vector((0, 0.004 * h, rz * 1.25)), rx * 0.2, ry * 0.2)], seg=12), mat, W("Head"))
+
+
+def headscarf(S, hc, r, mat, h):
+    """包头巾：裹住头顶到耳后，脑后打一个结。"""
+    rx, ry, rz = r
+    S.add(*ellipsoid(hc + Vector((0, 0.008 * h, 0.006 * h)), rx * 1.12, ry * 1.1, rz * 1.02, seg=10, rings=4, zmin=-0.15),
+          mat, W("Head"))
+    S.add(*ellipsoid(hc + Vector((0, ry * 1.1, -rz * 0.2)), 0.024 * h, 0.018 * h, 0.022 * h, seg=6, rings=3), mat, W("Head"))
+
+
 # ---------------------------------------------------------------- 角色配置
 CAST = {
     "CH_WangYan_1941": dict(H=1.75, outfit="robe", top="M_CH_WY41_Robe", pants="M_CH_WY41_Pants", shoe="M_CH_WY41_Shoe",
@@ -520,11 +573,54 @@ CAST = {
     "NPC_ClanGirl": dict(H=1.50, head=1.12, outfit="jacket", top="M_CH_GL_Ao", pants="M_CH_GL_Pants", shoe="M_CH_ClothShoe",
                          hair="braid", ribbon="M_CH_GL_Ribbon", bulk=0.88, brow_tilt=-6,
                          desc="族中少女 1941：14 岁，旧红袄蓝裤、一根长辫系红头绳；跟着藏谱派妇人（母女）"),
+    # ---- 1941 日军（第一幕祠堂/街市） ----
+    "NPC_JpOfficer": dict(H=1.72, outfit="jacket", top="M_CH_JA_Khaki", pants="M_CH_JA_Khaki", shoe="M_CH_JA_Boot", boot=True,
+                          wrap="M_CH_JA_Boot", sash="M_CH_JA_Leather", glove="M_CH_JA_Glove", hair="peaked_cap",
+                          hair_mat="M_CH_JA_Khaki", brow_tilt=6, extras=["glasses", "boards", "gunto"],
+                          desc="日本军官 1941：40 岁，黄呢军服、大檐帽红帽箍、白手套、圆眼镜、马靴、左胯军刀；克制而危险（祠堂/街市共用）"),
+    "NPC_JpSoldier_A": dict(H=1.66, outfit="jacket", top="M_CH_JA_Khaki", pants="M_CH_JA_Khaki", shoe="M_CH_JA_Boot",
+                            wrap="M_CH_JA_Wrap", sash="M_CH_JA_Leather", hair="helmet", hair_mat="M_CH_JA_Helmet", brow_tilt=10,
+                            extras=["boards", "pouches", "bayonet", "rifle_back"],
+                            desc="日本兵·步枪兵 1941：钢盔、绑腿、子弹盒、刺刀鞘、三八式斜背（随军官进祠堂）"),
+    "NPC_JpSoldier_B": dict(H=1.68, outfit="jacket", top="M_CH_JA_Khaki", pants="M_CH_JA_Khaki", shoe="M_CH_JA_Boot",
+                            wrap="M_CH_JA_Wrap", sash="M_CH_JA_Leather", hair="field_cap_flaps", hair_mat="M_CH_JA_Khaki",
+                            brow_tilt=14, bulk=1.05, extras=["boards", "pouches", "bayonet", "canteen"],
+                            desc="日本兵·搜捕兵 1941：战斗帽带护颈布、徒手（步枪另为道具握持），踹门抢箱/推搡小贩"),
+    "NPC_JpSoldier_C": dict(H=1.64, outfit="jacket", top="M_CH_JA_KhakiDark", pants="M_CH_JA_KhakiDark", shoe="M_CH_JA_Boot",
+                            wrap="M_CH_JA_Wrap", sash="M_CH_JA_Leather", hair="helmet", hair_mat="M_CH_JA_Helmet", brow_tilt=8,
+                            extras=["boards", "pouches", "backpack", "canteen", "rifle_back"],
+                            desc="日本兵·巡逻兵 1941：钢盔、背囊毛毯卷、水壶、三八式斜背（街市巡逻）"),
+    # ---- 1941 小贩 ----
+    "NPC_VendorVeg": dict(H=1.68, outfit="jacket", top="M_CH_VD_Coat", pants="M_CH_VD_Pants", shoe="M_CH_Straw",
+                          sash="M_CH_VD_Pants", hair="straw_hat", hair_mat="M_CH_StrawHat", skin="M_CH_Skin_Dark",
+                          brow_tilt=-8, cuff=1.25, bulk=0.96, extras=["apron"],
+                          desc="小贩·菜贩 1941：50 岁，灰褐短褂卷袖、斗笠、蓝围裙、草鞋（扁担菜筐另为道具）"),
+    "NPC_VendorGoods": dict(H=1.64, outfit="robe", top="M_CH_VG_Coat", pants="M_CH_VG_Coat", shoe="M_CH_ClothShoe",
+                            hem=0.18, skin="M_CH_Skin_Old", hair="melon_cap", brow="M_CH_Hair_Grey", beard="short_grey",
+                            brow_tilt=-10, hunch=0.3, extras=["apron"], apron="M_CH_Bedroll",
+                            desc="小贩·杂货摊主 1941：60 岁，青灰短衫、旧瓜皮帽、灰短须、土黄围裙"),
+    # ---- 1941 街坊（与族亲 4 人合计 8 个变体：老/少/男/女/伤/逃难） ----
+    "NPC_TownOldMan": dict(H=1.64, outfit="robe", top="M_CH_TO_Robe", pants="M_CH_TO_Robe", shoe="M_CH_ClothShoe",
+                           skin="M_CH_Skin_Old", hair="short", hair_mat="M_CH_Hair_White", brow="M_CH_Hair_White",
+                           beard="long_white", hunch=0.8, bulk=0.9,
+                           desc="街坊·老汉 1941：70 岁，旧褐长衫、白发长须、驼背"),
+    "NPC_TownWoman": dict(H=1.57, outfit="robe", top="M_CH_TW_Ao", skirt="M_CH_GM_Skirt", pants="M_CH_GM_Skirt",
+                          shoe="M_CH_ClothShoe", hair="headscarf", hair_mat="M_CH_TW_Scarf", hem=0.03, bulk=0.92,
+                          trim="M_CH_GM_Skirt", brow_tilt=-10, extras=["ao_hem"],
+                          desc="街坊·妇女 1941：35 岁，灰紫袄黑裙、灰包头巾，眉头发愁"),
+    "NPC_TownInjured": dict(H=1.70, outfit="jacket", top="M_CH_TI_Coat", pants="M_CH_VD_Pants", shoe="M_CH_ClothShoe",
+                            sash="M_CH_VD_Pants", hair="bandaged", brow_tilt=-6, extras=["sling"],
+                            desc="街坊·伤者 1941：28 岁，头缠渗血绷带、右臂吊带（轰炸后）"),
+    "NPC_TownRefugee": dict(H=1.70, outfit="jacket", top="M_CH_TR_Coat", pants="M_CH_VD_Pants", shoe="M_CH_Straw",
+                            sash="M_CH_VD_Pants", wrap="M_CH_Wrap", hair="straw_hat", hair_mat="M_CH_StrawHat",
+                            skin="M_CH_Skin_Dark", extras=["bedroll"],
+                            desc="街坊·逃难者 1941：35 岁，土黄短褂绑腿、斗笠、背铺盖卷和包袱"),
 }
 
 
-def build_character(name):
-    c = CAST[name]
+def build_character(name, cfg=None):
+    """cfg 不为空时用它代替 CAST[name]（例如只用来渲染照片、不单独出资产的人物）。"""
+    c = cfg if cfg is not None else CAST[name]
     H = c["H"]
     h = H
     J = joints(H, c.get("hunch", 0.0), c.get("bulk", 1.0))
@@ -549,6 +645,26 @@ def build_character(name):
     elif hair == "brim_hat":
         hair_short(S, hc, r, "M_CH_Hair", h)
         brim_hat(S, hc, r, hm, h)
+    elif hair == "helmet":
+        hair_short(S, hc, r, "M_CH_Hair", h)
+        helmet(S, hc, r, hm, h)
+    elif hair in ("field_cap", "field_cap_flaps"):
+        hair_short(S, hc, r, "M_CH_Hair", h)
+        field_cap(S, hc, r, hm, h, neck_flaps=hair.endswith("flaps"))
+    elif hair == "peaked_cap":
+        hair_short(S, hc, r, "M_CH_Hair", h)
+        peaked_cap(S, hc, r, hm, h)
+    elif hair == "straw_hat":
+        hair_short(S, hc, r, "M_CH_Hair", h)
+        straw_hat(S, hc, r, hm, h)
+    elif hair == "headscarf":
+        hair_short(S, hc, r, "M_CH_Hair", h)
+        headscarf(S, hc, r, hm, h)
+    elif hair == "bandaged":     # 伤者：头缠绷带，额前一片血迹
+        hair_short(S, hc, r, hm, h)
+        S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, r[2] * 0.15)), r[0] * 1.1, r[1] * 1.08),
+                           (hc + Vector((0, 0.004 * h, r[2] * 0.62)), r[0] * 1.06, r[1] * 1.04)], seg=10), "M_CH_Bandage", W("Head"))
+        S.add(*box(hc + Vector((0.018 * h, -r[1] * 1.07, r[2] * 0.4)), (0.03 * h, 0.004 * h, 0.022 * h)), "M_CH_Blood", W("Head"))
     elif hair == "melon_cap":       # 瓜皮帽
         S.add(*ellipsoid(hc + Vector((0, 0.004 * h, 0.014 * h)), r[0] * 1.08, r[1] * 1.06, r[2] * 0.95, seg=10, rings=4, zmin=0.05),
               "M_CH_WB_Cap", W("Head"))
@@ -641,6 +757,54 @@ def build_character(name):
                 S.add(*box(mid, (0.03 * h, 0.006 * h, d.length), rot=_eu(0, ang, 0)), "M_CH_CP_Bundle", tw)
             S.add(*box((0.06 * h, 0.115 * h, 0.55 * h), (0.15 * h, 0.07 * h, 0.13 * h), rot=_eu(0, -10, 0)), "M_CH_CP_Bundle", tw)
             S.add(*ellipsoid((0.0, 0.08 * h, 0.64 * h), 0.022 * h, 0.018 * h, 0.018 * h, seg=6, rings=3), "M_CH_CP_Bundle", tw)
+        elif e == "boards":     # 军装：肩章 + 红领章 + 前襟纽扣
+            for s_, side in (("L", "Left"), ("R", "Right")):
+                sg = 1 if s_ == "L" else -1
+                S.add(*box(J["arm" + s_] + Vector((-sg * 0.03 * h, 0, 0.035 * h)), (0.07 * h, 0.03 * h, 0.006 * h)),
+                      "M_CH_JA_Red", {side + "Shoulder": 0.5, "Chest": 0.5})
+                S.add(*box(J["neck"] + Vector((sg * 0.022 * h, -0.024 * h, -0.004 * h)), (0.016 * h, 0.006 * h, 0.012 * h)),
+                      "M_CH_JA_Red", W("Neck"))
+            for k in range(4):
+                z = 0.5 * h + k * 0.075 * h
+                S.add(*box((0, spine_y(J, z) - 0.068 * h * c.get("bulk", 1.0), z), (0.01 * h, 0.006 * h, 0.01 * h)),
+                      "M_CH_JA_Gold", tw)
+        elif e == "gunto":      # 军刀：左胯挂鞘，刀柄朝前上
+            S.add(*box((0.1 * h, 0.03 * h, 0.36 * h), (0.018 * h, 0.03 * h, 0.42 * h), rot=_eu(22, 0, 0)), "M_CH_JA_Steel", hipsW)
+            S.add(*box((0.1 * h, -0.07 * h, 0.6 * h), (0.016 * h, 0.022 * h, 0.12 * h), rot=_eu(22, 0, 0)), "M_CH_JA_Leather", hipsW)
+            S.add(*box((0.1 * h, -0.05 * h, 0.55 * h), (0.03 * h, 0.035 * h, 0.006 * h), rot=_eu(22, 0, 0)), "M_CH_JA_Gold", hipsW)
+        elif e == "pouches":    # 子弹盒：腰带前两只、后一只
+            for x in (-0.055, 0.055):
+                S.add(*box((x * h, -0.08 * h, 0.5 * h), (0.05 * h, 0.03 * h, 0.035 * h)), "M_CH_JA_Leather", hipsW)
+            S.add(*box((0, 0.08 * h, 0.5 * h), (0.07 * h, 0.03 * h, 0.04 * h)), "M_CH_JA_Leather", hipsW)
+        elif e == "bayonet":    # 刺刀鞘：左胯
+            S.add(*box((0.1 * h, 0.01 * h, 0.43 * h), (0.014 * h, 0.022 * h, 0.2 * h), rot=_eu(10, 0, 0)), "M_CH_JA_Boot", hipsW)
+        elif e == "rifle_back":  # 三八式斜背：右肩到左腰后，枪口朝上
+            a = Vector((0.11 * h, 0.085 * h, 0.3 * h))
+            b = Vector((-0.12 * h, 0.09 * h, 0.95 * h))
+            d = (b - a).normalized()
+            S.add(*tube(a, a + d * 0.45 * (b - a).length, 0.02 * h, 0.018 * h, seg=6), "M_PR_Wood",
+                  lambda p: W("Hips") if p.z < 0.56 * h else W("Chest"))
+            S.add(*tube(a + d * 0.45 * (b - a).length, b, 0.01 * h, 0.009 * h, seg=6), "M_CH_JA_Steel", W("Chest"))
+            S.add(*box((0, 0.068 * h, 0.66 * h), (0.012 * h, 0.006 * h, 0.4 * h), rot=_eu(0, 35, 0)), "M_CH_JA_Leather", tw)
+        elif e == "backpack":   # 背囊 + 卷起的毛毯
+            S.add(*box((0, 0.1 * h, 0.68 * h), (0.15 * h, 0.06 * h, 0.14 * h)), "M_CH_JA_KhakiDark", tw)
+            S.add(*tube((-0.09 * h, 0.1 * h, 0.77 * h), (0.09 * h, 0.1 * h, 0.77 * h), 0.022 * h, 0.022 * h, seg=6),
+                  "M_CH_JA_Wrap", W("Chest"))
+        elif e == "canteen":    # 水壶：右胯
+            S.add(*ellipsoid((-0.1 * h, 0.02 * h, 0.45 * h), 0.02 * h, 0.014 * h, 0.032 * h, seg=6, rings=3), "M_CH_JA_Helmet", hipsW)
+        elif e == "apron":      # 围裙：前片到膝
+            S.add(*box((0, -0.078 * h * c.get("bulk", 1.0), 0.4 * h), (0.16 * h, 0.006 * h, 0.22 * h)), c.get("apron", "M_CH_VD_Apron"),
+                  {"Hips": 0.6, "LeftUpperLeg": 0.2, "RightUpperLeg": 0.2})
+            S.add(*box((0, -0.075 * h, 0.66 * h), (0.11 * h, 0.006 * h, 0.12 * h)), c.get("apron", "M_CH_VD_Apron"), tw)
+        elif e == "sling":      # 伤者：右前臂吊带 + 绷带
+            S.add(*tube(J["elbowR"], J["wristR"], 0.032 * h, 0.028 * h, seg=6), "M_CH_Bandage", W("RightLowerArm"))
+            S.add(*box((0, -0.06 * h, 0.7 * h), (0.012 * h, 0.006 * h, 0.28 * h), rot=_eu(0, -40, 0)), "M_CH_Bandage", tw)
+            S.add(*box((-0.035 * h, -0.072 * h, 0.66 * h), (0.02 * h, 0.004 * h, 0.03 * h)), "M_CH_Blood", tw)
+        elif e == "bedroll":    # 逃难：背上铺盖卷 + 包袱
+            S.add(*tube((-0.11 * h, 0.1 * h, 0.72 * h), (0.11 * h, 0.1 * h, 0.72 * h), 0.04 * h, 0.04 * h, seg=8), "M_CH_Bedroll", W("Chest"))
+            S.add(*box((0, 0.1 * h, 0.58 * h), (0.14 * h, 0.07 * h, 0.12 * h)), "M_CH_CP_Bundle", tw)
+            for sx in (-1, 1):
+                S.add(*box((sx * 0.06 * h, -0.07 * h, 0.66 * h), (0.012 * h, 0.006 * h, 0.22 * h)), "M_CH_Bedroll", tw)
         elif e == "armor":
             # 皮札甲：胸背甲 + 甲片横条 + 披膊 + 前后甲裙
             rings = []
@@ -792,6 +956,139 @@ def build_anim(kind):
     bpy.ops.object.mode_set(mode="OBJECT")
 
 
+# ---------------------------------------------------------------- 第一幕动作（关键帧手摆，Humanoid 共用）
+# 手臂参数 (fwd, side)：都从「自然下垂」量起——fwd 向前抬的角度（90 = 平举向前，140 = 举过头），
+# side 向外侧张开的角度（90 = T 姿势；负值 = 向身体内侧收，手到对侧胯/胸前）。
+# 前臂 _fore(sg, a) 向前屈肘 a 度；脊柱/头 _rot("X", +a) 前倾/低头；大腿 _rot("X", -a) 前抬，小腿 _rot("X", +a) 后屈。
+def _arm(sg, fwd=0.0, side=0.0):
+    return _rot("X", -fwd) @ _rot("Y", sg * (88.0 - side))
+
+
+def _fore(sg, bend):
+    return _rot("Z", -sg * bend)
+
+
+def _base():
+    P, _ = pose_at(0.0, "idle")
+    return dict(P)
+
+
+def _pose(**kw):
+    """从待机姿势出发，按关键字覆盖骨骼：L/R 臂 = (fwd, side)，LF/RF 前臂 = 屈肘度数，其余为骨骼名 → 矩阵。"""
+    P = _base()
+    for k, v in kw.items():
+        if k in ("L", "R"):
+            sg = 1 if k == "L" else -1
+            P[("Left" if k == "L" else "Right") + "UpperArm"] = _arm(sg, *v)
+        elif k in ("LF", "RF"):
+            sg = 1 if k == "LF" else -1
+            P[("Left" if k == "LF" else "Right") + "LowerArm"] = _fore(sg, v)
+        else:
+            P[k] = v
+    return P
+
+
+def _legs(P, thigh=0.0, shin=0.0, foot=0.0, side=None):
+    for s in (("Left", "Right") if side is None else (side,)):
+        P[s + "UpperLeg"] = _rot("X", -thigh)
+        P[s + "LowerLeg"] = _rot("X", shin)
+        P[s + "Foot"] = _rot("X", foot)
+    return P
+
+
+def gesture_keys(kind):
+    """返回 (总帧数, [(帧, 姿势, 髋高偏移 m)])。24 fps；髋高按 1.75 m 基准人物，Humanoid 会按身高缩放。"""
+    X = lambda a: _rot("X", a)
+    Z = lambda a: _rot("Z", a)
+    if kind == "TalkLoop":          # 说话：右手在胸前比划，轻点头（族老、三派、军官共用）
+        return 48, [(0, _pose(R=(50, 10), RF=60, Head=X(2)), 0),
+                    (12, _pose(R=(62, 22), RF=40, Head=X(-3), Neck=Z(4)), 0),
+                    (24, _pose(R=(45, 8), RF=72, Head=X(4)), 0),
+                    (36, _pose(R=(66, 16), RF=30, Head=X(-2), Neck=Z(-4)), 0),
+                    (48, _pose(R=(50, 10), RF=60, Head=X(2)), 0)]
+    if kind == "ArgueLoop":         # 争吵：前倾、双手挥动、头往前戳（春祭争执）
+        return 36, [(0, _pose(Spine=X(8), Chest=X(6), R=(70, 15), RF=50, L=(30, 10), LF=40, Head=X(-6)), 0),
+                    (9, _pose(Spine=X(12), Chest=X(8), R=(100, 5), RF=20, L=(45, 15), LF=70, Head=X(4)), 0),
+                    (18, _pose(Spine=X(6), Chest=X(4), R=(60, 30), RF=80, L=(80, 10), LF=20, Head=X(-8)), 0),
+                    (27, _pose(Spine=X(12), Chest=X(9), R=(95, 0), RF=30, L=(40, 10), LF=60, Head=X(6)), 0),
+                    (36, _pose(Spine=X(8), Chest=X(6), R=(70, 15), RF=50, L=(30, 10), LF=40, Head=X(-6)), 0)]
+    if kind == "CowerLoop":         # 躲闪：缩身半蹲、双臂护头、发抖（街坊、小贩）
+        def k(f, d):
+            P = _pose(Spine=X(18 + d), Chest=X(12), Head=X(20), L=(130, 25), LF=115, R=(130, 25), RF=115)
+            return (f, _legs(P, 35, 60, -25), -0.14)
+        return 12, [k(0, 0), k(3, 2), k(6, -1), k(9, 2), k(12, 0)]
+    if kind == "WatchLoop":         # 围观：双手攥在身前、头随事件慢慢转
+        return 72, [(0, _pose(L=(28, -12), LF=70, R=(28, -12), RF=70, Head=X(6), Neck=Z(10)), 0),
+                    (36, _pose(L=(28, -12), LF=76, R=(28, -12), RF=76, Head=X(3), Neck=Z(-12)), 0),
+                    (72, _pose(L=(28, -12), LF=70, R=(28, -12), RF=70, Head=X(6), Neck=Z(10)), 0)]
+    if kind == "AttentionLoop":     # 军官站定：挺胸收腹、两臂贴身、下巴微抬（进祠堂站定后才开口）
+        return 72, [(0, _pose(Chest=X(-4), Head=X(-4), L=(0, 3), LF=4, R=(0, 3), RF=4), 0),
+                    (36, _pose(Chest=X(-5), Head=X(-3), L=(0, 3), LF=5, R=(0, 3), RF=5), 0),
+                    (72, _pose(Chest=X(-4), Head=X(-4), L=(0, 3), LF=4, R=(0, 3), RF=4), 0)]
+    if kind == "Beckon":            # 族老「跟我来」：右手抬到身侧往回招两下
+        return 40, [(0, _base(), 0),
+                    (10, _pose(R=(70, 30), RF=80, Head=Z(-15)), 0),
+                    (18, _pose(R=(75, 35), RF=20, Head=Z(-15)), 0),
+                    (26, _pose(R=(70, 30), RF=85, Head=Z(-15)), 0),
+                    (34, _pose(R=(75, 35), RF=20, Head=Z(-10)), 0),
+                    (40, _base(), 0)]
+    if kind == "IncenseBow":        # 王砚上香：双手捧香举到额前，三拜（结束回站姿）
+        hold = dict(L=(75, -15), LF=100, R=(75, -15), RF=100)
+        keys = [(0, _base(), 0), (12, _pose(**hold, Head=X(4)), 0)]
+        for i in range(3):
+            f = 18 + i * 22
+            keys += [(f + 8, _pose(**hold, Spine=X(30), Chest=X(10), Head=X(10)), 0), (f + 20, _pose(**hold, Head=X(4)), 0)]
+        keys += [(96, _base(), 0)]
+        return 96, keys
+    if kind == "KneelPray":         # 跪拜：双膝跪地、合手胸前、俯身，停在最后一帧
+        hands = dict(L=(55, -22), LF=95, R=(55, -22), RF=95)
+        return 48, [(0, _base(), 0),
+                    (16, _legs(_pose(Spine=X(6), **hands), 50, 90, -20), -0.25),
+                    (30, _legs(_pose(Spine=X(10), Chest=X(6), Head=X(8), **hands), 0, 90, 60), -0.43),
+                    (48, _legs(_pose(Spine=X(32), Chest=X(16), Head=X(14), **hands), 0, 90, 60), -0.45)]
+    if kind == "TouchFlag":         # 指尖触旗：半蹲、右手向前下方伸出，停住
+        return 40, [(0, _base(), 0),
+                    (18, _legs(_pose(Spine=X(25), Chest=X(10), Head=X(15), R=(60, 5), RF=25), 40, 70, -30), -0.18),
+                    (40, _legs(_pose(Spine=X(32), Chest=X(14), Head=X(20), R=(78, 5), RF=8), 45, 80, -35), -0.22)]
+    if kind == "DrawSword":         # 军官拔刀：右手横过身前到左胯握柄 → 拔出向前斜指，停住
+        return 36, [(0, _base(), 0),
+                    (12, _pose(Spine=Z(-10), R=(30, -38), RF=55, L=(10, 8), LF=30), 0),
+                    (22, _pose(Spine=Z(6), R=(100, 18), RF=25, L=(0, 3), LF=15), 0),
+                    (36, _pose(Spine=Z(4), Chest=X(-3), R=(85, 8), RF=5, L=(0, 3), LF=10), 0)]
+    if kind == "Push":              # 日本兵推搡：收手蓄力 → 前冲双手猛推 → 回收
+        return 30, [(0, _base(), 0),
+                    (8, _pose(Spine=X(-4), L=(40, 5), LF=100, R=(40, 5), RF=100), 0),
+                    (14, _legs(_legs(_pose(Spine=X(18), Chest=X(8), L=(90, -5), LF=5, R=(90, -5), RF=5), 35, 30, -10, "Left"),
+                               -20, 5, 10, "Right"), -0.04),
+                    (30, _pose(Spine=X(6), L=(30, 5), LF=40, R=(30, 5), RF=40), 0)]
+    if kind == "Fall":              # 小贩被推倒：后仰踉跄、双臂乱抓 → 坐倒在地、手撑身后，停住
+        return 36, [(0, _base(), 0),
+                    (8, _legs(_pose(Spine=X(-15), Head=X(-10), L=(60, 50), LF=30, R=(60, 50), RF=30), -15, 10, 0), 0),
+                    (20, _legs(_pose(Spine=X(-25), Chest=X(-10), Head=X(5), L=(-30, 25), LF=10, R=(-30, 25), RF=10), 60, 40, -10), -0.5),
+                    (36, _legs(_pose(Spine=X(-20), Chest=X(-6), Head=X(10), L=(-40, 20), LF=5, R=(-40, 20), RF=5), 85, 30, -20), -0.8)]
+    raise ValueError(kind)
+
+
+GESTURES = ("TalkLoop", "ArgueLoop", "CowerLoop", "WatchLoop", "AttentionLoop", "Beckon", "IncenseBow", "KneelPray",
+            "TouchFlag", "DrawSword", "Push", "Fall")
+
+
+def build_gesture(kind):
+    rig = build_character("CH_WangYan_1941")
+    scene = bpy.context.scene
+    scene.render.fps = 24
+    total, keys = gesture_keys(kind)
+    scene.frame_start, scene.frame_end = 0, total
+    bpy.context.view_layer.objects.active = rig
+    bpy.ops.object.mode_set(mode="POSE")
+    act = bpy.data.actions.new(kind)
+    rig.animation_data_create()
+    rig.animation_data.action = act
+    for f, P, up in keys:
+        key_pose(rig, f, P, up)
+    bpy.ops.object.mode_set(mode="OBJECT")
+
+
 # ---------------------------------------------------------------- 注册
 def recipes():
     R = {}
@@ -804,4 +1101,6 @@ def recipes():
     R["PROP_Staff_Elder"] = ("Props", build_staff)
     for k in ("Idle", "Walk", "Run"):
         R[f"CH_WangYan_1941@{k}"] = ("Characters", (lambda kk=k.lower(): build_anim(kk)))
+    for g in GESTURES:
+        R[f"CH_WangYan_1941@{g}"] = ("Characters", (lambda gg=g: build_gesture(gg)))
     return R

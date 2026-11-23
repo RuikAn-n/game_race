@@ -22,6 +22,10 @@ namespace Rupu.EditorTools
         // 1941 族亲（第一幕祠堂）：族老、三派、族中冷遇/亲善、孩童、少女
         public static readonly string[] ClanCast =
             { "NPC_ClanElder", "NPC_ClanJiao", "NPC_ClanShao", "NPC_ClanCang", "NPC_ClanUncle", "NPC_ClanGranny", "NPC_ClanBoy", "NPC_ClanGirl" };
+        // 1941 日军、小贩、街坊（第一幕街市）
+        public static readonly string[] StreetCast =
+            { "NPC_JpOfficer", "NPC_JpSoldier_A", "NPC_JpSoldier_B", "NPC_JpSoldier_C", "NPC_VendorVeg", "NPC_VendorGoods",
+              "NPC_TownOldMan", "NPC_TownWoman", "NPC_TownInjured", "NPC_TownRefugee" };
 
         public static string ModelPath(string asset)
         {
@@ -57,9 +61,26 @@ namespace Rupu.EditorTools
             tree.AddChild(walk, 1.8f);
             tree.AddChild(run, 5f);
             ac.layers[0].stateMachine.defaultState = state;
+            // 动作状态（无连线）：脚本里 Animator.CrossFadeInFixedTime("<动作名>") 进入，CrossFade("Locomotion") 回到走跑。
+            // 名字带 Loop 的循环播放；其余一次性动作播完停在最后一帧（跪下、倒地、拔刀指人）。
+            var sm = ac.layers[0].stateMachine;
+            int row = 0;
+            foreach (var g in Gestures)
+            {
+                var clip = Clip(g);
+                if (clip == null) { Debug.LogWarning($"[Chars] 缺少动作片段 {AnimBase}@{g}"); continue; }
+                var s = sm.AddState(g, new Vector3(300, 60 * row++, 0));
+                s.motion = clip;
+                s.writeDefaultValues = true;
+            }
             AssetDatabase.SaveAssets();
             return ac;
         }
+
+        /// <summary>第一幕动作（Tools/blender/rupu_char.py 的 GESTURES，同名状态）。</summary>
+        public static readonly string[] Gestures =
+            { "TalkLoop", "ArgueLoop", "CowerLoop", "WatchLoop", "AttentionLoop", "Beckon", "IncenseBow", "KneelPray",
+              "TouchFlag", "DrawSword", "Push", "Fall" };
 
         public static GameObject Instantiate(string asset, Transform parent, Vector3 pos, float rot, RuntimeAnimatorController ac)
         {
@@ -115,7 +136,7 @@ namespace Rupu.EditorTools
         public static bool CheckAvatars()
         {
             bool ok = true;
-            foreach (var a in Cast.Concat(ClanCast).Concat(new[] { AnimBase + "@Idle", AnimBase + "@Walk", AnimBase + "@Run" }))
+            foreach (var a in Cast.Concat(ClanCast).Concat(StreetCast).Concat(new[] { AnimBase + "@Idle", AnimBase + "@Walk", AnimBase + "@Run" }))
             {
                 var path = a.Contains("@") ? $"Assets/Art/Characters/{a}/{a}.fbx" : ModelPath(a);
                 var av = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Avatar>().FirstOrDefault();
@@ -141,16 +162,29 @@ namespace Rupu.EditorTools
 
         public static void LineupCLI()
         {
-            try { CheckAvatars(); Lineup(); ClanLineup(); EditorApplication.Exit(0); }
+            try { CheckAvatars(); Lineup(); ClanLineup(); StreetLineup(); GestureLineup(); EditorApplication.Exit(0); }
             catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
         }
 
         [MenuItem("入谱/人物/族亲合影截图 (Builds/screens)", priority = 62)]
         public static void ClanLineup() => LineupOf(ClanCast, "clan");
 
+        [MenuItem("入谱/人物/街市人物合影截图 (Builds/screens)", priority = 63)]
+        public static void StreetLineup() => LineupOf(StreetCast, "street");
+
+        /// <summary>12 个第一幕动作各取一帧（循环动作取中段，一次性动作取末帧），检查重定向到不同体型后是否正常。</summary>
+        [MenuItem("入谱/人物/第一幕动作截图 (Builds/screens)", priority = 64)]
+        public static void GestureLineup()
+        {
+            var who = new[] { "NPC_ClanElder", "NPC_ClanShao", "NPC_TownWoman", "NPC_TownOldMan", "NPC_JpOfficer", "NPC_ClanElder",
+                              "CH_WangYan_1941", "CH_WangYan_1941", "CH_WangYan_1941", "NPC_JpOfficer", "NPC_JpSoldier_B", "NPC_VendorVeg" };
+            var times = Gestures.Select(g => g.EndsWith("Loop") ? 0.3f : g == "IncenseBow" || g == "Beckon" ? 0.3f : 0.99f).ToArray();
+            LineupOf(who, "gestures", Gestures, times);
+        }
+
         public static void Lineup() => LineupOf(Cast, "chars");
 
-        static void LineupOf(string[] cast, string prefix)
+        static void LineupOf(string[] cast, string prefix, string[] clipNames = null, float[] clipTimes = null)
         {
             var ac = EnsureController();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -171,6 +205,7 @@ namespace Rupu.EditorTools
             var gos = new GameObject[cast.Length];
             for (int i = 0; i < cast.Length; i++)
                 gos[i] = Instantiate(cast[i], null, new Vector3((i - (cast.Length - 1) / 2f) * 1.1f, 0, 0), 180, ac);
+            float dist = Mathf.Max(9.5f, cast.Length * 1.15f);       // 人多时相机拉远
             // 道具：王沛的枪立在身旁，王秉之的拐、王叔杲的算盘
             void Prop(string a, Vector3 p, Vector3 e)
             {
@@ -185,7 +220,7 @@ namespace Rupu.EditorTools
                 Prop("PROP_Cane_Bingzhi", gos[5] ? gos[5].transform.position + new Vector3(-0.4f, 0, -0.15f) : Vector3.zero, new Vector3(0, 90, 0));
                 Prop("PROP_Abacus", gos[3] ? gos[3].transform.position + new Vector3(0, 0, -0.6f) : Vector3.zero, Vector3.zero);
             }
-            else
+            else if (prefix == "clan")
             {   // 族老的手杖
                 Prop("PROP_Staff_Elder", gos[0] ? gos[0].transform.position + new Vector3(-0.4f, 0, -0.12f) : Vector3.zero, Vector3.zero);
             }
@@ -208,11 +243,12 @@ namespace Rupu.EditorTools
                 File.WriteAllBytes(Path.Combine(outDir, name + ".png"), tex.EncodeToPNG());
                 RenderTexture.active = null;
             }
-            Shot(prefix + "_01_tpose", new Vector3(0, 1.3f, -9.5f), new Vector3(0, 0.95f, 0));
+            Shot(prefix + "_01_tpose", new Vector3(0, 1.3f, -dist), new Vector3(0, 0.95f, 0));
 
-            // 用 PlayableGraph 在编辑器里求值 Humanoid 片段（验证重定向到每个人物）：待机 / 走 / 跑 交替
-            var clips = new[] { Clip("Idle"), Clip("Walk"), Clip("Idle"), Clip("Walk"), Clip("Run"), Clip("Idle") };
-            float[] times = { 0.5f, 0.25f, 1.0f, 0.75f, 0.2f, 1.5f };
+            // 用 PlayableGraph 在编辑器里求值 Humanoid 片段（验证重定向到每个人物）：默认待机 / 走 / 跑 交替，或按 clipNames 逐个
+            var clips = clipNames != null ? clipNames.Select(Clip).ToArray()
+                                          : new[] { Clip("Idle"), Clip("Walk"), Clip("Idle"), Clip("Walk"), Clip("Run"), Clip("Idle") };
+            float[] times = { 0.5f, 0.25f, 1.0f, 0.75f, 0.2f, 1.5f };   // 秒；clipTimes 则为片段长度的比例
             var graphs = new System.Collections.Generic.List<UnityEngine.Playables.PlayableGraph>();
             for (int i = 0; i < gos.Length; i++)
             {
@@ -222,7 +258,7 @@ namespace Rupu.EditorTools
                 var output = UnityEngine.Animations.AnimationPlayableOutput.Create(g, "anim", an);
                 var cp = UnityEngine.Animations.AnimationClipPlayable.Create(g, clips[i % clips.Length]);
                 output.SetSourcePlayable(cp);
-                cp.SetTime(times[i % times.Length] * clips[i % clips.Length].length / Mathf.Max(clips[i % clips.Length].length, 0.01f));
+                cp.SetTime(clipTimes != null ? clipTimes[i % clipTimes.Length] * clips[i % clips.Length].length : times[i % times.Length]);
                 var ua = an.GetBoneTransform(HumanBodyBones.LeftUpperArm);
                 var before = ua ? ua.rotation.eulerAngles : Vector3.zero;
                 g.Evaluate();
@@ -240,7 +276,7 @@ namespace Rupu.EditorTools
                 }
                 graphs.Add(g);
             }
-            Shot(prefix + "_02_posed", new Vector3(0, 1.3f, -9.5f), new Vector3(0, 0.95f, 0));
+            Shot(prefix + "_02_posed", new Vector3(0, 1.3f, -dist), new Vector3(0, 0.95f, 0));
             Shot(prefix + "_03_posed_3q", new Vector3(5.5f, 2.2f, -6.5f), new Vector3(0, 0.9f, 0));
             foreach (var g in graphs) g.Destroy();
             cam.targetTexture = null;

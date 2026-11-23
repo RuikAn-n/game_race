@@ -47,6 +47,11 @@ namespace Rupu.EditorTools
                 string n = (c.name + " " + assetPath).ToLowerInvariant();
                 if (n.Contains("idle") || n.Contains("walk") || n.Contains("run") || n.Contains("loop"))
                     c.loopTime = true;
+                // 根运动全部烘进姿势（Original）：跪下/坐倒的髋高变化作用在身体上，动作不漂移、不自转。
+                // 角色位移一律由脚本移动 transform，不用根运动。
+                c.lockRootHeightY = true; c.keepOriginalPositionY = true;
+                c.lockRootRotation = true; c.keepOriginalOrientation = true;
+                c.lockRootPositionXZ = true; c.keepOriginalPositionXZ = true;
             }
             mi.clipAnimations = clips;
         }

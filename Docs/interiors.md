@@ -65,3 +65,8 @@
 - 明代 `BLD_MING_INT_*`：几何不动，换材质即可；牌位、沙盘、家具的明代版需要另做。
 - 1941 的积灰、香灰、烧痕贴花，沙盘的三套皮肤。
 - 贴图：目前全是纯色材质，UV 是 2 m 盒式投影。
+
+## 接入情况
+
+- `BLD_INT_AncestralHall` 已接入第一幕 `Act1_ROC`（替换 ROC 祖祠外壳，互动点/站位用 `ANCHOR_*`），见 [act1_assets.md](act1_assets.md)。`INT_Tablet_WangShiqing` 在第一幕里由 `PROP_Tablet_Father`（墨污态）替换。
+- `BLD_INT_HuanhaiLou` 第一幕不进楼，暂未接入；留给第二/三幕军议与战中指挥。

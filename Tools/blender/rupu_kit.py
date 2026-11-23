@@ -80,8 +80,10 @@ class MB:
 
     # ---------------- 变换
     @contextmanager
-    def at(self, x=0.0, y=0.0, z=0.0, rz=0.0):
-        m = self.stack[-1] @ Matrix.Translation((x, y, z)) @ Matrix.Rotation(math.radians(rz), 4, "Z")
+    def at(self, x=0.0, y=0.0, z=0.0, rz=0.0, rx=0.0, ry=0.0):
+        """局部变换：平移后依次绕 Z、Y、X 旋转（度）。rx/ry 默认 0，与旧调用一致。"""
+        m = (self.stack[-1] @ Matrix.Translation((x, y, z)) @ Matrix.Rotation(math.radians(rz), 4, "Z")
+             @ Matrix.Rotation(math.radians(ry), 4, "Y") @ Matrix.Rotation(math.radians(rx), 4, "X"))
         self.stack.append(m)
         try:
             yield

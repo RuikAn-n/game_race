@@ -65,3 +65,61 @@ NPC_ClanGirl,Characters,Assets/Art/Characters/NPC_ClanGirl/NPC_ClanGirl.fbx,,,,�
 PROP_Staff_Elder,Props,Assets/Art/Props/PROP_Staff_Elder/PROP_Staff_Elder.fbx,,,,族老手杖 1.28 m，原点=杖底,白模（程序化）,B
 BLD_INT_AncestralHall,Buildings,Assets/Art/Buildings/BLD_INT_AncestralHall/BLD_INT_AncestralHall.fbx,,,,祠堂内景 20x36 与 BLD_ROC_AncestralHall 同占地；ROOF_* 俯视隐藏；COL_* 碰撞；ANCHOR_* 互动/站位/镜头；详见 Docs/interiors.md,白模（程序化）,B
 BLD_INT_HuanhaiLou,Buildings,Assets/Art/Buildings/BLD_INT_HuanhaiLou/BLD_INT_HuanhaiLou.fbx,,,,环海楼内景 20x8.8 两层+城门洞；ROOF_*/INT_Upper*/INT_Floor2 可逐层隐藏；ANCHOR_*；详见 Docs/interiors.md,白模（程序化）,B
+NPC_JpOfficer,Characters,Assets/Art/Characters/NPC_JpOfficer/NPC_JpOfficer.fbx,,,,日本军官（1941，CHR_JapaneseOfficer）；祠堂索谱 + 街市盘问各一；军刀 PROP_JpSword 拔刀时挂右手,白模（程序化）,B
+NPC_JpSoldier_A,Characters,Assets/Art/Characters/NPC_JpSoldier_A/NPC_JpSoldier_A.fbx,,,,日本兵·步枪兵（CHR_JapaneseSoldier 变体 1）；祠堂随从 / 砸门 / 哨兵,白模（程序化）,B
+NPC_JpSoldier_B,Characters,Assets/Art/Characters/NPC_JpSoldier_B/NPC_JpSoldier_B.fbx,,,,日本兵·搜捕兵（变体 2）；祠堂随从 / 街市欺压小贩,白模（程序化）,B
+NPC_JpSoldier_C,Characters,Assets/Art/Characters/NPC_JpSoldier_C/NPC_JpSoldier_C.fbx,,,,日本兵·巡逻兵（变体 3）；主街巡逻（Act1Patrol）,白模（程序化）,B
+NPC_VendorVeg,Characters,Assets/Art/Characters/NPC_VendorVeg/NPC_VendorVeg.fbx,,,,小贩·菜贩（CHR_Vendor 变体 1）；主街被推倒,白模（程序化）,B
+NPC_VendorGoods,Characters,Assets/Art/Characters/NPC_VendorGoods/NPC_VendorGoods.fbx,,,,小贩·杂货摊主（CHR_Vendor 变体 2）；横街东杂货摊,白模（程序化）,B
+NPC_TownOldMan,Characters,Assets/Art/Characters/NPC_TownOldMan/NPC_TownOldMan.fbx,,,,街坊·老汉（CHR_Townsperson 老）；主街围观,白模（程序化）,B
+NPC_TownWoman,Characters,Assets/Art/Characters/NPC_TownWoman/NPC_TownWoman.fbx,,,,街坊·妇女（CHR_Townsperson 女）；主街围观 / 火场躲闪,白模（程序化）,B
+NPC_TownInjured,Characters,Assets/Art/Characters/NPC_TownInjured/NPC_TownInjured.fbx,,,,街坊·伤者（CHR_Townsperson 伤）；砸门旁观,白模（程序化）,B
+NPC_TownRefugee,Characters,Assets/Art/Characters/NPC_TownRefugee/NPC_TownRefugee.fbx,,,,街坊·逃难者（CHR_Townsperson 逃难）；砸门旁观 / 校场废墟,白模（程序化）,B
+CH_WangYan_1941@TalkLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@TalkLoop/CH_WangYan_1941@TalkLoop.fbx,,共用 Humanoid 动作 说话（循环）：族老/三派/军官/族亲，Act1Director 换句时自动切（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@ArgueLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@ArgueLoop/CH_WangYan_1941@ArgueLoop.fbx,,共用 Humanoid 动作 争吵（循环）：春祭三派争执（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@CowerLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@CowerLoop/CH_WangYan_1941@CowerLoop.fbx,,共用 Humanoid 动作 躲闪（循环）：街坊/小贩（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@WatchLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@WatchLoop/CH_WangYan_1941@WatchLoop.fbx,,共用 Humanoid 动作 围观（循环）：街坊（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@AttentionLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@AttentionLoop/CH_WangYan_1941@AttentionLoop.fbx,,共用 Humanoid 动作 立正（循环）：军官/士兵站定（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@Beckon,Characters,,,Assets/Art/Characters/CH_WangYan_1941@Beckon/CH_WangYan_1941@Beckon.fbx,,共用 Humanoid 动作 招手：族老「跟我来」（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@IncenseBow,Characters,,,Assets/Art/Characters/CH_WangYan_1941@IncenseBow/CH_WangYan_1941@IncenseBow.fbx,,共用 Humanoid 动作 上香三拜：王砚祭父（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@KneelPray,Characters,,,Assets/Art/Characters/CH_WangYan_1941@KneelPray/CH_WangYan_1941@KneelPray.fbx,,共用 Humanoid 动作 跪拜（停在末帧）（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@TouchFlag,Characters,,,Assets/Art/Characters/CH_WangYan_1941@TouchFlag/CH_WangYan_1941@TouchFlag.fbx,,共用 Humanoid 动作 指尖触旗（停在末帧）：残旗入谱（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@DrawSword,Characters,,,Assets/Art/Characters/CH_WangYan_1941@DrawSword/CH_WangYan_1941@DrawSword.fbx,,共用 Humanoid 动作 拔刀指人（停在末帧）：街市军官（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@Push,Characters,,,Assets/Art/Characters/CH_WangYan_1941@Push/CH_WangYan_1941@Push.fbx,,共用 Humanoid 动作 推搡：日本兵欺压小贩/踹门（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+CH_WangYan_1941@Fall,Characters,,,Assets/Art/Characters/CH_WangYan_1941@Fall/CH_WangYan_1941@Fall.fbx,,共用 Humanoid 动作 被推倒坐地（停在末帧）：小贩（AC_Humanoid_Locomotion 同名状态）,白模（程序化）,B
+PROP_Genealogy,Props,Assets/Art/Props/PROP_Genealogy/PROP_Genealogy.fbx,,,,族谱套件：半本谱合/开、谱匣+盖、三张散页、拼合页、父名墨污（子物体按名切换）,白模（程序化）,B
+PROP_JapanesePlane,Props,Assets/Art/Props/PROP_JapanesePlane/PROP_JapanesePlane.fbx,,,,日机：单发低单翼、红日徽、Propeller 子物体旋转、FX_Trail 尾迹挂点,白模（程序化）,B
+PROP_FallenFlag,Props,Assets/Art/Props/PROP_FallenFlag/PROP_FallenFlag.fbx,,,,残旗：三级石阶+旗座+6 m 旗杆倒地+破旗旧血；Pole 枢轴在旗座,白模（程序化）,B
+PROP_IncenseSet,Props,Assets/Art/Props/PROP_IncenseSet/PROP_IncenseSet.fbx,,,,香案套件：铜炉+香灰+三炷香、一对烛台、供果、酒盅；FX_ 挂点,白模（程序化）,B
+PROP_Camera_1941,Props,Assets/Art/Props/PROP_Camera_1941/PROP_Camera_1941.fbx,,,,王砚折叠相机 + 皮套,白模（程序化）,B
+PROP_JpRifle,Props,Assets/Art/Props/PROP_JpRifle/PROP_JpRifle.fbx,,,,三八式步枪（原点=枪托底）+ 刺刀 Bayonet 子物体,白模（程序化）,B
+PROP_JpSword,Props,Assets/Art/Props/PROP_JpSword/PROP_JpSword.fbx,,,,九八式军刀：Sword / Scabbard 分开（拔刀）,白模（程序化）,B
+PROP_JpAmmoBox,Props,Assets/Art/Props/PROP_JpAmmoBox/PROP_JpAmmoBox.fbx,,,,弹药箱,白模（程序化）,B
+PROP_VendorGoods,Props,Assets/Art/Props/PROP_VendorGoods/PROP_VendorGoods.fbx,,,,摊货：扁担菜筐、鱼、米袋、陶罐、杆秤（子物体）,白模（程序化）,B
+PROP_Banner_Shrine,Props,Assets/Art/Props/PROP_Banner_Shrine/PROP_Banner_Shrine.fbx,,,,祠堂幡,白模（程序化）,B
+PROP_Banner_Street,Props,Assets/Art/Props/PROP_Banner_Street/PROP_Banner_Street.fbx,,,,街市横幅,白模（程序化）,B
+PROP_Flag_Japan,Props,Assets/Art/Props/PROP_Flag_Japan/PROP_Flag_Japan.fbx,,,,日军旗（哨卡）,白模（程序化）,B
+PROP_Door_Loot,Props,Assets/Art/Props/PROP_Door_Loot/PROP_Door_Loot.fbx,,,,砸门抢箱：Door_L/Door_R（枢轴在门轴）+ Chest/Chest_Lid,白模（程序化）,B
+PROP_Tablet_Father,Props,Assets/Art/Props/PROP_Tablet_Father/PROP_Tablet_Father.fbx,,,,父亲王世清牌位：Name（未涂黑）/ Ink（墨污）两态,白模（程序化）,B
+PROP_FatherPhoto,Props,Assets/Art/Props/PROP_FatherPhoto/PROP_FatherPhoto.fbx,Assets/Art/Props/PROP_FatherPhoto/T_FatherPhoto_D.png,,,父亲照片（CHR_Father_2D）：渲染贴图 T_FatherPhoto_D.png + 相框,白模（程序化）,B
+PROP_NoticeWall,Props,Assets/Art/Props/PROP_NoticeWall/PROP_NoticeWall.fbx,,,,告示墙,白模（程序化）,B
+PROP_Postbox,Props,Assets/Art/Props/PROP_Postbox/PROP_Postbox.fbx,,,,邮筒,白模（程序化）,B
+PROP_StreetLamp,Props,Assets/Art/Props/PROP_StreetLamp/PROP_StreetLamp.fbx,,,,路灯（FX_Lamp）,白模（程序化）,B
+PROP_Bollards,Props,Assets/Art/Props/PROP_Bollards/PROP_Bollards.fbx,,,,石墩一对,白模（程序化）,B
+PROP_BambooBaskets,Props,Assets/Art/Props/PROP_BambooBaskets/PROP_BambooBaskets.fbx,,,,竹筐堆,白模（程序化）,B
+ENV_Fire_Shop,Environments,Assets/Art/Environments/ENV_Fire_Shop/ENV_Fire_Shop.fbx,,,,燃烧铺面：State_Burning / State_Burnt 两态 + 门前焦木；FX_Fire_1..3 / FX_Smoke,白模（程序化）,B
+ENV_Ruin_A,Environments,Assets/Art/Environments/ENV_Ruin_A/ENV_Ruin_A.fbx,,,,被炸铺面·断墙转角+瓦砾,白模（程序化）,B
+ENV_Ruin_B,Environments,Assets/Art/Environments/ENV_Ruin_B/ENV_Ruin_B.fbx,,,,被炸铺面·屋顶塌落,白模（程序化）,B
+ENV_Ruin_C,Environments,Assets/Art/Environments/ENV_Ruin_C/ENV_Ruin_C.fbx,,,,弹坑+碎石,白模（程序化）,B
+ENV_VendorStall_Veg,Environments,Assets/Art/Environments/ENV_VendorStall_Veg/ENV_VendorStall_Veg.fbx,,,,菜摊,白模（程序化）,B
+ENV_VendorStall_Snack,Environments,Assets/Art/Environments/ENV_VendorStall_Snack/ENV_VendorStall_Snack.fbx,,,,小吃摊（FX_StoveSmoke）,白模（程序化）,B
+ENV_VendorStall_Goods,Environments,Assets/Art/Environments/ENV_VendorStall_Goods/ENV_VendorStall_Goods.fbx,,,,杂货摊,白模（程序化）,B
+ENV_Checkpoint_Props,Environments,Assets/Art/Environments/ENV_Checkpoint_Props/ENV_Checkpoint_Props.fbx,,,,哨卡道具：沙袋墙、两架拒马、可抬横杆,白模（程序化）,B
+PF_VFX_Rain,VFX,Assets/Art/VFX/PF_VFX_Rain.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,雨（挂相机，碰屋顶消失）（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_IncenseSmoke,VFX,Assets/Art/VFX/PF_VFX_IncenseSmoke.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,香火烟（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_Candle,VFX,Assets/Art/VFX/PF_VFX_Candle.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,烛火+点光（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_PaperAsh,VFX,Assets/Art/VFX/PF_VFX_PaperAsh.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,纸灰（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_Fire,VFX,Assets/Art/VFX/PF_VFX_Fire.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,火焰+火星+烟+火光（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_FireSmoke,VFX,Assets/Art/VFX/PF_VFX_FireSmoke.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,黑烟柱（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_PlaneTrail,VFX,Assets/Art/VFX/PF_VFX_PlaneTrail.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,飞机尾迹（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+PF_VFX_PropellerDisc,VFX,Assets/Art/VFX/PF_VFX_PropellerDisc.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,螺旋桨虚影（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
