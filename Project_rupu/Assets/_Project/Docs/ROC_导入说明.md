@@ -6,7 +6,7 @@
 - 分支：`main`
 - 提交：`7bf5cd1b0c05e87e2823a639c5822f97f90ba2ad`
 - 仓库公开，本次导入**未使用任何账号登录**，也不需要凭证。
-- 地图数据已复制到工程父目录 `D:\太平日月\Data\map\`，这是 `RupuMapBuilder` 的固定路径。
+- 地图数据读取仓库根目录的 `Data/map/`（`RupuMapBuilder` 用 `Application.dataPath` 向上两级推算，与盘符无关）。
 
 ## 已导入
 
