@@ -13,6 +13,8 @@
 
 人物与清单 ID 对应：CH_WangYan_1941=CHR_WangYan_1941、CH_WangYan_1560=CHR_WangYan_1560、
 NPC_WangPei=CHR_WangPei、NPC_WangShugao=CHR_WangShugao、NPC_WangDe=CHR_WangDe、NPC_WangBingzhi=CHR_WangBingzhi。
+1941 族亲：NPC_ClanElder=CHR_Elder、NPC_ClanJiao=CHR_Jiao、NPC_ClanShao=CHR_Shao、NPC_ClanCang=CHR_Cang；
+NPC_ClanUncle / NPC_ClanGranny / NPC_ClanBoy / NPC_ClanGirl = CHR_Townsperson 的男/老/少/女变体（族中冷遇、亲善、孩童、少女）。
 """
 import math
 
@@ -41,6 +43,24 @@ CHAR_PALETTE = {
     "M_CH_WD_Coat": "#3e4a57", "M_CH_WD_Pants": "#4a4438", "M_CH_WD_Sash": "#8A5A3B", "M_CH_Scabbard": "#3a2a1c",
     # 王秉之
     "M_CH_WB_Robe": "#4e3b2c", "M_CH_WB_Cap": "#1a1a1a", "M_CH_WB_Shoe": "#222222",
+    # 1941 族亲（第一幕祠堂）
+    "M_CH_EL_Robe": "#3a2f27", "M_CH_EL_Magua": "#1f1d1b", "M_CH_EL_Shoe": "#1a1a1a", "M_CH_Beads": "#5a2a22",
+    "M_CH_JP_Robe": "#4a5560", "M_CH_JP_Sash": "#2a2c2e", "M_CH_Ledger": "#7a6a4a", "M_CH_Glasses": "#1a1614",
+    "M_CH_SP_Coat": "#2f3236", "M_CH_SP_Pants": "#3d3b36", "M_CH_SP_Sash": "#6e3b32", "M_CH_Torch": "#9a5238",
+    "M_CH_CP_Ao": "#34423d", "M_CH_CP_Skirt": "#262629", "M_CH_CP_Bundle": "#5e6b5a", "M_CH_ClothShoe": "#2a2724",
+    "M_CH_UC_Coat": "#5a5a50", "M_CH_UC_Pants": "#33312d", "M_CH_UC_Hat": "#3a332b",
+    "M_CH_GM_Ao": "#3e4a57", "M_CH_GM_Skirt": "#2b2a28", "M_CH_GM_Band": "#1e1e1e",
+    "M_CH_BY_Coat": "#8a7a5a", "M_CH_BY_Pants": "#4a4438",
+    "M_CH_GL_Ao": "#7a4a40", "M_CH_GL_Pants": "#3a3f44", "M_CH_GL_Ribbon": "#8a3a30",
+    # 1941 族亲（第一幕祠堂）
+    "M_CH_EL_Robe": "#3a2f27", "M_CH_EL_Magua": "#1f1d1b", "M_CH_EL_Shoe": "#1a1a1a", "M_CH_Beads": "#5a2a22",
+    "M_CH_JP_Robe": "#4a5560", "M_CH_JP_Sash": "#2a2c2e", "M_CH_Ledger": "#7a6a4a", "M_CH_Glasses": "#1a1614",
+    "M_CH_SP_Coat": "#2f3236", "M_CH_SP_Pants": "#3d3b36", "M_CH_SP_Sash": "#6e3b32", "M_CH_Torch": "#9a5238",
+    "M_CH_CP_Ao": "#34423d", "M_CH_CP_Skirt": "#262629", "M_CH_CP_Bundle": "#5e6b5a", "M_CH_ClothShoe": "#2a2724",
+    "M_CH_UC_Coat": "#5a5a50", "M_CH_UC_Pants": "#33312d", "M_CH_UC_Hat": "#3a332b",
+    "M_CH_GM_Ao": "#3e4a57", "M_CH_GM_Skirt": "#2b2a28", "M_CH_GM_Band": "#1e1e1e",
+    "M_CH_BY_Coat": "#8a7a5a", "M_CH_BY_Pants": "#4a4438",
+    "M_CH_GL_Ao": "#7a4a40", "M_CH_GL_Pants": "#3a3f44", "M_CH_GL_Ribbon": "#8a3a30",
     # 道具
     "M_PR_Wood": "#6b5039", "M_PR_WoodDark": "#3e2f24", "M_PR_Iron": "#5a5d5e", "M_PR_Tassel": "#9a4a3a",
     "M_PR_Bead": "#2b211a",
@@ -311,18 +331,21 @@ def build_body(S, J, H, c):
     outfit = c["outfit"]
     bulk = c.get("bulk", 1.0)
 
-    # 头
-    hc = J["head"] + Vector((0, -0.004 * h, 0.064 * h))
-    rx, ry, rz = 0.05 * h, 0.058 * h, 0.066 * h
+    # 头（head>1：孩童的大头比例）
+    hs = c.get("head", 1.0)
+    hc = J["head"] + Vector((0, -0.004 * h, 0.064 * h * hs))
+    rx, ry, rz = 0.05 * h * hs, 0.058 * h * hs, 0.066 * h * hs
     S.add(*ellipsoid(hc, rx, ry, rz, seg=10, rings=6), skin, W("Head"))
     fy = hc.y - ry * 0.93
+    fh = h * hs     # 五官按头的大小缩放
+    tilt = c.get("brow_tilt", 0.0)     # >0 皱眉（内端压低），<0 眉梢下垂（和善）
     for sx in (-1, 1):
-        S.add(*box((hc.x + sx * 0.019 * h, fy, hc.z + 0.006 * h), (0.012 * h, 0.006 * h, 0.006 * h)), "M_CH_Eye", W("Head"))
-        S.add(*box((hc.x + sx * 0.019 * h, fy + 0.002 * h, hc.z + 0.018 * h), (0.017 * h, 0.006 * h, 0.003 * h)),
-              c.get("brow", "M_CH_Hair"), W("Head"))
-        S.add(*box((hc.x + sx * rx * 0.98, hc.y + 0.004 * h, hc.z), (0.008 * h, 0.018 * h, 0.022 * h)), skin, W("Head"))
-    S.add(*box((hc.x, fy - 0.004 * h, hc.z - 0.008 * h), (0.010 * h, 0.012 * h, 0.018 * h)), skin, W("Head"))
-    S.add(*box((hc.x, fy + 0.003 * h, hc.z - 0.03 * h), (0.018 * h, 0.004 * h, 0.003 * h)), "M_CH_Eye", W("Head"))
+        S.add(*box((hc.x + sx * 0.019 * fh, fy, hc.z + 0.006 * fh), (0.012 * fh, 0.006 * fh, 0.006 * fh)), "M_CH_Eye", W("Head"))
+        S.add(*box((hc.x + sx * 0.019 * fh, fy + 0.002 * fh, hc.z + 0.018 * fh), (0.017 * fh, 0.006 * fh, 0.003 * fh),
+                   rot=_eu(0, -sx * tilt, 0)), c.get("brow", "M_CH_Hair"), W("Head"))
+        S.add(*box((hc.x + sx * rx * 0.98, hc.y + 0.004 * fh, hc.z), (0.008 * fh, 0.018 * fh, 0.022 * fh)), skin, W("Head"))
+    S.add(*box((hc.x, fy - 0.004 * fh, hc.z - 0.008 * fh), (0.010 * fh, 0.012 * fh, 0.018 * fh)), skin, W("Head"))
+    S.add(*box((hc.x, fy + 0.003 * fh, hc.z - 0.03 * fh), (0.018 * fh, 0.004 * fh, 0.003 * fh)), "M_CH_Eye", W("Head"))
     # 脖子
     S.add(*tube(J["neck"] + Vector((0, 0, -0.01 * h)), J["head"] + Vector((0, 0, 0.02 * h)), 0.024 * h, 0.022 * h), skin, W("Neck"))
 
@@ -369,11 +392,14 @@ def build_body(S, J, H, c):
     # 下摆
     if outfit == "robe":
         zr = 0.505 * h
-        rr = [(Vector((0, 0, zr)), 0.095 * h, 0.066 * h), (Vector((0, 0.002 * h, 0.40 * h)), 0.108 * h, 0.075 * h),
-              (Vector((0, 0.004 * h, 0.24 * h)), 0.12 * h, 0.083 * h), (Vector((0, 0.006 * h, c.get("hem", 0.075) * h)), 0.128 * h, 0.088 * h)]
-        S.add(*rings_mesh(rr, seg=12, cap0=False, cap1=False), top, skirt_weight(J, zr))
+        fl = c.get("flare", 1.0)       # 裙摆外张
+        rr = [(Vector((0, 0, zr)), 0.095 * h * bulk, 0.066 * h * bulk), (Vector((0, 0.002 * h, 0.40 * h)), 0.108 * h * fl, 0.075 * h * fl),
+              (Vector((0, 0.004 * h, 0.24 * h)), 0.12 * h * fl, 0.083 * h * fl),
+              (Vector((0, 0.006 * h, c.get("hem", 0.075) * h)), 0.128 * h * fl, 0.088 * h * fl)]
+        S.add(*rings_mesh(rr, seg=12, cap0=False, cap1=False), c.get("skirt", top), skirt_weight(J, zr))
         # 长衫右衽开襟线
-        S.add(*box((0.035 * h, -0.066 * h, 0.66 * h), (0.006 * h, 0.004 * h, 0.2 * h), rot=_rz(0.0)), c.get("trim", "M_CH_Eye"), torso_weight(J))
+        S.add(*box((0.035 * h, spine_y(J, 0.66 * h) - 0.066 * h * bulk, 0.66 * h), (0.006 * h, 0.004 * h, 0.2 * h), rot=_rz(0.0)),
+              c.get("trim", "M_CH_Eye"), torso_weight(J))
     else:
         zr = zb + 0.01 * h
         rr = [(Vector((0, 0, zr)), 0.094 * h * bulk, 0.066 * h * bulk), (Vector((0, 0, 0.42 * h)), 0.105 * h * bulk, 0.074 * h * bulk)]
@@ -412,6 +438,37 @@ def hair_bun(S, hc, r, mat, h, band=None):
                           seg=10), band, W("Head"))
 
 
+def hair_back_bun(S, hc, r, mat, h, band=None):
+    """妇人：脑后低髻（可加抹额）。"""
+    hair_short(S, hc, r, mat, h)
+    rx, ry, rz = r
+    S.add(*ellipsoid(hc + Vector((0, ry * 0.95, -rz * 0.15)), 0.034 * h, 0.026 * h, 0.03 * h, seg=8, rings=4), mat, W("Head"))
+    if band:
+        S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, rz * 0.32)), rx * 1.1, ry * 1.08),
+                           (hc + Vector((0, 0.004 * h, rz * 0.5)), rx * 1.08, ry * 1.06)], seg=10), band, W("Head"))
+
+
+def hair_braid(S, J, hc, r, mat, h, ribbon=None):
+    """少女：短发 + 脑后一根长辫（辫梢跟胸）。"""
+    hair_short(S, hc, r, mat, h)
+    rx, ry, rz = r
+    top = hc + Vector((0, ry * 0.9, -rz * 0.4))
+    bot = Vector((0, J["chest"].y + 0.075 * h, J["chest"].z - 0.02 * h))
+    S.add(*tube(top, bot, 0.018 * h, 0.012 * h, seg=6), mat,
+          lambda p: {"Head": 0.6, "Chest": 0.4} if p.z > J["neck"].z else W("Chest"))
+    if ribbon:
+        S.add(*box(bot + Vector((0, 0.002 * h, 0.01 * h)), (0.03 * h, 0.012 * h, 0.022 * h)), ribbon, W("Chest"))
+
+
+def brim_hat(S, hc, r, mat, h):
+    """毡帽：圆顶 + 一圈帽檐。"""
+    rx, ry, rz = r
+    S.add(*ellipsoid(hc + Vector((0, 0.004 * h, rz * 0.35)), rx * 1.05, ry * 1.03, rz * 0.8, seg=10, rings=4, zmin=0.0),
+          mat, W("Head"))
+    S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, rz * 0.33)), rx * 1.75, ry * 1.6),
+                       (hc + Vector((0, 0.004 * h, rz * 0.37)), rx * 1.75, ry * 1.6)], seg=12), mat, W("Head"))
+
+
 # ---------------------------------------------------------------- 角色配置
 CAST = {
     "CH_WangYan_1941": dict(H=1.75, outfit="robe", top="M_CH_WY41_Robe", pants="M_CH_WY41_Pants", shoe="M_CH_WY41_Shoe",
@@ -432,6 +489,37 @@ CAST = {
     "NPC_WangBingzhi": dict(H=1.70, outfit="robe", top="M_CH_WB_Robe", pants="M_CH_WB_Robe", shoe="M_CH_WB_Shoe",
                             skin="M_CH_Skin_Old", hair="melon_cap", brow="M_CH_Hair_White", beard="long_white", hunch=1.0,
                             bulk=0.92, desc="王秉之 1941：60+，瘦、背微驼，深褐长袍、瓜皮帽、白须（木拐另为道具）"),
+    # ---- 1941 族亲（第一幕祠堂：族老、三派、族亲冷遇/亲善、老少群众） ----
+    "NPC_ClanElder": dict(H=1.68, outfit="robe", top="M_CH_EL_Robe", pants="M_CH_EL_Robe", shoe="M_CH_EL_Shoe",
+                          skin="M_CH_Skin_Old", hair="short", hair_mat="M_CH_Hair_Grey", brow="M_CH_Hair_Grey",
+                          beard="short_grey", hunch=0.35, bulk=0.95, extras=["magua", "beads"],
+                          desc="族老 1941：65 岁，黑褐长衫外罩黑马褂、念珠、灰短发短须；不戴帽、背只微弯，与王秉之区分（手杖另为道具）"),
+    "NPC_ClanJiao": dict(H=1.70, outfit="robe", top="M_CH_JP_Robe", pants="M_CH_JP_Robe", shoe="M_CH_EL_Shoe",
+                         sash="M_CH_JP_Sash", hair="short", hair_mat="M_CH_Hair_Grey", beard="goatee", bulk=1.1,
+                         extras=["glasses", "ledger"],
+                         desc="交谱派族老 1941：55 岁，微胖圆滑，石青长衫、圆眼镜、山羊须，腰间夹账本"),
+    "NPC_ClanShao": dict(H=1.76, outfit="jacket", top="M_CH_SP_Coat", pants="M_CH_SP_Pants", shoe="M_CH_ClothShoe",
+                         sash="M_CH_SP_Sash", wrap="M_CH_Wrap", hair="short", brow_tilt=16, bulk=1.02, cuff=1.2,
+                         extras=["torch"],
+                         desc="烧谱派青年 1941：22 岁，黑短打、褪红腰带、绑腿，皱眉，背后腰带斜插一支未点的火把"),
+    "NPC_ClanCang": dict(H=1.58, outfit="robe", top="M_CH_CP_Ao", skirt="M_CH_CP_Skirt", pants="M_CH_CP_Skirt",
+                         shoe="M_CH_ClothShoe", hair="back_bun", hem=0.03, flare=1.05, bulk=0.9, trim="M_CH_CP_Skirt",
+                         extras=["ao_hem", "bundle"],
+                         desc="藏谱派妇人 1941：42 岁，深青灰袄 + 黑长裙、脑后低髻，斜背灰绿包袱（藏谱用）"),
+    "NPC_ClanUncle": dict(H=1.72, outfit="jacket", top="M_CH_UC_Coat", pants="M_CH_UC_Pants", shoe="M_CH_ClothShoe",
+                          sash="M_CH_UC_Pants", hair="brim_hat", hair_mat="M_CH_UC_Hat", brow_tilt=14, bulk=1.04,
+                          desc="族叔（族中冷遇）1941：45 岁，灰短褂黑裤、旧毡帽、皱眉——「你爹投了日本人，你还有脸回来？」"),
+    "NPC_ClanGranny": dict(H=1.55, outfit="robe", top="M_CH_GM_Ao", skirt="M_CH_GM_Skirt", pants="M_CH_GM_Skirt",
+                           shoe="M_CH_ClothShoe", skin="M_CH_Skin_Old", hair="back_bun", hair_mat="M_CH_Hair_White",
+                           band="M_CH_GM_Band", brow="M_CH_Hair_White", brow_tilt=-12, hunch=0.7, bulk=0.9, hem=0.03,
+                           trim="M_CH_GM_Skirt", extras=["ao_hem"],
+                           desc="族婶婆（族中亲善）1941：68 岁，靛蓝袄黑裙、白发低髻、黑抹额、背驼——「孩子刚回来，先让他给他爹上炷香」"),
+    "NPC_ClanBoy": dict(H=1.18, head=1.3, outfit="jacket", top="M_CH_BY_Coat", pants="M_CH_BY_Pants", shoe="M_CH_ClothShoe",
+                        hair="short", bulk=0.95, cuff=1.15,
+                        desc="族中孩童 1941：8 岁男孩，褪黄短褂、短发、大头比例；跟在族婶婆身边"),
+    "NPC_ClanGirl": dict(H=1.50, head=1.12, outfit="jacket", top="M_CH_GL_Ao", pants="M_CH_GL_Pants", shoe="M_CH_ClothShoe",
+                         hair="braid", ribbon="M_CH_GL_Ribbon", bulk=0.88, brow_tilt=-6,
+                         desc="族中少女 1941：14 岁，旧红袄蓝裤、一根长辫系红头绳；跟着藏谱派妇人（母女）"),
 }
 
 
@@ -454,6 +542,13 @@ def build_character(name):
         S.add(*box(hc + Vector((0, 0.004 * h, r[2] * 0.75)), (r[0] * 2.05, r[1] * 2.0, 0.05 * h)), "M_CH_WS_Cap", W("Head"))
         S.add(*box(hc + Vector((0, 0.01 * h, r[2] * 0.75 + 0.035 * h)), (r[0] * 2.2, r[1] * 1.8, 0.03 * h)), "M_CH_WS_Cap", W("Head"))
         S.add(*box(hc + Vector((0, r[1] * 1.05, r[2] * 0.3)), (0.04 * h, 0.006 * h, 0.07 * h)), "M_CH_WS_Cap", W("Head"))
+    elif hair == "back_bun":
+        hair_back_bun(S, hc, r, hm, h, c.get("band"))
+    elif hair == "braid":
+        hair_braid(S, J, hc, r, hm, h, c.get("ribbon"))
+    elif hair == "brim_hat":
+        hair_short(S, hc, r, "M_CH_Hair", h)
+        brim_hat(S, hc, r, hm, h)
     elif hair == "melon_cap":       # 瓜皮帽
         S.add(*ellipsoid(hc + Vector((0, 0.004 * h, 0.014 * h)), r[0] * 1.08, r[1] * 1.06, r[2] * 0.95, seg=10, rings=4, zmin=0.05),
               "M_CH_WB_Cap", W("Head"))
@@ -494,6 +589,58 @@ def build_character(name):
             S.add(*box((0.1 * h, -0.02 * h, 0.53 * h), (0.016 * h, 0.016 * h, 0.05 * h)), "M_PR_WoodDark", hipsW)
         elif e == "tag":
             S.add(*box((-0.075 * h, -0.07 * h, 0.455 * h), (0.025 * h, 0.006 * h, 0.04 * h)), "M_CH_Tag", hipsW)
+        elif e == "magua":      # 马褂：罩在长衫外的短褂，到胯，袖到肘
+            bk = c.get("bulk", 1.0) * 1.07
+            rings = []
+            for z, rxx, ryy in ((0.45 * h, 0.104, 0.074), (0.56 * h, 0.092, 0.066), (0.64 * h, 0.098, 0.068),
+                                (0.72 * h, 0.11, 0.07), (J["chest_t"].z - 0.002 * h, 0.117, 0.064)):
+                rings.append((Vector((0, spine_y(J, z), z)), rxx * h * bk, ryy * h * bk))
+            S.add(*rings_mesh(rings, seg=10, cap0=False), "M_CH_EL_Magua", tw)
+            for s_, side in (("L", "Left"), ("R", "Right")):
+                sg = 1 if s_ == "L" else -1
+                S.add(*tube(J["arm" + s_] + Vector((sg * 0.01 * h, 0, 0)), J["elbow" + s_], 0.039 * h * bk, 0.034 * h * bk),
+                      "M_CH_EL_Magua", W(side + "UpperArm"))
+            for k in range(4):      # 对襟盘扣
+                z = 0.5 * h + k * 0.07 * h
+                S.add(*box((0, spine_y(J, z) - 0.073 * h * bk, z), (0.016 * h, 0.006 * h, 0.008 * h)), "M_CH_Tag", tw)
+        elif e == "beads":      # 念珠：挂在胸前的一圈珠子
+            nc = J["chest_t"]
+            for k in range(14):
+                a = math.pi * (0.15 + 0.7 * k / 13)
+                p = Vector((0.07 * h * math.cos(a), nc.y - 0.06 * h * math.sin(a) - 0.012 * h, nc.z - 0.11 * h * math.sin(a)))
+                S.add(*box(p, (0.013 * h, 0.013 * h, 0.013 * h)), "M_CH_Beads", W("Chest"))
+        elif e == "glasses":    # 圆眼镜：两圈镜框 + 鼻梁
+            fyy = hc.y - r[1] * 0.98
+            for sx in (-1, 1):
+                ring = [Vector((sx * 0.019 * h + 0.011 * h * math.cos(2 * math.pi * k / 8), fyy,
+                                hc.z + 0.006 * h + 0.011 * h * math.sin(2 * math.pi * k / 8))) for k in range(8)]
+                for k in range(8):
+                    S.add(*tube(ring[k], ring[(k + 1) % 8], 0.0018 * h, 0.0018 * h, seg=4), "M_CH_Glasses", W("Head"))
+            S.add(*box((0, fyy, hc.z + 0.008 * h), (0.016 * h, 0.003 * h, 0.003 * h)), "M_CH_Glasses", W("Head"))
+        elif e == "ledger":     # 账本：夹在腰带左前
+            S.add(*box((-0.07 * h, -0.085 * h, 0.47 * h), (0.07 * h, 0.018 * h, 0.1 * h), rot=_eu(0, 8, 0)), "M_CH_Ledger", hipsW)
+            S.add(*box((-0.07 * h, -0.095 * h, 0.47 * h), (0.072 * h, 0.004 * h, 0.012 * h), rot=_eu(0, 8, 0)), "M_CH_Scroll", hipsW)
+        elif e == "torch":      # 火把：斜插在背后腰带，缠布头朝上
+            a = Vector((-0.06 * h, 0.08 * h, 0.4 * h))
+            b = Vector((0.1 * h, 0.1 * h, 0.78 * h))
+            S.add(*tube(a, b, 0.012 * h, 0.012 * h, seg=6), "M_PR_Wood", lambda p: W("Hips") if p.z < 0.56 * h else W("Chest"))
+            d = (b - a).normalized()
+            S.add(*tube(b - d * 0.07 * h, b + d * 0.03 * h, 0.022 * h, 0.018 * h, seg=6), "M_CH_Torch", W("Chest"))
+        elif e == "ao_hem":     # 袄的下摆：盖在裙子外的一圈短摆
+            bk = c.get("bulk", 1.0)
+            S.add(*rings_mesh([(Vector((0, 0, 0.53 * h)), 0.1 * h * bk, 0.071 * h * bk),
+                               (Vector((0, 0.002 * h, 0.43 * h)), 0.118 * h * bk, 0.083 * h * bk)], seg=12, cap0=False, cap1=False),
+                  c["top"], skirt_weight(J, 0.53 * h))
+        elif e == "bundle":     # 包袱：右肩斜挎到左后腰，一个方包袱 + 打结
+            a = J["chest_t"] + Vector((-0.07 * h, 0, 0))
+            b = Vector((0.09 * h, 0.06 * h, 0.5 * h))
+            for yy in (-0.066 * h, 0.064 * h):
+                d = b - a
+                mid = (a + b) / 2 + Vector((0, yy, 0))
+                ang = math.degrees(math.atan2(d.x, d.z))
+                S.add(*box(mid, (0.03 * h, 0.006 * h, d.length), rot=_eu(0, ang, 0)), "M_CH_CP_Bundle", tw)
+            S.add(*box((0.06 * h, 0.115 * h, 0.55 * h), (0.15 * h, 0.07 * h, 0.13 * h), rot=_eu(0, -10, 0)), "M_CH_CP_Bundle", tw)
+            S.add(*ellipsoid((0.0, 0.08 * h, 0.64 * h), 0.022 * h, 0.018 * h, 0.018 * h, seg=6, rings=3), "M_CH_CP_Bundle", tw)
         elif e == "armor":
             # 皮札甲：胸背甲 + 甲片横条 + 披膊 + 前后甲裙
             rings = []
@@ -538,6 +685,15 @@ def build_cane():
     mb.cyl(0, 0, 0, 0.88, 0.014, "M_PR_WoodDark", seg=6, r_top=0.016)
     mb.prism([(0, 0.86), (0.012, 0.88), (0.12, 0.92), (0.11, 0.95)], "y", -0.016, 0.016, "M_PR_WoodDark")
     mb.to_object("PROP_Cane_Bingzhi")
+
+
+def build_staff():
+    """族老的手杖：直杆、杖头圆疙瘩、缠一道红绳（比王秉之的拐长、直）。"""
+    mb = K.MB()
+    mb.cyl(0, 0, 0, 1.22, 0.014, "M_PR_WoodDark", seg=6, r_top=0.017)
+    mb.cyl(0, 0, 1.2, 1.28, 0.03, "M_PR_WoodDark", seg=8, r_top=0.022)
+    mb.cyl(0, 0, 0.95, 0.99, 0.02, "M_CH_Beads", seg=6)
+    mb.to_object("PROP_Staff_Elder")
 
 
 def build_abacus():
@@ -645,6 +801,7 @@ def recipes():
     R["PROP_Spear_Pei"] = ("Props", build_spear)
     R["PROP_Cane_Bingzhi"] = ("Props", build_cane)
     R["PROP_Abacus"] = ("Props", build_abacus)
+    R["PROP_Staff_Elder"] = ("Props", build_staff)
     for k in ("Idle", "Walk", "Run"):
         R[f"CH_WangYan_1941@{k}"] = ("Characters", (lambda kk=k.lower(): build_anim(kk)))
     return R

@@ -41,6 +41,7 @@ namespace Rupu
         public Transform[] factionActors;
         public Transform clanLeader;
         public Transform elder;
+        public Transform elderStop;   // 族老带路进祠堂后的站位；为空时走到族亲互动点前 2m
         public Transform shrineOfficer;
         public Transform[] shrineGuards;
         public Transform streetExit;
@@ -136,9 +137,11 @@ namespace Rupu
             if (clanPoint != null) clanPoint.gameObject.SetActive(false);
 
             Vector3 start = elder != null ? elder.position : new Vector3(-20f, 0f, 17.5f);
-            Vector3 target = clanPoint != null
-                ? clanPoint.transform.position + Vector3.forward * 2f
-                : start + Vector3.forward * 10f;
+            Vector3 target = elderStop != null
+                ? elderStop.position
+                : clanPoint != null
+                    ? clanPoint.transform.position + Vector3.forward * 2f
+                    : start + Vector3.forward * 10f;
             target.y = start.y;
             if (player != null) player.LookAt(target + Vector3.up * 1.5f, 3f);
 
@@ -500,7 +503,7 @@ namespace Rupu
             argumentVisible = true;
             argumentText = "交谱派：交出去！三百口人不能陪一本谱死！";
             if (voice != null) voice.PlayArgue();
-            if (player != null) player.LookAt(new Vector3(0f, 2f, -4f), 11f);
+            if (player != null) player.LookAt(factionCenter + Vector3.up * 1.5f, 11f);
 
             if (factionActors == null || factionActors.Length == 0)
             {
@@ -529,8 +532,9 @@ namespace Rupu
                 for (int i = 0; i < factionActors.Length; i++)
                 {
                     if (factionActors[i] == null) continue;
-                    Vector3 target = Vector3.Lerp(starts[i], center + new Vector3((i - 2.5f) * 0.8f, 0f, 0f), 0.35f);
-                    factionActors[i].position = Vector3.Lerp(starts[i], target, t) + Vector3.up * Mathf.Sin(Time.time * 18f + i) * 0.04f;
+                    // 三拨人各自朝中心挤过去（以中心为轴左右排开，避免撞成一团）
+                    Vector3 target = Vector3.Lerp(starts[i], center + new Vector3((i - (factionActors.Length - 1) * 0.5f) * 1.2f, 0f, 0f), 0.35f);
+                    factionActors[i].position = Vector3.Lerp(starts[i], target, t) + Vector3.up * Mathf.Abs(Mathf.Sin(Time.time * 18f + i)) * 0.04f;
                 }
 
                 yield return null;

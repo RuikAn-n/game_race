@@ -32,12 +32,20 @@ Project_rupu/            团结工程（Assets/ Packages/ ProjectSettings/ 入�
 ArtSource/<分类>/<资产名>.blend   Blender 源文件（LFS），不要放进 Assets/
 Tools/blender/rupu_pipeline.py   Blender 插件和命令行：规格检查 + FBX 导出
 Tools/mac/               new_asset / blender_export_all / build_win / serve_build / check_env
-Docs/                    日常用法.md（给人看的操作手册）、asset_spec.md、licenses.md、vo_manifest.csv
+Docs/                    日常用法.md（给人看的操作手册）、asset_spec.md、licenses.md、vo_manifest.csv、characters.md、map_yongchang.md
+                         策划/文本：入谱_第二幕_筑堡_策划案_v1.md、入谱_第一幕_人物文本.md、入谱_美术建模清单.md、第一幕_队友README.md
+  Docs/private/          原始策划案 PDF、B 执行手册（只读原件，同样公开入库）
 Data/asset_manifest.csv  资产总表
 Builds/                  构建输出（忽略）
 ```
 
 分类只能是：`Characters` `Enemies` `Bosses` `Buildings` `Props` `Environments`。
+
+### 文档规则
+
+- **作为附件加入对话的文档（用户拖进来、贴路径、放在 `new_docs/` 或 Downloads 里的 .md / .pdf / .docx 等）都要整理进 `Docs/`**：保留原文件名，同名已存在时先比对内容，相同就跳过，不同就以新版覆盖并在提交信息里说明。不要让这类文档只留在仓库外或 `new_docs/` 这样的临时目录里。
+- 整理后在上面「目录约定」的 Docs 一行补上文件名；文档里的任务若已在其他会话完成，先看 git 记录和其他 worktree，避免重复做。
+- `Docs/private/` 只是「原始资料、不改动」的意思，它同样会入库公开。含密码、密钥或不能公开的内容不要放进 Docs，告诉用户另存。
 
 ## 美术资产规范（必须遵守）
 

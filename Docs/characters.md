@@ -25,3 +25,34 @@
 - **生成**：`Tools/blender/rupu_char.py`（造型配置在 `CAST` 表里：身高、服装、颜色、发型、胡子、配件），由 `Tools/mac/build_yongchang.sh` 统一生成和导出。场景里的摆放写在 `Data/map/era_kits.json` 的 `cast` 表里。
 
 后续：Mixamo 动作（说话、跪拜、拔刀、枪顿地、拨算盘……）按 `<模型>@<动作>.fbx` 放进来，就能直接给所有人用；6 个表情 blendshape、LOD、贴图属于下一轮细化。
+
+## 第二批：1941 族亲（第一幕祠堂：族老、三派、冷遇/亲善、老少）
+
+![族亲合影（待机/走/跑采样）](images/map/clan_03_posed_3q.jpg)
+
+| T 姿势（左→右） | 在 Act1_ROC 祠堂里（去掉屋顶俯视） |
+|---|---|
+| ![](images/map/clan_01_tpose.jpg) | ![](images/map/act1_clan_top.jpg) |
+
+| 资产 | 清单 ID / 文本角色 | 身高 | 造型 | Act1_ROC 站位 |
+|---|---|---|---|---|
+| `NPC_ClanElder` | CHR_Elder · 族老 | 1.68 | 65 岁，黑褐长衫外罩黑马褂、念珠、灰短发短须、背微弯；手杖 `PROP_Staff_Elder` | 院门口迎王砚 → 带路进祠堂停在门内 |
+| `NPC_ClanJiao` | CHR_Jiao · 交谱派族老 | 1.70 | 55 岁微胖，石青长衫、圆眼镜、山羊须、腰夹账本 | 祠堂西侧 |
+| `NPC_ClanShao` | CHR_Shao · 烧谱派青年 | 1.76 | 22 岁，黑短打、褪红腰带、绑腿、皱眉，背后插未点的火把 | 祠堂东侧 |
+| `NPC_ClanCang` | CHR_Cang · 藏谱派妇人 | 1.58 | 42 岁，深青灰袄 + 黑长裙、脑后低髻，斜背包袱 | 牌位前 |
+| `NPC_ClanGirl` | CHR_Townsperson 女 · 族中少女 | 1.50 | 14 岁，旧红袄蓝裤、长辫红头绳 | 藏谱派妇人身边（母女） |
+| `NPC_ClanUncle` | CHR_Townsperson 男 · 族中冷遇 | 1.72 | 45 岁，灰短褂、旧毡帽、皱眉 | 族亲互动点西侧 |
+| `NPC_ClanGranny` | CHR_Townsperson 老 · 族中亲善 | 1.55 | 68 岁，靛蓝袄黑裙、白发低髻、黑抹额、驼背、眉梢下垂 | 族亲互动点东侧 |
+| `NPC_ClanBoy` | CHR_Townsperson 少 · 族中孩童 | 1.18 | 8 岁，褪黄短褂、大头比例 | 跟着族婶婆 |
+
+- 规格同第一批：每人 0.9–1.4k 三角面，22 骨 Humanoid（8 人均已验证为有效 Avatar），共用 Idle/Walk/Run。
+- 生成器新增造型参数：`head`（孩童头身比）、`brow_tilt`（皱眉/和善）、`skirt`+`flare`+`ao_hem`（女装袄裙）、发型 `back_bun` / `braid` / `brim_hat`，配件 `magua` `beads` `glasses` `ledger` `torch` `bundle`。
+- 合影：菜单 入谱 > 人物 > 族亲合影截图（或 `RupuCharacters.LineupCLI`，会同时出 `chars_*` 和 `clan_*`）。
+
+### 第一幕祠堂里的接入（`Act1RocSceneBuilder`，菜单 入谱 > 第一幕 > 用 ROC 永昌堡场景生成）
+
+- 胶囊占位全部换成上面的模型；族老不再借用王秉之模型；王秉之（族长）带拐。日本军官/士兵、街市人物仍是胶囊，待后续建模。
+- 每个族亲挂 `Act1ClanActor`：玩家走近 4.5 m 内会转身面向王砚；被剧情移动时（族老带路、族长上前、三派争吵聚拢）按位移驱动 `Speed`，播走路动画而不是滑行。
+- 修正：族长停步点、三派聚拢中心贴地（原来按胶囊中心 y=1 设置，换成脚底原点模型后会浮空）；争吵镜头看向祠堂里的聚拢中心（原来是灰盒场景的坐标）；族老停在门内 `ElderStop`，不再走进供桌。
+
+![祠堂内（编辑模式下为 T 姿势，运行时为待机）](images/map/act1_clan_inside.jpg)

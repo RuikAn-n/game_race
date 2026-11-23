@@ -19,6 +19,9 @@ namespace Rupu.EditorTools
         public const string AnimBase = "CH_WangYan_1941";          // 动画来源：CH_WangYan_1941@Idle/Walk/Run.fbx
         public static readonly string[] Cast =
             { "CH_WangYan_1941", "CH_WangYan_1560", "NPC_WangPei", "NPC_WangShugao", "NPC_WangDe", "NPC_WangBingzhi" };
+        // 1941 族亲（第一幕祠堂）：族老、三派、族中冷遇/亲善、孩童、少女
+        public static readonly string[] ClanCast =
+            { "NPC_ClanElder", "NPC_ClanJiao", "NPC_ClanShao", "NPC_ClanCang", "NPC_ClanUncle", "NPC_ClanGranny", "NPC_ClanBoy", "NPC_ClanGirl" };
 
         public static string ModelPath(string asset)
         {
@@ -112,7 +115,7 @@ namespace Rupu.EditorTools
         public static bool CheckAvatars()
         {
             bool ok = true;
-            foreach (var a in Cast.Concat(new[] { AnimBase + "@Idle", AnimBase + "@Walk", AnimBase + "@Run" }))
+            foreach (var a in Cast.Concat(ClanCast).Concat(new[] { AnimBase + "@Idle", AnimBase + "@Walk", AnimBase + "@Run" }))
             {
                 var path = a.Contains("@") ? $"Assets/Art/Characters/{a}/{a}.fbx" : ModelPath(a);
                 var av = AssetDatabase.LoadAllAssetsAtPath(path).OfType<Avatar>().FirstOrDefault();
@@ -138,11 +141,16 @@ namespace Rupu.EditorTools
 
         public static void LineupCLI()
         {
-            try { CheckAvatars(); Lineup(); EditorApplication.Exit(0); }
+            try { CheckAvatars(); Lineup(); ClanLineup(); EditorApplication.Exit(0); }
             catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
         }
 
-        public static void Lineup()
+        [MenuItem("入谱/人物/族亲合影截图 (Builds/screens)", priority = 62)]
+        public static void ClanLineup() => LineupOf(ClanCast, "clan");
+
+        public static void Lineup() => LineupOf(Cast, "chars");
+
+        static void LineupOf(string[] cast, string prefix)
         {
             var ac = EnsureController();
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
@@ -160,9 +168,9 @@ namespace Rupu.EditorTools
             RenderSettings.ambientGroundColor = new Color(0.35f, 0.33f, 0.3f);
             RenderSettings.fog = false;
 
-            var gos = new GameObject[Cast.Length];
-            for (int i = 0; i < Cast.Length; i++)
-                gos[i] = Instantiate(Cast[i], null, new Vector3((i - (Cast.Length - 1) / 2f) * 1.1f, 0, 0), 180, ac);
+            var gos = new GameObject[cast.Length];
+            for (int i = 0; i < cast.Length; i++)
+                gos[i] = Instantiate(cast[i], null, new Vector3((i - (cast.Length - 1) / 2f) * 1.1f, 0, 0), 180, ac);
             // 道具：王沛的枪立在身旁，王秉之的拐、王叔杲的算盘
             void Prop(string a, Vector3 p, Vector3 e)
             {
@@ -171,9 +179,16 @@ namespace Rupu.EditorTools
                 var g = (GameObject)PrefabUtility.InstantiatePrefab(pr);
                 g.transform.SetPositionAndRotation(p, Quaternion.Euler(e));
             }
-            Prop("PROP_Spear_Pei", gos[2] ? gos[2].transform.position + new Vector3(-0.45f, 0, -0.1f) : Vector3.zero, Vector3.zero);
-            Prop("PROP_Cane_Bingzhi", gos[5] ? gos[5].transform.position + new Vector3(-0.4f, 0, -0.15f) : Vector3.zero, new Vector3(0, 90, 0));
-            Prop("PROP_Abacus", gos[3] ? gos[3].transform.position + new Vector3(0, 0, -0.6f) : Vector3.zero, Vector3.zero);
+            if (prefix == "chars")
+            {
+                Prop("PROP_Spear_Pei", gos[2] ? gos[2].transform.position + new Vector3(-0.45f, 0, -0.1f) : Vector3.zero, Vector3.zero);
+                Prop("PROP_Cane_Bingzhi", gos[5] ? gos[5].transform.position + new Vector3(-0.4f, 0, -0.15f) : Vector3.zero, new Vector3(0, 90, 0));
+                Prop("PROP_Abacus", gos[3] ? gos[3].transform.position + new Vector3(0, 0, -0.6f) : Vector3.zero, Vector3.zero);
+            }
+            else
+            {   // 族老的手杖
+                Prop("PROP_Staff_Elder", gos[0] ? gos[0].transform.position + new Vector3(-0.4f, 0, -0.12f) : Vector3.zero, Vector3.zero);
+            }
 
             var outDir = Path.Combine(Path.GetFullPath(Path.Combine(Application.dataPath, "..", "..")), "Builds", "screens");
             Directory.CreateDirectory(outDir);
@@ -193,7 +208,7 @@ namespace Rupu.EditorTools
                 File.WriteAllBytes(Path.Combine(outDir, name + ".png"), tex.EncodeToPNG());
                 RenderTexture.active = null;
             }
-            Shot("chars_01_tpose", new Vector3(0, 1.3f, -9.5f), new Vector3(0, 0.95f, 0));
+            Shot(prefix + "_01_tpose", new Vector3(0, 1.3f, -9.5f), new Vector3(0, 0.95f, 0));
 
             // 用 PlayableGraph 在编辑器里求值 Humanoid 片段（验证重定向到每个人物）：待机 / 走 / 跑 交替
             var clips = new[] { Clip("Idle"), Clip("Walk"), Clip("Idle"), Clip("Walk"), Clip("Run"), Clip("Idle") };
@@ -202,12 +217,12 @@ namespace Rupu.EditorTools
             for (int i = 0; i < gos.Length; i++)
             {
                 var an = gos[i] ? gos[i].GetComponent<Animator>() : null;
-                if (an == null || clips[i] == null) continue;
+                if (an == null || clips[i % clips.Length] == null) continue;
                 var g = UnityEngine.Playables.PlayableGraph.Create("lineup" + i);
                 var output = UnityEngine.Animations.AnimationPlayableOutput.Create(g, "anim", an);
-                var cp = UnityEngine.Animations.AnimationClipPlayable.Create(g, clips[i]);
+                var cp = UnityEngine.Animations.AnimationClipPlayable.Create(g, clips[i % clips.Length]);
                 output.SetSourcePlayable(cp);
-                cp.SetTime(times[i] * clips[i].length / Mathf.Max(clips[i].length, 0.01f));
+                cp.SetTime(times[i % times.Length] * clips[i % clips.Length].length / Mathf.Max(clips[i % clips.Length].length, 0.01f));
                 var ua = an.GetBoneTransform(HumanBodyBones.LeftUpperArm);
                 var before = ua ? ua.rotation.eulerAngles : Vector3.zero;
                 g.Evaluate();
@@ -225,8 +240,8 @@ namespace Rupu.EditorTools
                 }
                 graphs.Add(g);
             }
-            Shot("chars_02_posed", new Vector3(0, 1.3f, -9.5f), new Vector3(0, 0.95f, 0));
-            Shot("chars_03_posed_3q", new Vector3(5.5f, 2.2f, -6.5f), new Vector3(0, 0.9f, 0));
+            Shot(prefix + "_02_posed", new Vector3(0, 1.3f, -9.5f), new Vector3(0, 0.95f, 0));
+            Shot(prefix + "_03_posed_3q", new Vector3(5.5f, 2.2f, -6.5f), new Vector3(0, 0.9f, 0));
             foreach (var g in graphs) g.Destroy();
             cam.targetTexture = null;
             rt.Release();

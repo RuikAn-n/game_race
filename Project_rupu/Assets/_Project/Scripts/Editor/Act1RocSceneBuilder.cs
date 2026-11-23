@@ -76,22 +76,30 @@ namespace Rupu.EditorTools
             director.factionPoints.Add(shao.GetComponent<Act1Interactable>());
             director.factionPoints.Add(cang.GetComponent<Act1Interactable>());
 
-            // 关键 NPC：使用仓库里的 ROC 角色模型
-            GameObject elder = LoadModel("Assets/Art/Characters/NPC_WangBingzhi/NPC_WangBingzhi.fbx", story, new Vector3(-20f, 0f, 17.5f), Quaternion.Euler(0f, 0f, 0f));
-            GameObject leader = LoadModel("Assets/Art/Characters/NPC_WangBingzhi/NPC_WangBingzhi.fbx", story, new Vector3(-20f, 0f, 44f), Quaternion.Euler(0f, 180f, 0f));
-            if (leader != null) leader.name = "ClanLeader_ROC";
-            SetupAnimator(elder);
-            SetupAnimator(leader);
+            // 关键 NPC：族老（NPC_ClanElder + 手杖）在院门口迎王砚；族长王秉之（+ 拐）在祖宗牌位前
+            GameObject elder = ClanNpc(story, "NPC_ClanElder", "Elder_族老", new Vector3(-20f, 0f, 17.5f), 180f, walker.transform);
+            HoldProp(elder, "Assets/Art/Props/PROP_Staff_Elder/PROP_Staff_Elder.fbx", new Vector3(0.38f, 0f, 0.12f), 0f);
+            GameObject leader = ClanNpc(story, "NPC_WangBingzhi", "ClanLeader_王秉之", new Vector3(-20f, 0f, 44f), 180f, walker.transform);
+            HoldProp(leader, "Assets/Art/Props/PROP_Cane_Bingzhi/PROP_Cane_Bingzhi.fbx", new Vector3(0.36f, 0f, 0.14f), 90f);
+            director.elderStop = new GameObject("ElderStop").transform;
+            director.elderStop.SetParent(story, false);
+            director.elderStop.position = new Vector3(-21.8f, 0f, 26.2f);
+
+            // 族亲（冷遇/亲善）：互动点两侧。左边皱眉的族叔，右边驼背的族婶婆带着孙子
+            ClanNpc(story, "NPC_ClanUncle", "Clan_族中冷遇", new Vector3(-23.2f, 0f, 27.8f), 90f, walker.transform);
+            ClanNpc(story, "NPC_ClanGranny", "Clan_族中亲善", new Vector3(-16.8f, 0f, 27.8f), 270f, walker.transform);
+            ClanNpc(story, "NPC_ClanBoy", "Clan_孩童", new Vector3(-16.1f, 0f, 27.0f), 270f, walker.transform);
 
             // 日本军官与士兵用临时制服人形；模型待资源补齐
             GameObject officer = SimplePerson(story, "ShrineOfficer", new Vector3(-20f, 1f, 28f), new Color(0.34f, 0.32f, 0.22f));
             GameObject guardA = SimplePerson(story, "ShrineGuardA", new Vector3(-22f, 1f, 29f), new Color(0.30f, 0.30f, 0.22f));
             GameObject guardB = SimplePerson(story, "ShrineGuardB", new Vector3(-18f, 1f, 29f), new Color(0.30f, 0.30f, 0.22f));
 
-            // 三派人物：先用 ROC 角色/临时人形摆在祠堂内部
-            GameObject jiaoActor = SimplePerson(story, "FactionJiao", new Vector3(-25f, 1f, 32f), new Color(0.20f, 0.24f, 0.30f));
-            GameObject shaoActor = SimplePerson(story, "FactionShao", new Vector3(-15f, 1f, 32f), new Color(0.34f, 0.10f, 0.06f));
-            GameObject cangActor = SimplePerson(story, "FactionCang", new Vector3(-20f, 1f, 39f), new Color(0.10f, 0.16f, 0.12f));
+            // 三派人物（祠堂三拨人）：交谱派族老在西、烧谱派青年在东、藏谱派妇人带女儿在牌位前
+            GameObject jiaoActor = ClanNpc(story, "NPC_ClanJiao", "Faction_交谱派族老", new Vector3(-25f, 0f, 32f), 90f, walker.transform);
+            GameObject shaoActor = ClanNpc(story, "NPC_ClanShao", "Faction_烧谱派青年", new Vector3(-15f, 0f, 32f), 270f, walker.transform);
+            GameObject cangActor = ClanNpc(story, "NPC_ClanCang", "Faction_藏谱派妇人", new Vector3(-20.5f, 0f, 39f), 180f, walker.transform);
+            ClanNpc(story, "NPC_ClanGirl", "Faction_藏谱派之女", new Vector3(-19.5f, 0f, 39.4f), 180f, walker.transform);
 
             director.elder = elder != null ? elder.transform : null;
             director.clanLeader = leader != null ? leader.transform : null;
@@ -100,8 +108,9 @@ namespace Rupu.EditorTools
             director.factionActors = new[] { jiaoActor.transform, shaoActor.transform, cangActor.transform };
             director.streetExit = new GameObject("StreetExit").transform;
             director.streetExit.position = new Vector3(-20f, 0f, 20f);
-            director.factionCenter = new Vector3(-20f, 1f, 33f);
-            director.clanStop = new Vector3(-20f, 1.2f, 32f);
+            // 人物原点在脚底：聚拢中心和族长停步点都贴地（y=0），否则会浮空
+            director.factionCenter = new Vector3(-20f, 0f, 33f);
+            director.clanStop = new Vector3(-20f, 0f, 32f);
 
             // 桌椅/祭台/牌位
             Box(story, "Shrine_Table", new Vector3(-20f, 0.75f, 30f), new Vector3(3.2f, 0.15f, 1.2f), lip);
@@ -254,6 +263,33 @@ namespace Rupu.EditorTools
             go.transform.localRotation = localRotation;
             go.transform.localScale = Vector3.one;
             return go;
+        }
+
+        /// <summary>族亲/三派：人物 FBX + 走路控制器 + 面向玩家 + 胶囊碰撞（按模型高度）。模型缺失时退回胶囊占位。</summary>
+        private static GameObject ClanNpc(Transform parent, string asset, string name, Vector3 feet, float yaw, Transform player)
+        {
+            GameObject go = LoadModel($"Assets/Art/Characters/{asset}/{asset}.fbx", parent, Vector3.zero, Quaternion.identity);
+            if (go == null) return SimplePerson(parent, name, feet + Vector3.up, new Color(0.3f, 0.28f, 0.24f));
+            go.name = name;
+            go.transform.SetPositionAndRotation(feet, Quaternion.Euler(0f, yaw, 0f));
+            SetupAnimator(go);
+            float height = 0.8f;
+            foreach (Renderer r in go.GetComponentsInChildren<Renderer>()) height = Mathf.Max(height, r.bounds.max.y - feet.y);
+            CapsuleCollider col = go.AddComponent<CapsuleCollider>();
+            col.center = new Vector3(0f, height * 0.5f, 0f);
+            col.height = height;
+            col.radius = Mathf.Min(0.3f, height * 0.22f);
+            Act1ClanActor actor = go.AddComponent<Act1ClanActor>();
+            actor.player = player;
+            return go;
+        }
+
+        /// <summary>手杖/拐：立在人物身旁，挂在人物下面跟着走。</summary>
+        private static void HoldProp(GameObject owner, string path, Vector3 local, float yaw)
+        {
+            if (owner == null) return;
+            GameObject prop = LoadModel(path, owner.transform, local, Quaternion.Euler(0f, yaw, 0f));
+            if (prop != null) prop.name = System.IO.Path.GetFileNameWithoutExtension(path);
         }
 
         private static GameObject SimplePerson(Transform parent, string name, Vector3 position, Color color)

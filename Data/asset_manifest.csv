@@ -53,3 +53,12 @@ CH_WangYan_1941@Run,Characters,Assets/Art/Characters/CH_WangYan_1941@Run/CH_Wang
 PROP_Spear_Pei,Props,Assets/Art/Props/PROP_Spear_Pei/PROP_Spear_Pei.fbx,,,,王沛长枪 2.6 m，原点=枪尾,白模（程序化）,B
 PROP_Cane_Bingzhi,Props,Assets/Art/Props/PROP_Cane_Bingzhi/PROP_Cane_Bingzhi.fbx,,,,王秉之木拐，原点=拐底,白模（程序化）,B
 PROP_Abacus,Props,Assets/Art/Props/PROP_Abacus/PROP_Abacus.fbx,,,,王叔杲十三档算盘，原点=底面中心,白模（程序化）,B
+NPC_ClanElder,Characters,Assets/Art/Characters/NPC_ClanElder/NPC_ClanElder.fbx,,,,族老（1941，CHR_Elder）；院门口迎王砚、带路进祠堂；手杖 PROP_Staff_Elder,白模（程序化）,B
+NPC_ClanJiao,Characters,Assets/Art/Characters/NPC_ClanJiao/NPC_ClanJiao.fbx,,,,交谱派族老（1941，CHR_Jiao）；祠堂西侧,白模（程序化）,B
+NPC_ClanShao,Characters,Assets/Art/Characters/NPC_ClanShao/NPC_ClanShao.fbx,,,,烧谱派青年（1941，CHR_Shao）；祠堂东侧,白模（程序化）,B
+NPC_ClanCang,Characters,Assets/Art/Characters/NPC_ClanCang/NPC_ClanCang.fbx,,,,藏谱派妇人（1941，CHR_Cang）；牌位前，带女儿,白模（程序化）,B
+NPC_ClanUncle,Characters,Assets/Art/Characters/NPC_ClanUncle/NPC_ClanUncle.fbx,,,,族叔·族中冷遇（1941，CHR_Townsperson 男）；族亲互动点西侧,白模（程序化）,B
+NPC_ClanGranny,Characters,Assets/Art/Characters/NPC_ClanGranny/NPC_ClanGranny.fbx,,,,族婶婆·族中亲善（1941，CHR_Townsperson 老）；族亲互动点东侧,白模（程序化）,B
+NPC_ClanBoy,Characters,Assets/Art/Characters/NPC_ClanBoy/NPC_ClanBoy.fbx,,,,族中孩童 8 岁（1941，CHR_Townsperson 少）；跟族婶婆,白模（程序化）,B
+NPC_ClanGirl,Characters,Assets/Art/Characters/NPC_ClanGirl/NPC_ClanGirl.fbx,,,,族中少女 14 岁（1941，CHR_Townsperson 女）；藏谱派妇人之女,白模（程序化）,B
+PROP_Staff_Elder,Props,Assets/Art/Props/PROP_Staff_Elder/PROP_Staff_Elder.fbx,,,,族老手杖 1.28 m，原点=杖底,白模（程序化）,B

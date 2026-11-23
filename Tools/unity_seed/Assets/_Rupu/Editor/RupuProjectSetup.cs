@@ -24,6 +24,11 @@ namespace Rupu.EditorTools
         [MenuItem("入谱/初始化工程 (首次打开执行一次)", priority = 0)]
         public static void Init()
         {
+            if (EditorApplication.isPlaying)
+            {
+                EditorUtility.DisplayDialog("先退出 Play", "不能在 Play 模式初始化工程。请先停止 Play。", "知道了");
+                return;
+            }
             foreach (var f in Folders)
                 if (!AssetDatabase.IsValidFolder(f)) Directory.CreateDirectory(f);
 
@@ -91,6 +96,11 @@ namespace Rupu.EditorTools
         [MenuItem("入谱/创建美术测试场景", priority = 1)]
         public static void CreateArtTestScene()
         {
+            if (EditorApplication.isPlaying)
+            {
+                EditorUtility.DisplayDialog("先退出 Play", "不能在 Play 模式创建场景。请先停止 Play。", "知道了");
+                return;
+            }
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.DefaultGameObjects, NewSceneMode.Single);
 
