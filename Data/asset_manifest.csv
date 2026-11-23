@@ -53,3 +53,5 @@ CH_WangYan_1941@Run,Characters,Assets/Art/Characters/CH_WangYan_1941@Run/CH_Wang
 PROP_Spear_Pei,Props,Assets/Art/Props/PROP_Spear_Pei/PROP_Spear_Pei.fbx,,,,王沛长枪 2.6 m，原点=枪尾,白模（程序化）,B
 PROP_Cane_Bingzhi,Props,Assets/Art/Props/PROP_Cane_Bingzhi/PROP_Cane_Bingzhi.fbx,,,,王秉之木拐，原点=拐底,白模（程序化）,B
 PROP_Abacus,Props,Assets/Art/Props/PROP_Abacus/PROP_Abacus.fbx,,,,王叔杲十三档算盘，原点=底面中心,白模（程序化）,B
+BLD_INT_AncestralHall,Buildings,Assets/Art/Buildings/BLD_INT_AncestralHall/BLD_INT_AncestralHall.fbx,,,,祠堂内景 20x36 与 BLD_ROC_AncestralHall 同占地；ROOF_* 俯视隐藏；COL_* 碰撞；ANCHOR_* 互动/站位/镜头；详见 Docs/interiors.md,白模（程序化）,B
+BLD_INT_HuanhaiLou,Buildings,Assets/Art/Buildings/BLD_INT_HuanhaiLou/BLD_INT_HuanhaiLou.fbx,,,,环海楼内景 20x8.8 两层+城门洞；ROOF_*/INT_Upper*/INT_Floor2 可逐层隐藏；ANCHOR_*；详见 Docs/interiors.md,白模（程序化）,B

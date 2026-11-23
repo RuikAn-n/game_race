@@ -228,6 +228,36 @@
    "roc": "#141414",
    "ming": "#141414",
    "smooth": 0.0
+  },
+  {
+   "name": "M_Floor_Brick",
+   "roc": "#6f685a",
+   "ming": "#8d7f69",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Floor_Wood",
+   "roc": "#5a4635",
+   "ming": "#7a5436",
+   "smooth": 0.12
+  },
+  {
+   "name": "M_Bronze",
+   "roc": "#6f5a37",
+   "ming": "#9a7a3e",
+   "smooth": 0.3
+  },
+  {
+   "name": "M_Cloth_Red",
+   "roc": "#6e3a30",
+   "ming": "#b0452e",
+   "smooth": 0.05
+  },
+  {
+   "name": "M_Ceiling",
+   "roc": "#3c3027",
+   "ming": "#5a4030",
+   "smooth": 0.1
   }
  ]
 }
