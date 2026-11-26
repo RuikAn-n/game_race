@@ -523,6 +523,14 @@ def headscarf(S, hc, r, mat, h):
 
 
 # ---------------------------------------------------------------- 角色配置
+# ---------------------------------------------------------------- 扩展钩子（其他模块注册，不必改本文件）
+# HAIR_HOOKS[name](S, J, hc, r, hair_mat, h, cfg)      —— cfg["hair"] == name 时调用
+# EXTRA_HOOKS[name](S, J, h, cfg, torso_w, hips_w)     —— cfg["extras"] 含 name 时调用
+# GESTURE_HOOKS[kind]() -> (总帧数, [(帧, 姿势, 髋高)])   —— build_gesture(kind) 优先查这里
+HAIR_HOOKS = {}
+EXTRA_HOOKS = {}
+GESTURE_HOOKS = {}
+
 CAST = {
     "CH_WangYan_1941": dict(H=1.75, outfit="robe", top="M_CH_WY41_Robe", pants="M_CH_WY41_Pants", shoe="M_CH_WY41_Shoe",
                             hair="short", extras=["camera_bag"], desc="王砚 1941：照相馆学徒，灰蓝长衫、布鞋、斜挎相机包、短发"),
@@ -665,6 +673,8 @@ def build_character(name, cfg=None):
         S.add(*rings_mesh([(hc + Vector((0, 0.004 * h, r[2] * 0.15)), r[0] * 1.1, r[1] * 1.08),
                            (hc + Vector((0, 0.004 * h, r[2] * 0.62)), r[0] * 1.06, r[1] * 1.04)], seg=10), "M_CH_Bandage", W("Head"))
         S.add(*box(hc + Vector((0.018 * h, -r[1] * 1.07, r[2] * 0.4)), (0.03 * h, 0.004 * h, 0.022 * h)), "M_CH_Blood", W("Head"))
+    elif hair in HAIR_HOOKS:
+        HAIR_HOOKS[hair](S, J, hc, r, hm, h, c)
     elif hair == "melon_cap":       # 瓜皮帽
         S.add(*ellipsoid(hc + Vector((0, 0.004 * h, 0.014 * h)), r[0] * 1.08, r[1] * 1.06, r[2] * 0.95, seg=10, rings=4, zmin=0.05),
               "M_CH_WB_Cap", W("Head"))
@@ -685,7 +695,9 @@ def build_character(name, cfg=None):
     hipsW = W("Hips")
     tw = torso_weight(J)
     for e in c.get("extras", []):
-        if e == "camera_bag":   # 右肩斜挎到左胯
+        if e in EXTRA_HOOKS:
+            EXTRA_HOOKS[e](S, J, h, c, tw, hipsW)
+        elif e == "camera_bag":   # 右肩斜挎到左胯
             a = J["chest_t"] + Vector((-0.07 * h, 0, 0))
             b = Vector((0.1 * h, 0, 0.5 * h))
             for yy in (-0.068 * h, 0.066 * h):
@@ -1000,6 +1012,8 @@ def gesture_keys(kind):
     """返回 (总帧数, [(帧, 姿势, 髋高偏移 m)])。24 fps；髋高按 1.75 m 基准人物，Humanoid 会按身高缩放。"""
     X = lambda a: _rot("X", a)
     Z = lambda a: _rot("Z", a)
+    if kind in GESTURE_HOOKS:
+        return GESTURE_HOOKS[kind]()
     if kind == "TalkLoop":          # 说话：右手在胸前比划，轻点头（族老、三派、军官共用）
         return 48, [(0, _pose(R=(50, 10), RF=60, Head=X(2)), 0),
                     (12, _pose(R=(62, 22), RF=40, Head=X(-3), Neck=Z(4)), 0),

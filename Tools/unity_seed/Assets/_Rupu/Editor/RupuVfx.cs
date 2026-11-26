@@ -8,6 +8,16 @@
 //   PF_VFX_Fire          火焰 + 火星 + 火光（街尾火场）     PF_VFX_FireSmoke    大股黑烟柱
 //   PF_VFX_PlaneTrail    飞机翼尖尾迹（TrailRenderer）      PF_VFX_PropellerDisc 螺旋桨虚影盘
 //   旗面旧血直接做在 PROP_FallenFlag 模型上（M_PR_Blood），不另做特效。
+//
+// 第二至五幕（BuildActs()，同一菜单/命令一起生成）。「一次性」的 loop=false、不自动播放，脚本里 ps.Play()：
+//   第二幕 筑堡：PF_VFX_SandPuff 沙盘扬沙(一次) PF_VFX_WallRise 墙线隆起尘浪(一次，沿本地 X 8m)
+//               PF_VFX_StoneSparks 凿石火星(一次) PF_VFX_MortarSplash 灰浆溅(一次) PF_VFX_RamDust 夯土尘(一次)
+//               PF_VFX_InkBloom 墨迹晕开(一次) PF_VFX_PaperPages 纸页翻飞(循环) PF_VFX_StampPuff 盖印朱红(一次)
+//               PF_VFX_WaterFlow 水门水流(循环，沿本地 +Z 流) PF_VFX_Chimney 炊烟(循环)
+//   第三幕 守城：PF_VFX_Blood 血(一次) PF_VFX_Splinters 破片/门板碎裂(一次) PF_VFX_WaterSplash 泼水灭火(一次)
+//               PF_VFX_FirePotBurst 火罐炸开(一次) PF_VFX_FireSpread 火势蔓延(循环，本地 4×4m 区域，改 shape 可放大)
+//               PF_VFX_BattleSmoke 战场灰烟(循环) PF_VFX_ArrowTrail 箭矢尾迹(TrailRenderer，挂在箭上)
+//   第四幕 寻谱：PF_VFX_Dust 废墟浮尘(循环) PF_VFX_Snow 1941 冬落雪(循环，挂相机)
 using System;
 using System.IO;
 using UnityEditor;
@@ -20,7 +30,7 @@ namespace Rupu.EditorTools
     {
         public const string Dir = "Assets/Art/VFX";
 
-        [MenuItem("入谱/特效/生成第一幕特效", priority = 70)]
+        [MenuItem("入谱/特效/生成全部特效", priority = 70)]
         public static void BuildMenu() => Build();
 
         public static void BuildCLI()
@@ -147,8 +157,267 @@ namespace Rupu.EditorTools
                 var r = disc.GetComponent<MeshRenderer>();
                 r.sharedMaterial = m; r.shadowCastingMode = ShadowCastingMode.Off;
             });
+            BuildActs(soft, alpha, add);
             AssetDatabase.SaveAssets();
-            Debug.Log("[VFX] 第一幕特效已生成：" + Dir);
+            Debug.Log("[VFX] 特效已生成：" + Dir);
+        }
+
+
+        // ------------------------------------------------------------ 第二至五幕
+        static void BuildActs(Texture2D soft, Material alpha, Material add)
+        {
+            // ---- 第二幕 筑堡
+            Save("PF_VFX_SandPuff", go =>
+            {
+                var ps = PS(go, alpha, 1.6f, 0.9f, 0.18f, 120, new Color(0.72f, 0.64f, 0.5f, 0.6f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 60); Gravity(ps, 0.25f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Hemisphere; sh.radius = 0.25f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                Grow(ps, 1f, 2.5f); Fade(ps, new Color(0.72f, 0.64f, 0.5f), 0.6f);
+            });
+            Save("PF_VFX_WallRise", go =>
+            {
+                var ps = PS(go, alpha, 2.2f, 1.6f, 0.8f, 300, new Color(0.6f, 0.55f, 0.46f, 0.55f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 160); Gravity(ps, 0.1f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(8f, 0.3f, 0.6f);
+                var v = ps.velocityOverLifetime; v.enabled = true; v.space = ParticleSystemSimulationSpace.Local;
+                v.x = new ParticleSystem.MinMaxCurve(-0.4f, 0.4f); v.y = new ParticleSystem.MinMaxCurve(1.2f, 2.4f); v.z = new ParticleSystem.MinMaxCurve(-0.8f, 0.8f);
+                var main = ps.main; main.startSpeed = 0f;
+                Grow(ps, 1f, 3f); Fade(ps, new Color(0.6f, 0.55f, 0.46f), 0.55f);
+            });
+            Save("PF_VFX_StoneSparks", go =>
+            {
+                var ps = PS(go, add, 0.35f, 4f, 0.03f, 60, new Color(1f, 0.75f, 0.35f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 24); Gravity(ps, 1.2f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Cone; sh.angle = 45f; sh.radius = 0.02f;
+                Stretch(go, 0.04f);
+                Fade(ps, new Color(1f, 0.7f, 0.3f), 1f);
+                var chips = Child(go, "Chips");
+                var cps = PS(chips, alpha, 0.8f, 2.2f, 0.04f, 30, new Color(0.62f, 0.6f, 0.56f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(cps, 10); Gravity(cps, 1.5f);
+                var csh = cps.shape; csh.shapeType = ParticleSystemShapeType.Cone; csh.angle = 35f; csh.radius = 0.02f;
+            });
+            Save("PF_VFX_MortarSplash", go =>
+            {
+                var ps = PS(go, alpha, 0.7f, 2.2f, 0.07f, 60, new Color(0.86f, 0.84f, 0.78f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 30); Gravity(ps, 1.4f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Hemisphere; sh.radius = 0.08f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                Collide(ps, 0.6f);
+            });
+            Save("PF_VFX_RamDust", go =>
+            {
+                var ps = PS(go, alpha, 1.4f, 1.5f, 0.35f, 80, new Color(0.55f, 0.46f, 0.34f, 0.65f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 40); Gravity(ps, 0.05f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Circle; sh.radius = 0.3f; sh.radiusThickness = 0f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                var v = ps.velocityOverLifetime; v.enabled = true; v.space = ParticleSystemSimulationSpace.Local;
+                v.x = new ParticleSystem.MinMaxCurve(0f); v.y = new ParticleSystem.MinMaxCurve(0f); v.z = new ParticleSystem.MinMaxCurve(0.3f, 0.8f);
+                Grow(ps, 1f, 3f); Fade(ps, new Color(0.55f, 0.46f, 0.34f), 0.65f);
+            });
+            Save("PF_VFX_InkBloom", go =>
+            {
+                var ps = PS(go, alpha, 1.8f, 0.04f, 0.05f, 20, new Color(0.06f, 0.05f, 0.05f, 0.9f), ParticleSystemSimulationSpace.Local);
+                Burst(ps, 8);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Circle; sh.radius = 0.02f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                var r = go.GetComponent<ParticleSystemRenderer>(); r.renderMode = ParticleSystemRenderMode.HorizontalBillboard;
+                Grow(ps, 0.3f, 3f);
+                var c = ps.colorOverLifetime; c.enabled = true;
+                var g = new Gradient();
+                g.SetKeys(new[] { new GradientColorKey(new Color(0.05f, 0.05f, 0.05f), 0f), new GradientColorKey(new Color(0.12f, 0.11f, 0.1f), 1f) },
+                          new[] { new GradientAlphaKey(0.95f, 0f), new GradientAlphaKey(0.85f, 0.7f), new GradientAlphaKey(0f, 1f) });
+                c.color = g;
+            });
+            Save("PF_VFX_PaperPages", go =>
+            {
+                var ps = PS(go, alpha, 5f, 0.6f, 0.18f, 30, new Color(0.86f, 0.8f, 0.68f, 1f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 3); Gravity(ps, 0.02f);
+                var main = ps.main; main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(2f, 0.5f, 2f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.6f; n.frequency = 0.5f;
+                var rot = ps.rotationOverLifetime; rot.enabled = true; rot.z = new ParticleSystem.MinMaxCurve(-3f, 3f);
+                Fade(ps, new Color(0.86f, 0.8f, 0.68f), 1f);
+            });
+            Save("PF_VFX_StampPuff", go =>
+            {
+                var ps = PS(go, alpha, 0.6f, 0.5f, 0.05f, 30, new Color(0.7f, 0.16f, 0.12f, 0.8f), ParticleSystemSimulationSpace.Local);
+                Burst(ps, 16);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Circle; sh.radius = 0.04f; sh.radiusThickness = 0f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                var v = ps.velocityOverLifetime; v.enabled = true; v.space = ParticleSystemSimulationSpace.Local;
+                v.x = new ParticleSystem.MinMaxCurve(0f); v.y = new ParticleSystem.MinMaxCurve(0f); v.z = new ParticleSystem.MinMaxCurve(0.05f, 0.15f);
+                Grow(ps, 1f, 2f); Fade(ps, new Color(0.7f, 0.16f, 0.12f), 0.8f);
+            });
+            Save("PF_VFX_WaterFlow", go =>
+            {
+                var ps = PS(go, alpha, 1.6f, 3f, 0.35f, 400, new Color(0.62f, 0.72f, 0.72f, 0.45f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 140); Gravity(ps, 0.3f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(3f, 0.2f, 0.1f);
+                var v = ps.velocityOverLifetime; v.enabled = true; v.space = ParticleSystemSimulationSpace.Local;
+                v.x = new ParticleSystem.MinMaxCurve(0f); v.y = new ParticleSystem.MinMaxCurve(0f); v.z = new ParticleSystem.MinMaxCurve(2.5f, 3.5f);
+                var main = ps.main; main.startSpeed = 0f;
+                Stretch(go, 0.15f);
+                Fade(ps, new Color(0.62f, 0.72f, 0.72f), 0.45f);
+                var foam = Child(go, "Foam");
+                foam.transform.localPosition = new Vector3(0f, -0.3f, 3.5f);
+                var fps = PS(foam, alpha, 1.2f, 0.6f, 0.5f, 120, new Color(0.88f, 0.9f, 0.88f, 0.5f), ParticleSystemSimulationSpace.World);
+                Emit(fps, 40);
+                var fsh = fps.shape; fsh.shapeType = ParticleSystemShapeType.Box; fsh.scale = new Vector3(3f, 0.1f, 0.6f);
+                Grow(fps, 1f, 2f); Fade(fps, new Color(0.88f, 0.9f, 0.88f), 0.5f);
+            });
+            Save("PF_VFX_Chimney", go =>
+            {
+                var ps = PS(go, alpha, 7f, 0.5f, 0.4f, 80, new Color(0.7f, 0.7f, 0.68f, 0.35f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 6);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Cone; sh.angle = 6f; sh.radius = 0.15f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                Grow(ps, 1f, 6f); Fade(ps, new Color(0.7f, 0.7f, 0.68f), 0.35f);
+                var v = ps.velocityOverLifetime; v.enabled = true; v.space = ParticleSystemSimulationSpace.World;
+                v.x = new ParticleSystem.MinMaxCurve(0.3f); v.y = new ParticleSystem.MinMaxCurve(0f); v.z = new ParticleSystem.MinMaxCurve(0.15f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.25f; n.frequency = 0.3f;
+            });
+            // ---- 第三幕 守城
+            Save("PF_VFX_Blood", go =>
+            {
+                var ps = PS(go, alpha, 0.6f, 2.5f, 0.06f, 40, new Color(0.36f, 0.08f, 0.07f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 18); Gravity(ps, 1.6f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Cone; sh.angle = 30f; sh.radius = 0.03f;
+                Collide(ps, 1f);
+            });
+            Save("PF_VFX_Splinters", go =>
+            {
+                var ps = PS(go, alpha, 1.4f, 5f, 0.12f, 60, new Color(0.42f, 0.32f, 0.22f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 36); Gravity(ps, 1.3f);
+                var main = ps.main; main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                main.startSize3D = true;
+                main.startSizeX = new ParticleSystem.MinMaxCurve(0.04f, 0.08f); main.startSizeY = new ParticleSystem.MinMaxCurve(0.2f, 0.45f);
+                main.startSizeZ = new ParticleSystem.MinMaxCurve(0.04f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(1.5f, 2f, 0.1f);
+                var rot = ps.rotationOverLifetime; rot.enabled = true; rot.z = new ParticleSystem.MinMaxCurve(-8f, 8f);
+                Collide(ps, 0.4f);
+                var dust = Child(go, "Dust");
+                var dps = PS(dust, alpha, 1.5f, 1.2f, 0.6f, 40, new Color(0.5f, 0.45f, 0.38f, 0.5f), ParticleSystemSimulationSpace.World);
+                Burst(dps, 20);
+                var dsh = dps.shape; dsh.shapeType = ParticleSystemShapeType.Box; dsh.scale = new Vector3(1.5f, 2f, 0.2f);
+                Grow(dps, 1f, 3f); Fade(dps, new Color(0.5f, 0.45f, 0.38f), 0.5f);
+            });
+            Save("PF_VFX_WaterSplash", go =>
+            {
+                var ps = PS(go, alpha, 0.8f, 4f, 0.12f, 120, new Color(0.7f, 0.8f, 0.8f, 0.7f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 70); Gravity(ps, 1.3f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Cone; sh.angle = 18f; sh.radius = 0.15f;
+                Stretch(go, 0.08f);
+                var steam = Child(go, "Steam");
+                steam.transform.localPosition = new Vector3(0f, 0f, 2.5f);
+                var sps = PS(steam, alpha, 2.5f, 1f, 0.8f, 40, new Color(0.88f, 0.88f, 0.86f, 0.45f), ParticleSystemSimulationSpace.World);
+                Burst(sps, 18);
+                var ssh = sps.shape; ssh.shapeType = ParticleSystemShapeType.Sphere; ssh.radius = 0.6f;
+                Grow(sps, 1f, 3f); Fade(sps, new Color(0.88f, 0.88f, 0.86f), 0.45f);
+            });
+            Save("PF_VFX_FirePotBurst", go =>
+            {
+                var ps = PS(go, add, 0.5f, 4f, 0.9f, 80, new Color(1f, 0.55f, 0.15f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 50);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Sphere; sh.radius = 0.2f;
+                Grow(ps, 1f, 2f); Fade(ps, new Color(1f, 0.5f, 0.15f), 1f);
+                var smoke = Child(go, "Smoke");
+                var sps = PS(smoke, alpha, 2.5f, 1.2f, 1.2f, 40, new Color(0.12f, 0.11f, 0.1f, 0.6f), ParticleSystemSimulationSpace.World);
+                Burst(sps, 18);
+                var ssh = sps.shape; ssh.shapeType = ParticleSystemShapeType.Sphere; ssh.radius = 0.5f;
+                Grow(sps, 1f, 3f); Fade(sps, new Color(0.12f, 0.11f, 0.1f), 0.6f);
+                var oil = Child(go, "Oil");
+                var ops = PS(oil, add, 1.0f, 3f, 0.12f, 40, new Color(1f, 0.62f, 0.2f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ops, 24); Gravity(ops, 1.2f);
+                var osh = ops.shape; osh.shapeType = ParticleSystemShapeType.Hemisphere; osh.radius = 0.2f;
+                oil.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                Collide(ops, 0.3f);
+                AddLight(go, new Color(1f, 0.55f, 0.2f), 8f, 3f, Vector3.zero);
+            });
+            Save("PF_VFX_FireSpread", go =>
+            {
+                var ps = PS(go, add, 0.9f, 1.2f, 0.7f, 300, new Color(1f, 0.55f, 0.15f, 0.85f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 90);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(4f, 4f, 0.2f);
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                Grow(ps, 1f, 0.2f); Fade(ps, new Color(1f, 0.5f, 0.15f), 0.9f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.5f; n.frequency = 1.2f;
+                var smoke = Child(go, "Smoke");
+                smoke.transform.localPosition = new Vector3(0f, 0f, 1f);
+                var sps = PS(smoke, alpha, 5f, 1.4f, 1.4f, 100, new Color(0.12f, 0.11f, 0.1f, 0.5f), ParticleSystemSimulationSpace.World);
+                Emit(sps, 12);
+                var ssh = sps.shape; ssh.shapeType = ParticleSystemShapeType.Box; ssh.scale = new Vector3(4f, 4f, 0.2f);
+                Grow(sps, 1f, 3.5f); Fade(sps, new Color(0.12f, 0.11f, 0.1f), 0.5f);
+                AddLight(go, new Color(1f, 0.5f, 0.2f), 10f, 2.4f, new Vector3(0f, 0f, 1f));
+            });
+            Save("PF_VFX_BattleSmoke", go =>
+            {
+                var ps = PS(go, alpha, 10f, 0.6f, 3f, 60, new Color(0.42f, 0.41f, 0.39f, 0.35f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 4);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(10f, 1f, 10f);
+                Grow(ps, 1f, 2.5f); Fade(ps, new Color(0.42f, 0.41f, 0.39f), 0.35f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.3f; n.frequency = 0.15f;
+            });
+            Save("PF_VFX_ArrowTrail", go =>
+            {
+                var tr = go.AddComponent<TrailRenderer>();
+                tr.time = 0.25f; tr.minVertexDistance = 0.2f;
+                tr.widthCurve = new AnimationCurve(new Keyframe(0f, 0.04f), new Keyframe(1f, 0f));
+                var g = new Gradient();
+                g.SetKeys(new[] { new GradientColorKey(new Color(0.9f, 0.88f, 0.82f), 0f), new GradientColorKey(new Color(0.9f, 0.88f, 0.82f), 1f) },
+                          new[] { new GradientAlphaKey(0.5f, 0f), new GradientAlphaKey(0f, 1f) });
+                tr.colorGradient = g; tr.sharedMaterial = alpha; tr.shadowCastingMode = ShadowCastingMode.Off;
+            });
+            // ---- 第四幕 寻谱（1941 冬）
+            Save("PF_VFX_Dust", go =>
+            {
+                var ps = PS(go, alpha, 9f, 0.05f, 0.04f, 150, new Color(0.85f, 0.8f, 0.7f, 0.35f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 14);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(10f, 4f, 10f);
+                go.transform.localPosition = new Vector3(0f, 2f, 0f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.08f; n.frequency = 0.3f;
+                Fade(ps, new Color(0.85f, 0.8f, 0.7f), 0.35f);
+            });
+            Save("PF_VFX_Snow", go =>
+            {
+                var ps = PS(go, alpha, 6f, 0f, 0.05f, 2500, new Color(0.92f, 0.92f, 0.9f, 0.8f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 380);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(36f, 0.5f, 36f);
+                go.transform.localPosition = new Vector3(0f, 12f, 6f);
+                var v = ps.velocityOverLifetime; v.enabled = true; v.space = ParticleSystemSimulationSpace.World;
+                v.x = new ParticleSystem.MinMaxCurve(-0.4f, 0.2f); v.y = new ParticleSystem.MinMaxCurve(-2.2f, -1.6f); v.z = new ParticleSystem.MinMaxCurve(0.1f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.3f; n.frequency = 0.4f;
+                var col = ps.collision; col.enabled = true; col.type = ParticleSystemCollisionType.World;
+                col.mode = ParticleSystemCollisionMode.Collision3D; col.quality = ParticleSystemCollisionQuality.Low;
+                col.lifetimeLoss = 1f; col.bounce = 0f; col.maxCollisionShapes = 64;
+            });
+        }
+
+        /// <summary>一次性爆发：不循环、不预热、不自动播放，脚本里调用 Play()。</summary>
+        static void Burst(ParticleSystem ps, int count)
+        {
+            var main = ps.main; main.loop = false; main.prewarm = false; main.playOnAwake = false;
+            main.duration = 0.2f;
+            var e = ps.emission; e.enabled = true; e.rateOverTime = 0f;
+            e.SetBursts(new[] { new ParticleSystem.Burst(0f, (short)count) });
+        }
+
+        static void Gravity(ParticleSystem ps, float g)
+        {
+            var main = ps.main; main.gravityModifier = g;
+        }
+
+        static void Stretch(GameObject go, float velocityScale)
+        {
+            var r = go.GetComponent<ParticleSystemRenderer>();
+            r.renderMode = ParticleSystemRenderMode.Stretch; r.velocityScale = velocityScale; r.lengthScale = 1f;
+        }
+
+        static void Collide(ParticleSystem ps, float lifetimeLoss)
+        {
+            var col = ps.collision; col.enabled = true; col.type = ParticleSystemCollisionType.World;
+            col.mode = ParticleSystemCollisionMode.Collision3D; col.quality = ParticleSystemCollisionQuality.Low;
+            col.bounce = 0.05f; col.dampen = 0.8f; col.lifetimeLoss = lifetimeLoss; col.maxCollisionShapes = 32;
         }
 
         // ------------------------------------------------------------ 工具

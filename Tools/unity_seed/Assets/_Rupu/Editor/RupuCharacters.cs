@@ -65,7 +65,7 @@ namespace Rupu.EditorTools
             // 名字带 Loop 的循环播放；其余一次性动作播完停在最后一帧（跪下、倒地、拔刀指人）。
             var sm = ac.layers[0].stateMachine;
             int row = 0;
-            foreach (var g in Gestures)
+            foreach (var g in AllGestures())
             {
                 var clip = Clip(g);
                 if (clip == null) { Debug.LogWarning($"[Chars] 缺少动作片段 {AnimBase}@{g}"); continue; }
@@ -75,6 +75,18 @@ namespace Rupu.EditorTools
             }
             AssetDatabase.SaveAssets();
             return ac;
+        }
+
+        /// <summary>全部共用动作：第一幕 Gestures 在前，其余各幕（Assets/Art/Characters/CH_WangYan_1941@*/ 里除 Idle/Walk/Run 外）按名字排序追加。</summary>
+        public static string[] AllGestures()
+        {
+            var extra = Directory.Exists("Assets/Art/Characters")
+                ? Directory.GetDirectories("Assets/Art/Characters", AnimBase + "@*")
+                           .Select(d => Path.GetFileName(d).Substring(AnimBase.Length + 1))
+                           .Where(a => a != "Idle" && a != "Walk" && a != "Run" && !Gestures.Contains(a))
+                           .OrderBy(a => a, StringComparer.Ordinal)
+                : Enumerable.Empty<string>();
+            return Gestures.Concat(extra).ToArray();
         }
 
         /// <summary>第一幕动作（Tools/blender/rupu_char.py 的 GESTURES，同名状态）。</summary>
@@ -154,6 +166,76 @@ namespace Rupu.EditorTools
                           string.Join(",", b.Take(6).Select(x => x.propertyName)));
             }
             return ok;
+        }
+
+        // ------------------------------------------------------------ 第三幕：敌人 / Boss 控制器
+        public const string CombatControllerPath = "Assets/Art/Animations/AC_Combat.controller";
+
+        /// <summary>
+        /// 敌人和 Boss 共用的控制器：Locomotion（共用 Idle/Walk/Run）+ Assets/Art/{Enemies,Bosses}/*@*/ 的全部片段，
+        /// 状态名 = @ 后的动作名（EN_SwordAttack1、BS_GuiwoPhaseChange……，见 Docs/act3_enemies.md）。无连线，脚本 CrossFade 进入。
+        /// </summary>
+        [MenuItem("入谱/人物/生成敌人与 Boss 动画控制器", priority = 62)]
+        public static RuntimeAnimatorController EnsureCombatController()
+        {
+            var idle = Clip("Idle"); var walk = Clip("Walk"); var run = Clip("Run");
+            if (idle == null || walk == null || run == null) { Debug.LogWarning("[Chars] 缺少 Idle/Walk/Run"); return null; }
+            Directory.CreateDirectory(Path.GetDirectoryName(CombatControllerPath));
+            AssetDatabase.DeleteAsset(CombatControllerPath);
+            var ac = AnimatorController.CreateAnimatorControllerAtPath(CombatControllerPath);
+            ac.AddParameter("Speed", AnimatorControllerParameterType.Float);
+            var state = ac.CreateBlendTreeInController("Locomotion", out var tree, 0);
+            tree.blendType = BlendTreeType.Simple1D; tree.blendParameter = "Speed"; tree.useAutomaticThresholds = false;
+            tree.AddChild(idle, 0f); tree.AddChild(walk, 1.8f); tree.AddChild(run, 5f);
+            var sm = ac.layers[0].stateMachine;
+            sm.defaultState = state;
+            int row = 0, n = 0;
+            foreach (var root in new[] { "Assets/Art/Enemies", "Assets/Art/Bosses" })
+            {
+                if (!Directory.Exists(root)) continue;
+                foreach (var d in Directory.GetDirectories(root, "*@*").OrderBy(x => x, StringComparer.Ordinal))
+                {
+                    var asset = Path.GetFileName(d);
+                    var action = asset.Substring(asset.IndexOf('@') + 1);
+                    if (sm.states.Any(st => st.state.name == action)) continue;
+                    var clip = AssetDatabase.LoadAllAssetsAtPath($"{d}/{asset}.fbx").OfType<AnimationClip>()
+                                            .FirstOrDefault(c => !c.name.StartsWith("__preview__"));
+                    if (clip == null) { Debug.LogWarning("[Chars] 缺片段 " + asset); continue; }
+                    var s = sm.AddState(action, new Vector3(300 + 260 * (row / 20), 60 * (row % 20), 0));
+                    row++; n++;
+                    s.motion = clip; s.writeDefaultValues = true;
+                }
+            }
+            AssetDatabase.SaveAssets();
+            Debug.Log($"[Chars] AC_Combat：{n} 个战斗动作状态");
+            return ac;
+        }
+
+        public static void ControllersCLI()
+        {
+            try
+            {
+                var a = EnsureController(); var b = EnsureCombatController();
+                var sm = ((AnimatorController)a).layers[0].stateMachine;
+                Debug.Log($"[Chars] AC_Humanoid_Locomotion：{sm.states.Length} 个状态");
+                EditorApplication.Exit(a != null && b != null ? 0 : 1);
+            }
+            catch (Exception e) { Debug.LogException(e); EditorApplication.Exit(1); }
+        }
+
+        /// <summary>检查 Characters/Enemies/Bosses 下所有人形模型（不含 @动画）的 Avatar 是否有效。</summary>
+        public static void AvatarsCLI()
+        {
+            int ok = 0; var bad = new System.Collections.Generic.List<string>();
+            foreach (var root in new[] { "Assets/Art/Characters", "Assets/Art/Enemies", "Assets/Art/Bosses" })
+                foreach (var d in Directory.GetDirectories(root).Where(x => !Path.GetFileName(x).Contains("@")))
+                {
+                    var n = Path.GetFileName(d);
+                    var av = AssetDatabase.LoadAllAssetsAtPath($"{d}/{n}.fbx").OfType<Avatar>().FirstOrDefault();
+                    if (av != null && av.isValid && av.isHuman) ok++; else bad.Add(n);
+                }
+            Debug.Log($"[Chars] Humanoid Avatar 有效 {ok} 个；无效/缺失 {bad.Count} 个：{string.Join(",", bad)}");
+            EditorApplication.Exit(bad.Count == 0 ? 0 : 1);
         }
 
         // ------------------------------------------------------------ 合影截图

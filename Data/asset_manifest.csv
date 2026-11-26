@@ -53,7 +53,6 @@ CH_WangYan_1941@Run,Characters,Assets/Art/Characters/CH_WangYan_1941@Run/CH_Wang
 PROP_Spear_Pei,Props,Assets/Art/Props/PROP_Spear_Pei/PROP_Spear_Pei.fbx,,,,王沛长枪 2.6 m，原点=枪尾,白模（程序化）,B
 PROP_Cane_Bingzhi,Props,Assets/Art/Props/PROP_Cane_Bingzhi/PROP_Cane_Bingzhi.fbx,,,,王秉之木拐，原点=拐底,白模（程序化）,B
 PROP_Abacus,Props,Assets/Art/Props/PROP_Abacus/PROP_Abacus.fbx,,,,王叔杲十三档算盘，原点=底面中心,白模（程序化）,B
-<<<<<<< HEAD
 NPC_ClanElder,Characters,Assets/Art/Characters/NPC_ClanElder/NPC_ClanElder.fbx,,,,族老（1941，CHR_Elder）；院门口迎王砚、带路进祠堂；手杖 PROP_Staff_Elder,白模（程序化）,B
 NPC_ClanJiao,Characters,Assets/Art/Characters/NPC_ClanJiao/NPC_ClanJiao.fbx,,,,交谱派族老（1941，CHR_Jiao）；祠堂西侧,白模（程序化）,B
 NPC_ClanShao,Characters,Assets/Art/Characters/NPC_ClanShao/NPC_ClanShao.fbx,,,,烧谱派青年（1941，CHR_Shao）；祠堂东侧,白模（程序化）,B
@@ -123,3 +122,219 @@ PF_VFX_Fire,VFX,Assets/Art/VFX/PF_VFX_Fire.prefab,Assets/Art/VFX/T_VFX_Soft.png,
 PF_VFX_FireSmoke,VFX,Assets/Art/VFX/PF_VFX_FireSmoke.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,黑烟柱（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
 PF_VFX_PlaneTrail,VFX,Assets/Art/VFX/PF_VFX_PlaneTrail.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,飞机尾迹（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
 PF_VFX_PropellerDisc,VFX,Assets/Art/VFX/PF_VFX_PropellerDisc.prefab,Assets/Art/VFX/T_VFX_Soft.png,,,螺旋桨虚影（Tools/unity_seed RupuVfx 生成；旗面旧血做在 PROP_FallenFlag 模型上）,程序化,B
+NPC_TownMother,Characters,Assets/Art/Characters/NPC_TownMother/NPC_TownMother.fbx,,,,街坊·抱孩子的母亲（CHR_Townsperson 扩展）；胸前襁褓婴儿；主街/逃难队伍,白模（程序化）,B
+NPC_TownPorter,Characters,Assets/Art/Characters/NPC_TownPorter/NPC_TownPorter.fbx,,,,街坊·挑夫；右肩垫肩，配 PROP_Load_Pole（ANCHOR_Shoulder 对右肩）,白模（程序化）,B
+NPC_TownBeggar,Characters,Assets/Art/Characters/NPC_TownBeggar/NPC_TownBeggar.fbx,,,,街坊·乞丐；补丁破衣、赤脚、胯挂破碗；街角蹲坐/围观,白模（程序化）,B
+NPC_TownStudent,Characters,Assets/Art/Characters/NPC_TownStudent/NPC_TownStudent.fbx,,,,街坊·学生；立领学生装、学生帽、书包；告示墙前围观,白模（程序化）,B
+NPC_TownShopkeeper,Characters,Assets/Art/Characters/NPC_TownShopkeeper/NPC_TownShopkeeper.fbx,,,,街坊·铺子掌柜；马甲、礼帽、怀表链；铺面门口,白模（程序化）,B
+NPC_TownOldWoman,Characters,Assets/Art/Characters/NPC_TownOldWoman/NPC_TownOldWoman.fbx,,,,街坊·老太太；黑风帽、左臂挎竹篮、驼背,白模（程序化）,B
+NPC_TownToddler,Characters,Assets/Art/Characters/NPC_TownToddler/NPC_TownToddler.fbx,,,,街坊·幼童 4 岁；虎头帽、长命锁；跟在母亲/妇人身边,白模（程序化）,B
+NPC_TownRefugeeWoman,Characters,Assets/Art/Characters/NPC_TownRefugeeWoman/NPC_TownRefugeeWoman.fbx,,,,街坊·逃难妇人；背篓、方头巾、绑腿；逃难队伍,白模（程序化）,B
+PROP_StreetFood_Noodle,Props,Assets/Art/Props/PROP_StreetFood_Noodle/PROP_StreetFood_Noodle.fbx,,,,面担（PROP_StreetFood）：子物体 Stall / Pot_Lid；FX_Steam、FX_StoveFire、FX_StoveSmoke；ANCHOR_Vendor / ANCHOR_Customer_1..2,白模（程序化）,B
+PROP_StreetFood_Steamer,Props,Assets/Art/Props/PROP_StreetFood_Steamer/PROP_StreetFood_Steamer.fbx,,,,蒸笼+油锅早点摊（PROP_StreetFood）：Stall / Steamer_Lid；FX_Steam、FX_OilSmoke、FX_StoveFire_1..2；ANCHOR_*,白模（程序化）,B
+PROP_Load_Pole,Props,Assets/Art/Props/PROP_Load_Pole/PROP_Load_Pole.fbx,,,,逃难挑子（PROP_Load）：扁担沿 Y、两筐着地；挑起时 ANCHOR_Shoulder 对挑夫右肩,白模（程序化）,B
+PROP_Load_Cart,Props,Assets/Art/Props/PROP_Load_Cart/PROP_Load_Cart.fbx,,,,独轮车装家当（PROP_Load）：Cart + Wheel（枢轴在轮轴）；ANCHOR_Pusher,白模（程序化）,B
+PROP_Flag_Japan_Pole,Props,Assets/Art/Props/PROP_Flag_Japan_Pole/PROP_Flag_Japan_Pole.fbx,,,,哨卡高旗杆+旭日旗（PROP_JapaneseFlag）：Pole / Cloth（枢轴在杆顶挂点，可风动）,白模（程序化）,B
+PROP_Flag_Japan_Wall,Props,Assets/Art/Props/PROP_Flag_Japan_Wall/PROP_Flag_Japan_Wall.fbx,,,,墙挂日旗（PROP_JapaneseFlag）：Flag_Hung / Bracket / Flag_Crossed_L/R；原点在墙面旗下沿，墙在背后（团结 -Z）,白模（程序化）,B
+PROP_Poster_A,Props,Assets/Art/Props/PROP_Poster_A/PROP_Poster_A.fbx,Assets/Art/Props/PROP_Poster_A/T_Poster_A_D.png,,,告示·布告宵禁（PROP_WantedPoster 刚贴）：贴墙薄片，原点纸下沿中点,白模（程序化）,B
+PROP_Poster_B,Props,Assets/Art/Props/PROP_Poster_B/PROP_Poster_B.fbx,Assets/Art/Props/PROP_Poster_B/T_Poster_B_D.png,,,通缉令（PROP_WantedPoster 撕破）：右上角翻折、左下撕掉、Paper_Remnants,白模（程序化）,B
+PROP_Poster_C,Props,Assets/Art/Props/PROP_Poster_C/PROP_Poster_C.fbx,Assets/Art/Props/PROP_Poster_C/T_Poster_C_D.png,,,告示·良民证（PROP_WantedPoster 雨湿）：墨流、鼓包、卷角 + 墙上水痕 NOCOL_WetStain,白模（程序化）,B
+ENV_BombCrater_A,Environments,Assets/Art/Environments/ENV_BombCrater_A/ENV_BombCrater_A.fbx,,,,路面小弹坑（ENV_BombCrater）：浅坑积水、翘起石板,白模（程序化）,B
+ENV_BombCrater_B,Environments,Assets/Art/Environments/ENV_BombCrater_B/ENV_BombCrater_B.fbx,,,,靠墙大弹坑（ENV_BombCrater）：墙脚半圆大坑、炸塌熏黑的墙、翻起大石板；墙在团结 -Z 一侧,白模（程序化）,B
+ENV_Barricade_A,Environments,Assets/Art/Environments/ENV_Barricade_A/ENV_Barricade_A.fbx,,,,家具门板街垒（ENV_Barricade）：Barricade + COL_Barricade,白模（程序化）,B
+ENV_Barricade_B,Environments,Assets/Art/Environments/ENV_Barricade_B/ENV_Barricade_B.fbx,,,,铁丝网木桩路障（ENV_Barricade）：Posts / Sign / NOCOL_Wire / COL_Fence,白模（程序化）,B
+ENV_Barricade_C,Environments,Assets/Art/Environments/ENV_Barricade_C/ENV_Barricade_C.fbx,,,,沙袋矮墙带射击口（ENV_Barricade）：Sandbags；ANCHOR_Loophole_1..2,白模（程序化）,B
+PROP_Bicycle,Props,Assets/Art/Props/PROP_Bicycle/PROP_Bicycle.fbx,,,,1941 自行车：Frame / Wheel_F / Wheel_R（枢轴在轴心）,白模（程序化）,B
+PROP_Rickshaw,Props,Assets/Art/Props/PROP_Rickshaw/PROP_Rickshaw.fbx,,,,黄包车：Body（枢轴在车轴，默认停放后仰 21°，转回 21° 即拉起）/ Wheel_L/R；ANCHOR_Puller / ANCHOR_Seat,白模（程序化）,B
+PROP_Telephone,Props,Assets/Art/Props/PROP_Telephone/PROP_Telephone.fbx,,,,日军野战电话/交换机：Table / Phone / Handset / Crank / Switchboard / Reel_Stand / Reel / NOCOL_Wires；ANCHOR_Operator,白模（程序化）,B
+PROP_Suitcase,Props,Assets/Art/Props/PROP_Suitcase/PROP_Suitcase.fbx,,,,皮箱：Case / Contents / Lid（枢轴在后沿铰链，翻约 105° 即开）,白模（程序化）,B
+BLD_MING_House_S_A,Buildings,Assets/Art/Buildings/BLD_MING_House_S_A/BLD_MING_House_S_A.fbx,,,,house_s 明代 A：三开间悬山平房+前檐廊；门 x=0；ANCHOR_Door,白模（程序化）,B
+BLD_MING_House_S_B,Buildings,Assets/Art/Buildings/BLD_MING_House_S_B/BLD_MING_House_S_B.fbx,,,,house_s 明代 B：前院墙小门楼+后屋硬山马头墙；院门 x=-1.8；ANCHOR_Door,白模（程序化）,B
+BLD_MING_House_L_A,Buildings,Assets/Art/Buildings/BLD_MING_House_L_A/BLD_MING_House_L_A.fbx,,,,house_l 明代 A：两层木楼+腰檐+悬山；门 x=0；ANCHOR_Door,白模（程序化）,B
+BLD_MING_House_L_B,Buildings,Assets/Art/Buildings/BLD_MING_House_L_B/BLD_MING_House_L_B.fbx,,,,house_l 明代 B：曲尺形（两层马头墙楼+前厢屋+小院）；门 x=-2.2 / 2.2；ANCHOR_Door/_2,白模（程序化）,B
+BLD_MING_Shop_A,Buildings,Assets/Art/Buildings/BLD_MING_Shop_A/BLD_MING_Shop_A.fbx,,,,shop 明代 A：两层出挑店屋，排门板+柜台；NOCOL_Banner 布幌；ANCHOR_Counter,白模（程序化）,B
+BLD_MING_Shop_B,Buildings,Assets/Art/Buildings/BLD_MING_Shop_B/BLD_MING_Shop_B.fbx,,,,shop 明代 B：山面朝街悬山店屋+前披檐；ANCHOR_Door,白模（程序化）,B
+BLD_MING_ShopWest,Buildings,Assets/Art/Buildings/BLD_MING_ShopWest/BLD_MING_ShopWest.fbx,,,,shop_west 明代：两层客栈，槅扇+腰檐+歇山；NOCOL_WineFlag 酒旗；ANCHOR_Door,白模（程序化）,B
+BLD_MING_Courtyard,Buildings,Assets/Art/Buildings/BLD_MING_Courtyard/BLD_MING_Courtyard.fbx,,,,courtyard 明代三合院：正屋硬山+两厢+门楼+井；ANCHOR_Door/Yard/MainDoor,白模（程序化）,B
+BLD_MING_HallSmall,Buildings,Assets/Art/Buildings/BLD_MING_HallSmall/BLD_MING_HallSmall.fbx,,,,hall_small 明代一进祠第：门厅马头墙+歇山正厅+香炉；ANCHOR_Door/Censer/Hall，FX_Incense,白模（程序化）,B
+BLD_MING_Granary,Buildings,Assets/Art/Buildings/BLD_MING_Granary/BLD_MING_Granary.fbx,,,,granary 明代官仓：高台基+通长气楼；ANCHOR_Door/_2（坡道下）,白模（程序化）,B
+BLD_MING_Dock,Buildings,Assets/Art/Buildings/BLD_MING_Dock/BLD_MING_Dock.fbx,,,,dock 明代埠头：条石驳岸+下水石阶+木栈桥+货棚，正面(-Y)朝海；ANCHOR_Jetty/Steps，FX_Lantern,白模（程序化）,B
+BLD_MING_SaltShed,Buildings,Assets/Art/Buildings/BLD_MING_SaltShed/BLD_MING_SaltShed.fbx,,,,salt_shed 明代煎盐灶舍：茅草四坡+盐灶盘铁；FX_Fire/Smoke/Steam，ANCHOR_Stove,白模（程序化）,B
+BLD_MING_AncestralHall,Buildings,Assets/Art/Buildings/BLD_MING_AncestralHall/BLD_MING_AncestralHall.fbx,,,,明代祖祠外壳 20x36，kind=ancestral_hall；台基/门窗同 ROC 与 BLD_INT_AncestralHall；ANCHOR_door_front/courtyard/hall_front/hall_door,白模（程序化）,B
+BLD_MING_Temple,Buildings,Assets/Art/Buildings/BLD_MING_Temple/BLD_MING_Temple.fbx,,,,明代汤和庙 16x22，kind=temple；巡游起点 ANCHOR_procession_start；另有 gate_in/incense/hall_front/altar,白模（程序化）,B
+BLD_MING_GateTower,Buildings,Assets/Art/Buildings/BLD_MING_GateTower/BLD_MING_GateTower.fbx,,,,明代城门楼 12x6.4，kind=gate_tower；原点=城墙顶 y=7.0，坐 BLD_Wall_GateBase；底层柱廊+穿堂可走,白模（程序化）,B
+BLD_MING_HuanhaiLou,Buildings,Assets/Art/Buildings/BLD_MING_HuanhaiLou/BLD_MING_HuanhaiLou.fbx,,,,明代环海楼 20x8.8，kind=gate_tower_huanhai；原点=城墙顶；尺寸同 BLD_INT_HuanhaiLou；ROOF_Upper/ROOF_Waist 俯视可隐藏；旗杆,白模（程序化）,B
+BLD_MING_WaterGate_Sluice,Buildings,Assets/Art/Buildings/BLD_MING_WaterGate_Sluice/BLD_MING_WaterGate_Sluice.fbx,,,,水门闸套件，与 BLD_Wall_WaterGate 同位同旋转；Sluice_Gate(升 1.8m 开闸)/Sluice_Latch/Sluice_StoneBar_1..3/Sluice_WinchDrum(绕X转)；ANCHOR_Sluice_Spot_1..3；FX_WaterFlow,白模（程序化）,B
+ENV_NorthGate_Build,Environments,Assets/Art/Environments/ENV_NorthGate_Build/ENV_NorthGate_Build.fbx,,,,北门工地 40m 墙线(5x8m)；Stage_1/2/3 叠加显示 + Closure 合龙段；Scaffold/Ramp/Yard/Wall_Done；FX_RamDust_1/2、WallRise、Chisel、MortarSplash、ClosureDust；ANCHOR_Closure/Winch/Gantry_Hook 等,白模（程序化）,B
+ENV_WangHouse,Environments,Assets/Art/Environments/ENV_WangHouse/ENV_WangHouse.fbx,,,,王叔杲宅一进院 18x22；Beam_Removable(拆梁)；Door_L/Door_R(枢轴在门轴)；ROOF_Gate/Hall/Study/Wing；ANCHOR_shugao_hall/beam_drop/study_desk 等,白模（程序化）,B
+ENV_SaltField,Environments,Assets/Art/Environments/ENV_SaltField/ENV_SaltField.fbx,,,,盐田 8 块 32x22；SaltPan_1..8 三态换材质(M_MC_Brine/M_Salt/M_MC_PanDry)，SaltPan_4..6_Heaps；NOCOL_BrineChannel；ANCHOR_Pan_1..8,白模（程序化）,B
+ENV_SaltFurnace,Environments,Assets/Art/Environments/ENV_SaltFurnace/ENV_SaltFurnace.fbx,,,,煮盐灶；Pan_Brine(卤水面，下移/隐藏)/Pan_Salt(结晶层)；FX_Fire/Smoke/Steam；ANCHOR_Stoke/Pour/Scoop,白模（程序化）,B
+PROP_BrineVat_S,Props,Assets/Art/Props/PROP_BrineVat_S/PROP_BrineVat_S.fbx,,,,卤水缸小 r0.32 h0.6；Vat/Brine(液面)/Lid,白模（程序化）,B
+PROP_BrineVat_M,Props,Assets/Art/Props/PROP_BrineVat_M/PROP_BrineVat_M.fbx,,,,卤水缸中 r0.48 h0.85；Vat/Brine/Lid(半开)/Ladle,白模（程序化）,B
+PROP_BrineVat_L,Props,Assets/Art/Props/PROP_BrineVat_L/PROP_BrineVat_L.fbx,,,,卤水缸大 r0.68 h1.1；Vat/Brine/Lid(半开)/Ladle,白模（程序化）,B
+PROP_SaltSet,Props,Assets/Art/Props/PROP_SaltSet/PROP_SaltSet.fbx,,,,盐具组：SaltHeap/SaltBag_1..3/SaltShovel/SaltBasket/SaltRake,白模（程序化）,B
+PROP_Firewood,Props,Assets/Art/Props/PROP_Firewood/PROP_Firewood.fbx,,,,柴组：WoodStack/Kindling(引火草)/FireTongs(火钳),白模（程序化）,B
+NPC_MingElder_A,Characters,Assets/Art/Characters/NPC_MingElder_A/NPC_MingElder_A.fbx,,,,明代族老 A：70 岁，赭褐道袍、高方的四方平定巾、白长须、微驼、宽袖；算账反对筑堡的主声音（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_MingElder_B,Characters,Assets/Art/Characters/NPC_MingElder_B/NPC_MingElder_B.fbx,,,,明代族老 B：62 岁，高瘦，暗橄榄直裰外罩黑褐褙子、东坡巾、灰短须；中间派（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Artisan_Mason,Characters,Assets/Art/Characters/NPC_Artisan_Mason/NPC_Artisan_Mason.fbx,,,,石匠：40 岁，灰白短褐、灰头巾、皮围裙到膝、帆布袖套，腰挂錾子和手锤（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Artisan_Carpenter,Characters,Assets/Art/Characters/NPC_Artisan_Carpenter/NPC_Artisan_Carpenter.fbx,,,,木匠：45 岁，褐短褐、网巾发髻、浅帆布围裙，背插曲尺、腰挂墨斗、耳夹木笔（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Artisan_Rammer,Characters,Assets/Art/Characters/NPC_Artisan_Rammer/NPC_Artisan_Rammer.fbx,,,,夯土匠：35 岁，粗壮，土黄短褐卷袖、斗笠、脖搭白汗巾（喊号子的领夯）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Artisan_Smith,Characters,Assets/Art/Characters/NPC_Artisan_Smith/NPC_Artisan_Smith.fbx,,,,铁匠：50 岁，黑短褐、褐头巾、长皮围裙到小腿、皮护臂，左胯挂火钳（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Laborer_A,Characters,Assets/Art/Characters/NPC_Laborer_A/NPC_Laborer_A.fbx,,,,民夫 A：斗笠、汗巾、褐短褐（标准体）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Laborer_B,Characters,Assets/Art/Characters/NPC_Laborer_B/NPC_Laborer_B.fbx,,,,民夫 B：高瘦，蓝灰头巾、斜挎一盘麻绳（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Laborer_C,Characters,Assets/Art/Characters/NPC_Laborer_C/NPC_Laborer_C.fbx,,,,民夫 C：矮、上年纪、灰发髻、背微驼，衣裤打补丁（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Laborer_D,Characters,Assets/Art/Characters/NPC_Laborer_D/NPC_Laborer_D.fbx,,,,民夫 D：壮，网巾发髻、右肩垫肩（抬杠）、灰汗巾（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Laborer_E,Characters,Assets/Art/Characters/NPC_Laborer_E/NPC_Laborer_E.fbx,,,,民夫 E：包褐头巾、肩披短蓑衣（雨天上工）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Laborer_F,Characters,Assets/Art/Characters/NPC_Laborer_F/NPC_Laborer_F.fbx,,,,民夫 F：半大后生（17 岁），白头巾、短褐外罩坎肩（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Militia_A,Characters,Assets/Art/Characters/NPC_Militia_A/NPC_Militia_A.fbx,,,,义师 A：红褐布面甲钉铜泡、红头巾、短刀、腰牌（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Militia_B,Characters,Assets/Art/Characters/NPC_Militia_B/NPC_Militia_B.fbx,,,,义师 B：米黄纸甲压横绦、灰头巾、背箭囊（弓手）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Militia_C,Characters,Assets/Art/Characters/NPC_Militia_C/NPC_Militia_C.fbx,,,,义师 C：靛青布面甲、红缨斗笠、背藤牌（牌手）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_Militia_D,Characters,Assets/Art/Characters/NPC_Militia_D/NPC_Militia_D.fbx,,,,义师 D：灰纸甲、靛头巾、皮护臂、短刀（长枪另为道具）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_MingWoman_A,Characters,Assets/Art/Characters/NPC_MingWoman_A/NPC_MingWoman_A.fbx,,,,妇人 A（送饭）：35 岁，褐袄长裙、青灰比甲、包头巾、白腰围（饭篮另为道具）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_MingWoman_B,Characters,Assets/Art/Characters/NPC_MingWoman_B/NPC_MingWoman_B.fbx,,,,妇人 B（提灯）：20 岁，浅褐袄黑裙、暗红比甲、高髻横簪、黑抹额（灯笼另为道具）（第二幕 1560，Humanoid）,白模（程序化）,B
+NPC_MingChild,Characters,Assets/Art/Characters/NPC_MingChild/NPC_MingChild.fbx,,,,孩童：7 岁，赭红短袄、头两侧总角扎红绳、长命锁（春祭/巡游）（第二幕 1560，Humanoid）,白模（程序化）,B
+ENV_SandTable,Environments,Assets/Art/Environments/ENV_SandTable/ENV_SandTable.fbx,,,,祠堂沙盘台 1.2×0.8（anchor_sandtable）：1:500 永昌堡底盘（河/浃/护城河/田/山/海/坟地/盐田）；Ridge_River/Hill（沙埂，Z 缩放隆起）、Trench_River/Hill（浅沟）；ANCHOR_SandOrigin 为全部沙盘套件原点；CAM_Overview/East/North + LOOK_*；COL_Hot_EastWall/NorthWall/WaterGate/WangHouse 热区；Rim_Corner_FL（1941 断角隐藏）、Cover_1945（蒙布）；FX_SandDust*,白模（程序化）,B
+PROP_Sand_Wall,Props,Assets/Art/Props/PROP_Sand_Wall/PROP_Sand_Wall.fbx,,,,沙盘城墙条：Wall_Fixed / Wall_River / Wall_Hill 三组（子物体 <组>_NN、<组>_Corner_N），放在 ENV_SandTable 的 ANCHOR_SandOrigin；Kit_Straight_L/S、Kit_Corner、Kit_GateSeg 散件可拼,白模（程序化）,B
+PROP_Sand_Gate,Props,Assets/Art/Props/PROP_Sand_Gate/PROP_Sand_Gate.fbx,,,,沙盘门楼/水门：GateTower_N/E/S/W(+_Hill 版)、Wengcheng_E、WaterGate_E/N1/N2/S1/S2(+S1/S2_Hill)；WaterGate_E 下 Gate_Board、Gate_StoneBar、Water_Still/Water_Flow、Boat、StonePile 两态切换,白模（程序化）,B
+PROP_Sand_Tower,Props,Assets/Art/Props/PROP_Sand_Tower/PROP_Sand_Tower.fbx,,,,沙盘敌台：Tower_East（东台对海口）/Tower_North（北台对官道），小炮子物体 Tower_East_Cannon / Tower_North_Cannon（本地 Z -0.012→0 升起）,白模（程序化）,B
+PROP_Sand_House,Props,Assets/Art/Props/PROP_Sand_House/PROP_Sand_House.fbx,,,,沙盘民居片 House_01..20（按布局摆好）；House_20 = 王叔杲宅（北墙外），ANCHOR_House_20_In = 圈进墙内的位置,白模（程序化）,B
+PROP_Sand_Flags,Props,Assets/Art/Props/PROP_Sand_Flags/PROP_Sand_Flags.fbx,,,,沙盘小件：Flag_01..06（红/蓝/黄）、Stake_01..04 木签、Twine 麻线（+X 0.1 m，缩放拉伸）、Rice_01..03 米粒、Card_Wall/Tower/Water 三议题纸卡,白模（程序化）,B
+ENV_Stele,Environments,Assets/Art/Environments/ENV_Stele/ENV_Stele.fbx,,,,族约碑：Stele 本体；Clause_1..3（右起）各含 _Blank/_Carved 两态；FX_Chisel_1..3 凿石火星；ANCHOR_Carver 凿碑站位,白模（程序化）,B
+PROP_Covenant,Props,Assets/Art/Props/PROP_Covenant/PROP_Covenant.fbx,,,,族约木牌 Board_01..10（平放两排，拿起放下）；FX_Ink,白模（程序化）,B
+PROP_Roster,Props,Assets/Art/Props/PROP_Roster/PROP_Roster.fbx,,,,义师名录：Roster_Open + InkRow_01..12（逐行显现）、Roster_Closed、Roster_Scroll、NameTag_Stack、NameTag_01..04、Brush（握点原点）、Inkstone、Seal、Seal_Mark（盖印后显示）,白模（程序化）,B
+PROP_Deed,Props,Assets/Art/Props/PROP_Deed/PROP_Deed.fbx,,,,王叔杲田契：Deed_Flat（拍桌）/ Deed_Folded 两态,白模（程序化）,B
+PROP_Blueprint,Props,Assets/Art/Props/PROP_Blueprint/PROP_Blueprint.fbx,,,,建堡图卷：Scroll_Rolled / Scroll_Open 两态 + Fragment_1941（1941 废墟残页）,白模（程序化）,B
+PROP_Survey,Props,Assets/Art/Props/PROP_Survey/PROP_Survey.fbx,,,,测绘：Compass 罗盘、Plumb 垂准、LineReel 墨斗、Stake_01..03 木桩、MeasurePole 丈杆,白模（程序化）,B
+PROP_Scaffold,Props,Assets/Art/Props/PROP_Scaffold/PROP_Scaffold.fbx,,,,杉木脚手架：Bay_Standard（2×1.1×2 m，可拼）、Bay_Corner、Ladder；ANCHOR_Climb,白模（程序化）,B
+PROP_StoneBlock_S,Props,Assets/Art/Props/PROP_StoneBlock_S/PROP_StoneBlock_S.fbx,,,,料石小 0.4×0.25×0.2（抬石）,白模（程序化）,B
+PROP_StoneBlock_M,Props,Assets/Art/Props/PROP_StoneBlock_M/PROP_StoneBlock_M.fbx,,,,料石中 0.7×0.35×0.3,白模（程序化）,B
+PROP_StoneBlock_L,Props,Assets/Art/Props/PROP_StoneBlock_L/PROP_StoneBlock_L.fbx,,,,料石大 1.1×0.5×0.45（吊装）,白模（程序化）,B
+PROP_Mortar,Props,Assets/Art/Props/PROP_Mortar/PROP_Mortar.fbx,,,,灰浆：Bucket 木桶、Trough 拌灰槽、Trowel 抹子；FX_Splash,白模（程序化）,B
+PROP_Winch,Props,Assets/Art/Props/PROP_Winch/PROP_Winch.fbx,,,,绞盘吊架：Frame、Drum（绕本地 X 转）、Rope_Hang（Z 缩放 = 吊绳长）、Hook；ANCHOR_Crank / ANCHOR_Load,白模（程序化）,B
+PROP_Cart_Wheelbarrow,Props,Assets/Art/Props/PROP_Cart_Wheelbarrow/PROP_Cart_Wheelbarrow.fbx,,,,独轮车：Body + Wheel（绕本地 X 转）；ANCHOR_Push,白模（程序化）,B
+PROP_Cart_Flat,Props,Assets/Art/Props/PROP_Cart_Flat/PROP_Cart_Flat.fbx,,,,板车：Bed + Wheel_L/Wheel_R；车辕朝前，ANCHOR_Pull,白模（程序化）,B
+PROP_Tools,Props,Assets/Art/Props/PROP_Tools/PROP_Tools.fbx,,,,工具：Chisel/Hammer/Saw/Rammer/Shovel/Mallet，原点在握点、沿本地 +Z,白模（程序化）,B
+PROP_Rope,Props,Assets/Art/Props/PROP_Rope/PROP_Rope.fbx,,,,绳索：Coil 绳卷、PullRope 拉绳（4 m，+X）、Sling 吊索,白模（程序化）,B
+CH_WangYan_1941@A2_SpearStamp,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_SpearStamp/CH_WangYan_1941@A2_SpearStamp.fbx,,共用 Humanoid 动作：王沛枪顿地三下；AC_Humanoid_Locomotion 需加同名状态 A2_SpearStamp,白模（程序化）,B
+CH_WangYan_1941@A2_PointLine,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_PointLine/CH_WangYan_1941@A2_PointLine.fbx,,共用 Humanoid 动作：王沛指墙线；AC_Humanoid_Locomotion 需加同名状态 A2_PointLine,白模（程序化）,B
+CH_WangYan_1941@A2_KneelDie,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_KneelDie/CH_WangYan_1941@A2_KneelDie.fbx,,共用 Humanoid 动作：王沛中矢跪死（停末帧）；AC_Humanoid_Locomotion 需加同名状态 A2_KneelDie,白模（程序化）,B
+CH_WangYan_1941@A2_SlamDeed,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_SlamDeed/CH_WangYan_1941@A2_SlamDeed.fbx,,共用 Humanoid 动作：王叔杲拍田契；AC_Humanoid_Locomotion 需加同名状态 A2_SlamDeed,白模（程序化）,B
+CH_WangYan_1941@A2_Abacus,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_Abacus/CH_WangYan_1941@A2_Abacus.fbx,,共用 Humanoid 动作：王叔杲拨算盘三下停；AC_Humanoid_Locomotion 需加同名状态 A2_Abacus,白模（程序化）,B
+CH_WangYan_1941@A2_UnrollScroll,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_UnrollScroll/CH_WangYan_1941@A2_UnrollScroll.fbx,,共用 Humanoid 动作：王叔杲展开图卷；AC_Humanoid_Locomotion 需加同名状态 A2_UnrollScroll,白模（程序化）,B
+CH_WangYan_1941@A2_CloseGap,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_CloseGap/CH_WangYan_1941@A2_CloseGap.fbx,,共用 Humanoid 动作：王德合龙（双手推合）；AC_Humanoid_Locomotion 需加同名状态 A2_CloseGap,白模（程序化）,B
+CH_WangYan_1941@A2_HandTag,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_HandTag/CH_WangYan_1941@A2_HandTag.fbx,,共用 Humanoid 动作：王德递腰牌；AC_Humanoid_Locomotion 需加同名状态 A2_HandTag,白模（程序化）,B
+CH_WangYan_1941@A2_FallDead,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_FallDead/CH_WangYan_1941@A2_FallDead.fbx,,共用 Humanoid 动作：王德倒地（停末帧）；AC_Humanoid_Locomotion 需加同名状态 A2_FallDead,白模（程序化）,B
+CH_WangYan_1941@A2_PlantStake,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_PlantStake/CH_WangYan_1941@A2_PlantStake.fbx,,共用 Humanoid 动作：王砚插木签/插小旗；AC_Humanoid_Locomotion 需加同名状态 A2_PlantStake,白模（程序化）,B
+CH_WangYan_1941@A2_PullString,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_PullString/CH_WangYan_1941@A2_PullString.fbx,,共用 Humanoid 动作：王砚拉麻线；AC_Humanoid_Locomotion 需加同名状态 A2_PullString,白模（程序化）,B
+CH_WangYan_1941@A2_PushLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_PushLoop/CH_WangYan_1941@A2_PushLoop.fbx,,共用 Humanoid 动作：推（王砚推石入闸/群众推车，循环）；AC_Humanoid_Locomotion 需加同名状态 A2_PushLoop,白模（程序化）,B
+CH_WangYan_1941@A2_LoadCannon,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_LoadCannon/CH_WangYan_1941@A2_LoadCannon.fbx,,共用 Humanoid 动作：王砚装炮；AC_Humanoid_Locomotion 需加同名状态 A2_LoadCannon,白模（程序化）,B
+CH_WangYan_1941@A2_ChiselLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_ChiselLoop/CH_WangYan_1941@A2_ChiselLoop.fbx,,共用 Humanoid 动作：凿碑/凿石（循环）；AC_Humanoid_Locomotion 需加同名状态 A2_ChiselLoop,白模（程序化）,B
+CH_WangYan_1941@A2_WriteLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_WriteLoop/CH_WangYan_1941@A2_WriteLoop.fbx,,共用 Humanoid 动作：写名（循环）；AC_Humanoid_Locomotion 需加同名状态 A2_WriteLoop,白模（程序化）,B
+CH_WangYan_1941@A2_Stamp,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_Stamp/CH_WangYan_1941@A2_Stamp.fbx,,共用 Humanoid 动作：盖印；AC_Humanoid_Locomotion 需加同名状态 A2_Stamp,白模（程序化）,B
+CH_WangYan_1941@A2_CarryLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_CarryLoop/CH_WangYan_1941@A2_CarryLoop.fbx,,共用 Humanoid 动作：群众抬石（循环）；AC_Humanoid_Locomotion 需加同名状态 A2_CarryLoop,白模（程序化）,B
+CH_WangYan_1941@A2_RamLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_RamLoop/CH_WangYan_1941@A2_RamLoop.fbx,,共用 Humanoid 动作：群众夯土（循环）；AC_Humanoid_Locomotion 需加同名状态 A2_RamLoop,白模（程序化）,B
+CH_WangYan_1941@A2_ClimbLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_ClimbLoop/CH_WangYan_1941@A2_ClimbLoop.fbx,,共用 Humanoid 动作：爬架（循环，根节点上移）；AC_Humanoid_Locomotion 需加同名状态 A2_ClimbLoop,白模（程序化）,B
+CH_WangYan_1941@A2_HaulRopeLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A2_HaulRopeLoop/CH_WangYan_1941@A2_HaulRopeLoop.fbx,,共用 Humanoid 动作：拉绳（循环）；AC_Humanoid_Locomotion 需加同名状态 A2_HaulRopeLoop,白模（程序化）,B
+EN_Wokou_Sword_A,Enemies,Assets/Art/Enemies/EN_Wokou_Sword_A/EN_Wokou_Sword_A.fbx,,,,刀兵 A 真倭（CHR_Enemy_Sword）；双手 PROP_EN_Katana 挂 SOCKET_Hand_R，左手跟 SOCKET_Hand_L；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_Sword_B,Enemies,Assets/Art/Enemies/EN_Wokou_Sword_B/EN_Wokou_Sword_B.fbx,,,,刀兵 B 胁从（CHR_Enemy_Sword）；同上；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_Archer_A,Enemies,Assets/Art/Enemies/EN_Wokou_Archer_A/EN_Wokou_Archer_A.fbx,,,,弓兵 A 真倭（CHR_Enemy_Archer）；PROP_EN_Bow 挂 SOCKET_Hand_L，箭 PROP_EN_Arrow 挂 SOCKET_Hand_R；SOCKET_Quiver；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_Archer_B,Enemies,Assets/Art/Enemies/EN_Wokou_Archer_B/EN_Wokou_Archer_B.fbx,,,,弓兵 B 胁从（CHR_Enemy_Archer）；同上；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_FirePot_A,Enemies,Assets/Art/Enemies/EN_Wokou_FirePot_A/EN_Wokou_FirePot_A.fbx,,,,火罐兵 A 真倭（CHR_Enemy_FirePot）；PROP_EN_FirePot 挂 SOCKET_Hand_R，补罐点 SOCKET_PotBasket；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_FirePot_B,Enemies,Assets/Art/Enemies/EN_Wokou_FirePot_B/EN_Wokou_FirePot_B.fbx,,,,火罐兵 B 胁从（CHR_Enemy_FirePot）；同上；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_Shield_A,Enemies,Assets/Art/Enemies/EN_Wokou_Shield_A/EN_Wokou_Shield_A.fbx,,,,盾兵 A 真倭（CHR_Enemy_Shield）；PROP_EN_Shield 挂 SOCKET_Hand_L；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+EN_Wokou_Shield_B,Enemies,Assets/Art/Enemies/EN_Wokou_Shield_B/EN_Wokou_Shield_B.fbx,,,,盾兵 B 胁从（CHR_Enemy_Shield）；同上；FX_Hit/FX_HitHead 受击点；SOCKET_Back 背挂,白模（程序化）,B
+BOSS_Chiyan,Bosses,Assets/Art/Bosses/BOSS_Chiyan/BOSS_Chiyan.fbx,,,,赤焰（第4波东水门）；阶段子物体 Phase1_Mino/Phase12_Armor/Phase3_ArmorBroken/Phase12_Pack/Phase3_PackOpen；WEAK_Chiyan_Pack；FX_Chiyan_*；大斧挂 SOCKET_Hand_R,白模（程序化）,B
+BOSS_Guiwo,Bosses,Assets/Art/Bosses/BOSS_Guiwo/BOSS_Guiwo.fbx,,,,鬼倭（第8波环海楼/瓮城）；Phase1_Sashimono/Phase12_Armor/Phase3_ArmorBroken/Phase12_Kabuto/Phase12_Mask/Phase3_MaskBroken；WEAK_Guiwo_*；P1太刀 P2薙刀 P3野太刀,白模（程序化）,B
+PROP_EN_Katana,Props,Assets/Art/Props/PROP_EN_Katana/PROP_EN_Katana.fbx,,,,倭刀；原点=右手握点，挂 SOCKET_Hand_R；FX_Trail_Base/Tip 刀光,白模（程序化）,B
+PROP_EN_Bow,Props,Assets/Art/Props/PROP_EN_Bow/PROP_EN_Bow.fbx,,,,和弓；原点=握把，挂 SOCKET_Hand_L；String/String_Drawn 两态；ANCHOR_Nock,白模（程序化）,B
+PROP_EN_Arrow,Props,Assets/Art/Props/PROP_EN_Arrow/PROP_EN_Arrow.fbx,,,,箭；原点=箭尾，箭头朝局部 -Y（团结 +Z）；投射物也用它,白模（程序化）,B
+PROP_EN_FirePot,Props,Assets/Art/Props/PROP_EN_FirePot/PROP_EN_FirePot.fbx,,,,火罐；原点=掌心，挂 SOCKET_Hand_R；FX_Fuse 引信；投射物也用它（赤焰共用）,白模（程序化）,B
+PROP_EN_Shield,Props,Assets/Art/Props/PROP_EN_Shield/PROP_EN_Shield.fbx,,,,大木盾；原点=中央握把，挂 SOCKET_Hand_L；FX_Block,白模（程序化）,B
+PROP_BS_Chiyan_Axe,Props,Assets/Art/Props/PROP_BS_Chiyan_Axe/PROP_BS_Chiyan_Axe.fbx,,,,赤焰大斧；挂 SOCKET_Hand_R（左手在柄后 0.45 m）；FX_AxeFire、FX_Trail_*,白模（程序化）,B
+PROP_BS_Guiwo_Tachi,Props,Assets/Art/Props/PROP_BS_Guiwo_Tachi/PROP_BS_Guiwo_Tachi.fbx,,,,鬼倭一阶段太刀；挂 SOCKET_Hand_R,白模（程序化）,B
+PROP_BS_Guiwo_Naginata,Props,Assets/Art/Props/PROP_BS_Guiwo_Naginata/PROP_BS_Guiwo_Naginata.fbx,,,,鬼倭二阶段薙刀；挂 SOCKET_Hand_R（左手在杆后 0.45 m）,白模（程序化）,B
+PROP_BS_Guiwo_Nodachi,Props,Assets/Art/Props/PROP_BS_Guiwo_Nodachi/PROP_BS_Guiwo_Nodachi.fbx,,,,鬼倭三阶段野太刀；挂 SOCKET_Hand_R,白模（程序化）,B
+PROP_SiegeLadder,Props,Assets/Art/Props/PROP_SiegeLadder/PROP_SiegeLadder.fbx,,,,"云梯；Ladder 枢轴在梯脚（绕X推倒）；放在 BLD_Wall_Seg 局部 (x,-5.25,0) 同朝向；ANCHOR_Bottom/Top、FX_Hook_L/R",白模（程序化）,B
+PROP_BatteringRam,Props,Assets/Art/Props/PROP_BatteringRam/PROP_BatteringRam.fbx,,,,冲车；Frame + Ram（吊点枢轴，绕X摆）+ Wheel_FL/FR/BL/BR；FX_RamHit；ANCHOR_Push_1..4；COL_Ram,白模（程序化）,B
+PROP_FireShip,Props,Assets/Art/Props/PROP_FireShip/PROP_FireShip.fbx,,,,火船；Hull/Cargo/Cargo_Burnt/Mast；FX_Fire_1..4、FX_Smoke；ANCHOR_Waterline(z0.45 下沉到水面)、ANCHOR_Boss,白模（程序化）,B
+PROP_Cannon_Ming,Props,Assets/Art/Props/PROP_Cannon_Ming/PROP_Cannon_Ming.fbx,,,,明铁炮；Carriage + Barrel（炮耳枢轴，绕X俯仰）；FX_Muzzle/FX_Fuse 随炮身；ANCHOR_Gunner/Loader,白模（程序化）,B
+PROP_CannonEmplacement,Props,Assets/Art/Props/PROP_CannonEmplacement/PROP_CannonEmplacement.fbx,,,,炮位；Platform + Ammo_Solid(实弹)/Ammo_Scatter(散弹)/Powder/Powder_Lid；ANCHOR_Cannon 放炮,白模（程序化）,B
+PROP_WaterWheel,Props,Assets/Art/Props/PROP_WaterWheel/PROP_WaterWheel.fbx,,,,水轮；Frame + Wheel（轮轴枢轴绕X转，含绞把）+ Trough；ANCHOR_Turn、FX_Water；轮底低于原点 0.35 m 放进渠,白模（程序化）,B
+PROP_GateBar,Props,Assets/Art/Props/PROP_GateBar/PROP_GateBar.fbx,,,,城门门扇+门闩（门洞 4.4 m）；Door_L/R 枢轴在门轴、Bar、Bar_Sockets、Broken 撞破态；FX_RamHit/FX_Splinters,白模（程序化）,B
+PROP_Chevaux,Props,Assets/Art/Props/PROP_Chevaux/PROP_Chevaux.fbx,,,,拒马 Juma（原点）+ 鹿角 Lujiao（+X 3.6 m）；COL_Juma/COL_Lujiao,白模（程序化）,B
+PROP_FireOil,Props,Assets/Art/Props/PROP_FireOil/PROP_FireOil.fbx,,,,熬火油；Stove + Cauldron（倾倒枢轴绕X）；FX_Fire/FX_Pour/FX_Smoke；ANCHOR_Tip,白模（程序化）,B
+PROP_BucketSand,Props,Assets/Art/Props/PROP_BucketSand/PROP_BucketSand.fbx,,,,Bucket(ANCHOR_Handle)/Bucket_Row/Sandbags/Sandbag/SandBasket,白模（程序化）,B
+PROP_Stretcher,Props,Assets/Art/Props/PROP_Stretcher/PROP_Stretcher.fbx,,,,伤兵担架；Stretcher + Wounded（静态平躺伤兵）+ Bandage；ANCHOR_Bearer_Front/Back,白模（程序化）,B
+ENV_WallBreach,Environments,Assets/Art/Environments/ENV_WallBreach/ENV_WallBreach.fbx,,,,城墙破口/火起，替换 BLD_Wall_Seg 同位同向；Breach_Wall/Rubble/COL_Rubble/Scorch(可叠完好墙)/Burning_Debris；FX_Fire_1..3/FX_Smoke/FX_Dust；ANCHOR_BreachTop/RubbleFoot,白模（程序化）,B
+EN_Wokou_Sword_A@EN_SwordIdleLoop,Enemies,,,Assets/Art/Enemies/EN_Wokou_Sword_A@EN_SwordIdleLoop/EN_Wokou_Sword_A@EN_SwordIdleLoop.fbx,,Humanoid 共用动作 刀兵战斗待机（循环）,白模（程序化）,B
+EN_Wokou_Sword_A@EN_SwordAttack1,Enemies,,,Assets/Art/Enemies/EN_Wokou_Sword_A@EN_SwordAttack1/EN_Wokou_Sword_A@EN_SwordAttack1.fbx,,Humanoid 共用动作 刀兵一段斜斩，前摇0.45s，AttackHit@14,白模（程序化）,B
+EN_Wokou_Sword_A@EN_SwordAttack2,Enemies,,,Assets/Art/Enemies/EN_Wokou_Sword_A@EN_SwordAttack2/EN_Wokou_Sword_A@EN_SwordAttack2.fbx,,Humanoid 共用动作 刀兵二段反撩，接一段末，AttackHit@9,白模（程序化）,B
+EN_Wokou_Sword_A@EN_SwordHit,Enemies,,,Assets/Art/Enemies/EN_Wokou_Sword_A@EN_SwordHit/EN_Wokou_Sword_A@EN_SwordHit.fbx,,Humanoid 共用动作 刀兵受击,白模（程序化）,B
+EN_Wokou_Sword_A@EN_SwordDeath,Enemies,,,Assets/Art/Enemies/EN_Wokou_Sword_A@EN_SwordDeath/EN_Wokou_Sword_A@EN_SwordDeath.fbx,,Humanoid 共用动作 刀兵死亡，Death@24,白模（程序化）,B
+EN_Wokou_Archer_A@EN_BowIdleLoop,Enemies,,,Assets/Art/Enemies/EN_Wokou_Archer_A@EN_BowIdleLoop/EN_Wokou_Archer_A@EN_BowIdleLoop.fbx,,Humanoid 共用动作 弓兵待机（侧身，循环）,白模（程序化）,B
+EN_Wokou_Archer_A@EN_BowShoot,Enemies,,,Assets/Art/Enemies/EN_Wokou_Archer_A@EN_BowShoot/EN_Wokou_Archer_A@EN_BowShoot.fbx,,Humanoid 共用动作 拉弓射箭，满弓18–26，AttackHit@28 放箭,白模（程序化）,B
+EN_Wokou_Archer_A@EN_BowHit,Enemies,,,Assets/Art/Enemies/EN_Wokou_Archer_A@EN_BowHit/EN_Wokou_Archer_A@EN_BowHit.fbx,,Humanoid 共用动作 弓兵受击,白模（程序化）,B
+EN_Wokou_Archer_A@EN_BowDeath,Enemies,,,Assets/Art/Enemies/EN_Wokou_Archer_A@EN_BowDeath/EN_Wokou_Archer_A@EN_BowDeath.fbx,,Humanoid 共用动作 弓兵死亡，Death@24,白模（程序化）,B
+EN_Wokou_FirePot_A@EN_PotIdleLoop,Enemies,,,Assets/Art/Enemies/EN_Wokou_FirePot_A@EN_PotIdleLoop/EN_Wokou_FirePot_A@EN_PotIdleLoop.fbx,,Humanoid 共用动作 火罐兵待机（循环）,白模（程序化）,B
+EN_Wokou_FirePot_A@EN_PotThrow,Enemies,,,Assets/Art/Enemies/EN_Wokou_FirePot_A@EN_PotThrow/EN_Wokou_FirePot_A@EN_PotThrow.fbx,,Humanoid 共用动作 点引信@6 + 投掷，AttackHit@17 出手,白模（程序化）,B
+EN_Wokou_FirePot_A@EN_PotHit,Enemies,,,Assets/Art/Enemies/EN_Wokou_FirePot_A@EN_PotHit/EN_Wokou_FirePot_A@EN_PotHit.fbx,,Humanoid 共用动作 火罐兵受击,白模（程序化）,B
+EN_Wokou_FirePot_A@EN_PotDeath,Enemies,,,Assets/Art/Enemies/EN_Wokou_FirePot_A@EN_PotDeath/EN_Wokou_FirePot_A@EN_PotDeath.fbx,,Humanoid 共用动作 火罐兵死亡，Death@24,白模（程序化）,B
+EN_Wokou_Shield_A@EN_ShieldIdleLoop,Enemies,,,Assets/Art/Enemies/EN_Wokou_Shield_A@EN_ShieldIdleLoop/EN_Wokou_Shield_A@EN_ShieldIdleLoop.fbx,,Humanoid 共用动作 盾兵待机（循环）,白模（程序化）,B
+EN_Wokou_Shield_A@EN_ShieldBash,Enemies,,,Assets/Art/Enemies/EN_Wokou_Shield_A@EN_ShieldBash/EN_Wokou_Shield_A@EN_ShieldBash.fbx,,Humanoid 共用动作 顶盾冲撞，前摇0.7s，AttackHit@21,白模（程序化）,B
+EN_Wokou_Shield_A@EN_ShieldBlockLoop,Enemies,,,Assets/Art/Enemies/EN_Wokou_Shield_A@EN_ShieldBlockLoop/EN_Wokou_Shield_A@EN_ShieldBlockLoop.fbx,,Humanoid 共用动作 举盾格挡（循环）,白模（程序化）,B
+EN_Wokou_Shield_A@EN_ShieldWalk,Enemies,,,Assets/Art/Enemies/EN_Wokou_Shield_A@EN_ShieldWalk/EN_Wokou_Shield_A@EN_ShieldWalk.fbx,,Humanoid 共用动作 举盾缓慢推进（循环，约0.14 m/s）,白模（程序化）,B
+EN_Wokou_Shield_A@EN_ShieldHit,Enemies,,,Assets/Art/Enemies/EN_Wokou_Shield_A@EN_ShieldHit/EN_Wokou_Shield_A@EN_ShieldHit.fbx,,Humanoid 共用动作 盾兵受击,白模（程序化）,B
+EN_Wokou_Shield_A@EN_ShieldDeath,Enemies,,,Assets/Art/Enemies/EN_Wokou_Shield_A@EN_ShieldDeath/EN_Wokou_Shield_A@EN_ShieldDeath.fbx,,Humanoid 共用动作 盾兵死亡，Death@24,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanIdleLoop,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanIdleLoop/BOSS_Chiyan@BS_ChiyanIdleLoop.fbx,,Humanoid 共用动作 赤焰待机（循环）,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanAxeChop,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanAxeChop/BOSS_Chiyan@BS_ChiyanAxeChop.fbx,,Humanoid 共用动作 下劈（也是砍水闸），AttackHit@18,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanAxeCombo3,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanAxeCombo3/BOSS_Chiyan@BS_ChiyanAxeCombo3.fbx,,Humanoid 共用动作 2快1慢三连，AttackHit@15/25/44,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanAxeSpin,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanAxeSpin/BOSS_Chiyan@BS_ChiyanAxeSpin.fbx,,Humanoid 共用动作 旋斧（没侦察时多的一招），AttackHit@16/22/28,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanPotThrow,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanPotThrow/BOSS_Chiyan@BS_ChiyanPotThrow.fbx,,Humanoid 共用动作 左手扔火罐（P1），AttackHit@17,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanLeap,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanLeap/BOSS_Chiyan@BS_ChiyanLeap.fbx,,Humanoid 共用动作 原地起跳砸地（跳上码头，位移由脚本做），AttackHit@28,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanPhaseChange,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanPhaseChange/BOSS_Chiyan@BS_ChiyanPhaseChange.fbx,,Humanoid 共用动作 阶段转换怒吼，PhaseChange@20,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanWeakHit,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanWeakHit/BOSS_Chiyan@BS_ChiyanWeakHit.fbx,,Humanoid 共用动作 背包弱点受击踉跄，Stagger@3,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanStaggerLoop,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanStaggerLoop/BOSS_Chiyan@BS_ChiyanStaggerLoop.fbx,,Humanoid 共用动作 破架势单膝跪（循环，处决窗口）,白模（程序化）,B
+BOSS_Chiyan@BS_ChiyanExecuted,Bosses,,,Assets/Art/Bosses/BOSS_Chiyan@BS_ChiyanExecuted/BOSS_Chiyan@BS_ChiyanExecuted.fbx,,Humanoid 共用动作 被处决倒地，Death@30,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoIdleLoop,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoIdleLoop/BOSS_Guiwo@BS_GuiwoIdleLoop.fbx,,Humanoid 共用动作 鬼倭八相待机（循环）,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoCombo3,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoCombo3/BOSS_Guiwo@BS_GuiwoCombo3.fbx,,Humanoid 共用动作 太刀三连（红光0–12），AttackHit@15/23/46,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoIaiDash,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoIaiDash/BOSS_Guiwo@BS_GuiwoIaiDash.fbx,,Humanoid 共用动作 突进居合横斩，AttackHit@14,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoNaginataSweep,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoNaginataSweep/BOSS_Guiwo@BS_GuiwoNaginataSweep.fbx,,Humanoid 共用动作 薙刀横扫（P2），AttackHit@18,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoNaginataThrust,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoNaginataThrust/BOSS_Guiwo@BS_GuiwoNaginataThrust.fbx,,Humanoid 共用动作 薙刀突刺（P2），AttackHit@16,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoNodachiCleave,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoNodachiCleave/BOSS_Guiwo@BS_GuiwoNodachiCleave.fbx,,Humanoid 共用动作 野太刀重劈（P3），AttackHit@26,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoPhaseChange,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoPhaseChange/BOSS_Guiwo@BS_GuiwoPhaseChange.fbx,,Humanoid 共用动作 阶段转换怒吼，PhaseChange@20,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoWeakHit,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoWeakHit/BOSS_Guiwo@BS_GuiwoWeakHit.fbx,,Humanoid 共用动作 弱点受击后仰，Stagger@3,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoStaggerLoop,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoStaggerLoop/BOSS_Guiwo@BS_GuiwoStaggerLoop.fbx,,Humanoid 共用动作 破架势跪地拄刀（循环，处决窗口）,白模（程序化）,B
+BOSS_Guiwo@BS_GuiwoExecuted,Bosses,,,Assets/Art/Bosses/BOSS_Guiwo@BS_GuiwoExecuted/BOSS_Guiwo@BS_GuiwoExecuted.fbx,,Humanoid 共用动作 被处决倒地，Death@30,白模（程序化）,B
+ENV_Hide_Wall,Environments,Assets/Art/Environments/ENV_Hide_Wall/ENV_Hide_Wall.fbx,,,,第四幕夹墙藏谱点；原点在贴墙面底边中点；子物体 Wall/Brick_Loose(向-Y抽出)/NOCOL_Crumbs；ANCHOR_Hide/ANCHOR_Use；放祠堂 ANCHOR_hide_wall 正面朝室内,白模（程序化）,B
+ENV_Hide_Well,Environments,Assets/Art/Environments/ENV_Hide_Well/ENV_Hide_Well.fbx,,,,第四幕井中藏谱点，替换 INT_Well（ANCHOR_hide_well）；子物体 Well/Windlass(绕X转)/Rope/Bucket/Rim_Stone(暗格盖)；ANCHOR_Hide/ANCHOR_Hide_Bucket/ANCHOR_Use；FX_Water,白模（程序化）,B
+ENV_Hide_Plaque,Environments,Assets/Art/Environments/ENV_Hide_Plaque/ENV_Hide_Plaque.fbx,,,,"第四幕匾后藏谱点；原点在正厅地面贴墙面，放内景(0,6.2,0.9)；子物体 Frame/Plaque(上沿铰链掀起)/Ladder；ANCHOR_Hide/ANCHOR_Use/ANCHOR_Climb_Top",白模（程序化）,B
+ENV_Shrine_Ruin_1941,Environments,Assets/Art/Environments/ENV_Shrine_Ruin_1941/ENV_Shrine_Ruin_1941.fbx,,,,1941冬破祠，与 BLD_INT_AncestralHall 同原点同锚点整体替换；ROOF_* 可隐藏；RUIN_*/NOCOL_RUIN_SnowAsh/COL_Ruin；ANCHOR_search_page_01..12/search_photo/search_case；FX_SnowFall/FX_Dust_*,白模（程序化）,B
+PROP_ScatteredPages,Props,Assets/Art/Props/PROP_ScatteredPages/PROP_ScatteredPages.fbx,,,,散落谱页 Page_01..12（平/折/烧边/泥/撕角/卷边），各自原点在页中心,白模（程序化）,B
+PROP_SearchDebris,Props,Assets/Art/Props/PROP_SearchDebris/PROP_SearchDebris.fbx,,,,废墟散布件 Rubble_Pile/Ash_Pile/Beam_Broken/Tiles_Scatter/Planks/Snow_Patch,白模（程序化）,B
+PROP_JapaneseSearchKit,Props,Assets/Art/Props/PROP_JapaneseSearchKit/PROP_JapaneseSearchKit.fbx,,,,日军搜查 Flashlight(FX_Flashlight)/Crowbar/Sack/Ledger/Ledger_Open/Seal_Strip；刺刀用 PROP_JpRifle,白模（程序化）,B
+ENV_RepairTable,Environments,Assets/Art/Environments/ENV_RepairTable/ENV_RepairTable.fbx,,,,修谱长案 Table/Bench/Ruler_1..2/Paste_Bowl/Page_Repair_1..3/Paper_Stack/Lamp；ANCHOR_Writer/Book/BrushInk/Seal；FX_Lamp/FX_Ink,白模（程序化）,B
+PROP_BrushInk,Props,Assets/Art/Props/PROP_BrushInk/PROP_BrushInk.fbx,,,,文房 Brush/Brush_Small/BrushRest/Inkstone/InkStick/WaterDropper；FX_InkDrip,白模（程序化）,B
+PROP_Seal,Props,Assets/Art/Props/PROP_Seal/PROP_Seal.fbx,,,,印章 Seal(单独可拿)/SealPad_Box/SealPad_Lid/Stamp_Mark(0..1 UV 印文)；FX_Stamp,白模（程序化）,B
+PROP_Genealogy_Final,Props,Assets/Art/Props/PROP_Genealogy_Final/PROP_Genealogy_Final.fbx,,,,修好的族谱 Book_Closed/Book_Open/Slot_1..8(页槽，系统点亮)/Case/Case_Lid/Ribbon；FX_Glow；即 PROP_Genealogy_System 的模型部分,白模（程序化）,B
+PROP_Offering,Props,Assets/Art/Props/PROP_Offering/PROP_Offering.fbx,,,,路祭供桌 Table/Pig/Chicken/Fish/Peaches/Candle_L/R/PaperMoney/Censer；FX_Candle_L/R/FX_Incense；ANCHOR_Kneel,白模（程序化）,B
+PROP_ParadeFlag_A,Props,Assets/Art/Props/PROP_ParadeFlag_A/PROP_ParadeFlag_A.fbx,,,,姓氏旗·大方旗 4.6m；Pole/Cloth(0..1 UV 换字)；ANCHOR_Grip,白模（程序化）,B
+PROP_ParadeFlag_B,Props,Assets/Art/Props/PROP_ParadeFlag_B/PROP_ParadeFlag_B.fbx,,,,姓氏旗·三角牙旗 3.8m；Pole/Cloth/Fringe；ANCHOR_Grip,白模（程序化）,B
+PROP_ParadeFlag_C,Props,Assets/Art/Props/PROP_ParadeFlag_C/PROP_ParadeFlag_C.fbx,,,,姓氏旗·长幡 3.4m；Pole/Cloth/Streamers；ANCHOR_Grip,白模（程序化）,B
+PROP_DragonLantern,Props,Assets/Art/Props/PROP_DragonLantern/PROP_DragonLantern.fbx,,,,拼字龙灯 Head/Seg_01..08/Seg_NN_Face(灯面换字)/Tail/Pearl，原点在提杆底；ANCHOR_Carrier_00..09；FX_*_Light,白模（程序化）,B
+PROP_DrumGong,Props,Assets/Art/Props/PROP_DrumGong/PROP_DrumGong.fbx,,,,锣鼓 DrumFrame/Drum/Drumstick_L/R/Gong(吊点枢轴)/Gong_Handle/Gong_Mallet/Cymbal_L/R,白模（程序化）,B
+ENV_TempleFront,Environments,Assets/Art/Environments/ENV_TempleFront/ENV_TempleFront.fbx,,,,汤和庙前巡游布置（庙在+Y）：Caimen/Caimen_Board/Xiangting/FlagBases/Benches/NOCOL_Lantern_Lines/COL_TempleFront；ANCHOR_Flag_01..08/Offering/ParadeStart/ParadeExit/Bench_1..6,白模（程序化）,B
+ENV_Street_Parade,Environments,Assets/Art/Environments/ENV_Street_Parade/ENV_Street_Parade.fbx,,,,巡游主街9m平铺模块(沿Y，街宽6m)：Poles/NOCOL_Bunting/NOCOL_Lanterns/FlagBases/Banner_L/R；ANCHOR_Flag_L1..R3,白模（程序化）,B
+CH_WangYan_1945,Characters,Assets/Art/Characters/CH_WangYan_1945/CH_WangYan_1945.fbx,,,,王砚1945；Humanoid；浅灰长衫、黑纱、相机包,白模（程序化）,B
+NPC_WangBingzhi_1945,Characters,Assets/Art/Characters/NPC_WangBingzhi_1945/NPC_WangBingzhi_1945.fbx,,,,王秉之1945；Humanoid；更驼、马褂；拐杖 PROP_Cane_Bingzhi,白模（程序化）,B
+NPC_ParadeCrowd_A,Characters,Assets/Art/Characters/NPC_ParadeCrowd_A/NPC_ParadeCrowd_A.fbx,,,,巡游群众变体 A；Humanoid；共用底模换头换色,白模（程序化）,B
+NPC_ParadeCrowd_B,Characters,Assets/Art/Characters/NPC_ParadeCrowd_B/NPC_ParadeCrowd_B.fbx,,,,巡游群众变体 B；Humanoid；共用底模换头换色,白模（程序化）,B
+NPC_ParadeCrowd_C,Characters,Assets/Art/Characters/NPC_ParadeCrowd_C/NPC_ParadeCrowd_C.fbx,,,,巡游群众变体 C；Humanoid；共用底模换头换色,白模（程序化）,B
+NPC_ParadeCrowd_D,Characters,Assets/Art/Characters/NPC_ParadeCrowd_D/NPC_ParadeCrowd_D.fbx,,,,巡游群众变体 D；Humanoid；共用底模换头换色,白模（程序化）,B
+NPC_ParadeCrowd_E,Characters,Assets/Art/Characters/NPC_ParadeCrowd_E/NPC_ParadeCrowd_E.fbx,,,,巡游群众变体 E；Humanoid；共用底模换头换色,白模（程序化）,B
+NPC_ParadeCrowd_F,Characters,Assets/Art/Characters/NPC_ParadeCrowd_F/NPC_ParadeCrowd_F.fbx,,,,巡游群众变体 F；Humanoid；共用底模换头换色,白模（程序化）,B
+CH_WangYan_1941@A45_FlagWalkLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A45_FlagWalkLoop/CH_WangYan_1941@A45_FlagWalkLoop.fbx,,共用 Humanoid 动作 A45_FlagWalkLoop（AC_Humanoid_Locomotion 需加同名状态）,白模（程序化）,B
+CH_WangYan_1941@A45_LanternWalkLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A45_LanternWalkLoop/CH_WangYan_1941@A45_LanternWalkLoop.fbx,,共用 Humanoid 动作 A45_LanternWalkLoop（AC_Humanoid_Locomotion 需加同名状态）,白模（程序化）,B
+CH_WangYan_1941@A45_GongLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A45_GongLoop/CH_WangYan_1941@A45_GongLoop.fbx,,共用 Humanoid 动作 A45_GongLoop（AC_Humanoid_Locomotion 需加同名状态）,白模（程序化）,B
+CH_WangYan_1941@A45_DrumLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A45_DrumLoop/CH_WangYan_1941@A45_DrumLoop.fbx,,共用 Humanoid 动作 A45_DrumLoop（AC_Humanoid_Locomotion 需加同名状态）,白模（程序化）,B
+CH_WangYan_1941@A45_WriteLoop,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A45_WriteLoop/CH_WangYan_1941@A45_WriteLoop.fbx,,共用 Humanoid 动作 A45_WriteLoop（AC_Humanoid_Locomotion 需加同名状态）,白模（程序化）,B
+CH_WangYan_1941@A45_Stamp,Characters,,,Assets/Art/Characters/CH_WangYan_1941@A45_Stamp/CH_WangYan_1941@A45_Stamp.fbx,,共用 Humanoid 动作 A45_Stamp（AC_Humanoid_Locomotion 需加同名状态）,白模（程序化）,B

@@ -9,7 +9,7 @@
 | ![](images/map/02_overview_se.jpg) | ![](images/map/03_strategy_view.jpg) |
 | **主街（电线、店屋、西式立面）** | **城墙走道 → 镇山门城楼，远处罗山** |
 | ![](images/map/05_main_street.jpg) | ![](images/map/08_wall_walk.jpg) |
-| **环海门 + 瓮城** | **同一布局的明代场景（目前用民国模型占位、明代配色）** |
+| **环海门 + 瓮城** | **同一布局的明代场景（明代建筑 BLD_MING_*，明代配色）** |
 | ![](images/map/11_wengcheng_top.jpg) | ![](images/map/MING_02_overview_se.jpg) |
 
 布局总图（矢量，标了全部地名）：[`Data/map/yongchang_layout.svg`](../Data/map/yongchang_layout.svg)
@@ -90,23 +90,27 @@ Data/map/era_materials.json      ← 语义材质 → 民国颜色 / 明代颜�
 - **建筑**单独建：民国是 `BLD_ROC_*`。做明代时按**同一个 kind、同样的占地尺寸**建 `BLD_MING_*`，填进 `era_kits.json` 的 `ming` 数组，重新生成明代场景即可，布局不用动。
 - 只属于某个年代的东西用布局里的 `eras` 字段控制（哨卡、电线杆只在 ROC）。
 
-| kind | 占地 w×d (m) | 民国模型 | 明代（待做） |
+| kind | 占地 w×d (m) | 民国模型 | 明代 |
 |---|---|---|---|
-| house_s | 10×7 | `BLD_ROC_House_S_A`（前檐廊）、`_B`（马头墙） | `BLD_MING_House_S_*` |
-| house_l | 12×8 | `BLD_ROC_House_L_A`（腰檐木楼）、`_B`（挑廊 + 马头墙） | |
-| shop | 6×10 | `BLD_ROC_Shop_A`（排门板 + 竖招牌）、`_B`（阁楼 + 横匾） | |
-| shop_west | 8×12 | `BLD_ROC_ShopWest`（民国西式立面） | 明代改成普通店屋 |
-| courtyard | 20×18 | `BLD_ROC_Courtyard`（三合院） | |
-| hall_small | 14×20 | `BLD_ROC_HallSmall`（布政司祠/世大夫祠/状元第/都堂第） | |
-| ancestral_hall | 20×36 | `BLD_ROC_AncestralHall`（王氏祖祠三进） | |
-| temple | 16×22 | `BLD_ROC_Temple`（汤和庙，重檐） | |
-| granary | 20×12 | `BLD_ROC_Granary` | |
-| gate_tower | 12×6.4 | `BLD_ROC_GateTower`（城楼，底层可穿行） | |
-| gate_tower_huanhai | 20×8.8 | `BLD_ROC_HuanhaiLou`（环海楼） | |
-| dock / salt_shed | 20×18 / 12×8 | `BLD_ROC_Dock` / `BLD_ROC_SaltShed` | |
+| house_s | 10×7 | `BLD_ROC_House_S_A`（前檐廊）、`_B`（马头墙） | `BLD_MING_House_S_A/B` |
+| house_l | 12×8 | `BLD_ROC_House_L_A`（腰檐木楼）、`_B`（挑廊 + 马头墙） | `BLD_MING_House_L_A/B` |
+| shop | 6×10 | `BLD_ROC_Shop_A`（排门板 + 竖招牌）、`_B`（阁楼 + 横匾） | `BLD_MING_Shop_A/B` |
+| shop_west | 8×12 | `BLD_ROC_ShopWest`（民国西式立面） | `BLD_MING_ShopWest`（两层木构客栈） |
+| courtyard | 20×18 | `BLD_ROC_Courtyard`（三合院） | `BLD_MING_Courtyard` |
+| hall_small | 14×20 | `BLD_ROC_HallSmall`（布政司祠/世大夫祠/状元第/都堂第） | `BLD_MING_HallSmall` |
+| ancestral_hall | 20×36 | `BLD_ROC_AncestralHall`（王氏祖祠三进） | `BLD_MING_AncestralHall` |
+| temple | 16×22 | `BLD_ROC_Temple`（汤和庙，重檐） | `BLD_MING_Temple` |
+| granary | 20×12 | `BLD_ROC_Granary` | `BLD_MING_Granary` |
+| gate_tower | 12×6.4 | `BLD_ROC_GateTower`（城楼，底层可穿行） | `BLD_MING_GateTower` |
+| gate_tower_huanhai | 20×8.8 | `BLD_ROC_HuanhaiLou`（环海楼） | `BLD_MING_HuanhaiLou` |
+| dock / salt_shed | 20×18 / 12×8 | `BLD_ROC_Dock` / `BLD_ROC_SaltShed` | `BLD_MING_Dock` / `BLD_MING_SaltShed` |
 | checkpoint | 8×8 | `BLD_ROC_Checkpoint`（只在 1941） | — |
 
-明代场景现在也能生成（`Map_Yongchang_MING.unity`），缺的明代模型自动用民国模型占位，只换明代配色。这样可以先验证流程。
+明代场景 `Map_Yongchang_MING.unity` 已全部换成明代模型（生成日志：明代占位 0、缺模型 0，可走性 6 项全过）。造型说明见 [ming_buildings_house.md](ming_buildings_house.md)、[ming_buildings_civic.md](ming_buildings_civic.md)。某个 kind 的 `ming` 留空时仍会自动用民国模型占位。
+
+| 明代全景 | 明代祖祠前 |
+|---|---|
+| ![](images/map/MING_02_overview_se.jpg) | ![](images/map/MING_13_cast_zuci.jpg) |
 
 ---
 

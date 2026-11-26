@@ -1040,6 +1040,11 @@ RECIPES.update(rupu_char.recipes())
 import rupu_act1  # noqa: E402
 RECIPES.update(rupu_act1.recipes())
 
+# ====================================================================== 其余各幕（每个模块一个文件，互不干扰）
+import importlib  # noqa: E402
+for _m in ("rupu_act1p1", "rupu_ming_house", "rupu_ming_civic", "rupu_act2", "rupu_enemy", "rupu_act45"):
+    RECIPES.update(importlib.import_module(_m).recipes())
+
 
 # ====================================================================== 驱动
 def render_preview(path, name):

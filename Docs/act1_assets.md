@@ -146,8 +146,92 @@ $T -batchmode -quit -projectPath "$PWD/Project_rupu" -executeMethod Rupu.EditorT
 $T -batchmode -quit -projectPath "$PWD/Project_rupu" -executeMethod Rupu.EditorTools.Act1RocSceneBuilder.Create -logFile Builds/logs/act1.log </dev/null
 ```
 
+## P1 完成情况
+
+依据：[`入谱_当前建模缺口清单.md`](入谱_当前建模缺口清单.md) 第二节（第一幕 P1）。生成脚本 `Tools/blender/rupu_act1p1.py`（材质前缀 `M_P1_*`，人物 `M_P1C_*`，钩子 `P1_*`）。全部 `[OK]` 导出到 `Project_rupu/Assets/Art/<分类>/<名>/`，**还没导入团结、没接场景**。
+
+| 清单项 | 状态 | 资产（三角面） |
+|---|---|---|
+| `CHR_Townsperson` 扩展 6—8 | ✅ 8 个 | `NPC_TownMother`（1232）/ `NPC_TownPorter`（1132）/ `NPC_TownBeggar`（1388）/ `NPC_TownStudent`（1168）/ `NPC_TownShopkeeper`（1416）/ `NPC_TownOldWoman`（1198）/ `NPC_TownToddler`（1116）/ `NPC_TownRefugeeWoman`（1260） |
+| `PROP_StreetFood` 2 | ✅ | `PROP_StreetFood_Noodle` 面担（976）/ `PROP_StreetFood_Steamer` 蒸笼+油锅早点摊（1248） |
+| `PROP_Load` 2 | ✅ | `PROP_Load_Pole` 逃难挑子（426）/ `PROP_Load_Cart` 独轮车装家当（854） |
+| `PROP_JapaneseFlag` 2 | ✅ | `PROP_Flag_Japan_Pole` 哨卡高杆旭日旗（492）/ `PROP_Flag_Japan_Wall` 门楣横挂 + 交叉小旗（372）；原有 `PROP_Flag_Japan` 不变 |
+| `PROP_WantedPoster` 3 | ✅ 带文字贴图 | `PROP_Poster_A` 布告·刚贴（192）/ `_B` 通缉·撕破（1172）/ `_C` 告示·雨湿（608） |
+| `ENV_BombCrater` 2 | ✅ | `ENV_BombCrater_A` 路面小坑积水（600）/ `_B` 靠墙大坑 + 炸塌的墙（874） |
+| `ENV_Barricade` 3 | ✅ | `ENV_Barricade_A` 家具门板堆（1300）/ `_B` 铁丝网 + 木桩（3592）/ `_C` 沙袋矮墙带射击口（2908） |
+| `PROP_Bicycle` | ✅ | `PROP_Bicycle`（1624） |
+| `PROP_Rickshaw` | ✅ | `PROP_Rickshaw`（1320），车身枢轴在车轴 |
+| `PROP_Telephone` | ✅ | `PROP_Telephone` 野战电话 + 交换机 + 线轴（912） |
+| `PROP_Suitcase` | ✅ | `PROP_Suitcase`（492），`Lid` 开/合 |
+
+### 街坊（8 个，与 P0 的 8 个区分）
+
+![P1 街坊：母亲、挑夫、乞丐、学生、掌柜、老太太、幼童、逃难妇人（最右 1.75 m 参考）](images/act1/p1_townsfolk.jpg)
+
+| 资产 | 身高 | 造型 |
+|---|---|---|
+| `NPC_TownMother` | 1.58 | 28 岁，浅灰蓝大襟袄深蓝裤、低髻银簪，胸前背带兜襁褓婴儿 |
+| `NPC_TownPorter` | 1.74 | 壮，深灰短褂挽袖（露前臂）、裤腿卷到膝、草鞋，额扎汗巾、颈搭汗巾、右肩垫肩 |
+| `NPC_TownBeggar` | 1.63 | 瘦驼，补丁破短褂、草绳腰带、破布条下摆、赤脚、乱发花白短须，左胯破碗 |
+| `NPC_TownStudent` | 1.73 | 18 岁，深藏青立领学生装、五颗铜扣、学生帽、斜挎帆布书包 |
+| `NPC_TownShopkeeper` | 1.66 | 胖（bulk 1.24），驼色长衫外罩黑缎马甲、怀表链、礼帽、八字胡 |
+| `NPC_TownOldWoman` | 1.47 | 75 岁，矮小背驼，黑风帽缀玉抹额、扎裤脚，左臂挎竹篮 |
+| `NPC_TownToddler` | 1.02 | 4 岁，大头比例、棉袄、虎头帽（额前「王」字纹）、银长命锁 |
+| `NPC_TownRefugeeWoman` | 1.60 | 土灰短袄、绑腿草鞋、下巴打结的方头巾、背篓装铺盖、胸前包袱 |
+
+都是 `rupu_char.build_character` + 本模块注册的钩子（发型 `P1_student_cap/P1_tiger_cap/P1_hood/P1_towel/P1_messy/P1_fedora/P1_kerchief`，配件 `P1_baby/P1_hairpin/P1_shoulder_pad/P1_rags/P1_student/P1_vest/P1_mustache/P1_basket_arm/P1_lock/P1_back_basket`），22 骨 Humanoid，共用 `CH_WangYan_1941@*` 动作，没有新动作。
+
+### 道具与环境
+
+![小吃摊、挑子、独轮车、日旗、电话、皮箱](images/act1/p1_props_a.jpg)
+
+![告示三张、自行车、黄包车（停放态）、独轮车](images/act1/p1_props_b.jpg)
+
+![弹坑两种、街垒三种](images/act1/p1_env.jpg)
+
+告示纸面贴图（1024，`T_Poster_<A|B|C>_D.png`，在资产目录里）：文字竖排右起，A「佈告」宵禁令（昭和十六年 + 朱印），B「通緝」木刻画像，C「告示」领良民证（墨往下流、水渍）：
+
+![告示贴图](images/act1/p1_poster_textures.jpg)
+
+### 子物体 / 挂点 / 锚点（团结里按名字找）
+
+| 资产 | 子物体 | FX / ANCHOR |
+|---|---|---|
+| `PROP_StreetFood_Noodle` | `Stall`、`Pot_Lid`（锅盖，可揭） | `FX_Steam`（锅上）、`FX_StoveFire`（灶口）、`FX_StoveSmoke`（烟囱）；`ANCHOR_Vendor`、`ANCHOR_Customer_1/2`（长凳） |
+| `PROP_StreetFood_Steamer` | `Stall`、`Steamer_Lid` | `FX_Steam`（蒸笼顶）、`FX_OilSmoke`（油锅）、`FX_StoveFire_1/2`；`ANCHOR_Vendor`、`ANCHOR_Customer_1/2` |
+| `PROP_Load_Pole` | `Load` | `ANCHOR_Shoulder`（扁担中点，高 1.34）。放地上两筐着地；挑起时整体上抬，让 `ANCHOR_Shoulder` 对齐挑夫右肩（1.74 m 的挑夫约 +0.1 m，右肩在人物 -X 侧约 0.18 m） |
+| `PROP_Load_Cart` | `Cart`、`Wheel`（枢轴在轮轴，绕本地 X 转） | `ANCHOR_Pusher`（车把后方） |
+| `PROP_Flag_Japan_Pole` | `Pole`、`Cloth`（旗面，枢轴在杆顶挂点，可加风动） | — |
+| `PROP_Flag_Japan_Wall` | `Flag_Hung`、`Bracket`、`Flag_Crossed_L/R` | 原点 = 墙面上横挂旗的下沿中点，墙在背后；只要一种就隐藏另一组 |
+| `PROP_Poster_A/B/C` | `Poster`（正面贴图 + 背面纸背色）；B 另有 `Paper_Remnants`；C 另有 `NOCOL_WetStain`（墙上水痕，低于原点 0.36 m，pivot 警告可忽略） | `ANCHOR_Read`（纸前 0.9 m）。原点 = 纸下沿中点、贴墙面；纸厚度 3 mm 内，直接贴墙放 |
+| `ENV_BombCrater_A/B` | `Crater`（坑底只低于地面 3 cm，靠土沿堆高做出深度） | B 的墙在背后（团结 -Z 侧） |
+| `ENV_Barricade_A` | `Barricade`、`COL_Barricade` | — |
+| `ENV_Barricade_B` | `Posts`、`Sign`、`NOCOL_Wire`（铁丝不加碰撞）、`COL_Fence`（整体挡人） | — |
+| `ENV_Barricade_C` | `Sandbags` | `ANCHOR_Loophole_1/2`（射击口后的踏板上，朝前） |
+| `PROP_Bicycle` | `Frame`、`Wheel_F`、`Wheel_R`（枢轴在轴心） | — |
+| `PROP_Rickshaw` | `Body`（枢轴在车轴）、`Wheel_L/R` | `ANCHOR_Puller`（车杠前端）、`ANCHOR_Seat`。默认停放态：车杠着地、车身后仰 21°；拉起 = `Body` 绕本地 X 转回 21°（车杠水平，把手高约 0.78 m），正负以车杠前端抬起为准 |
+| `PROP_Telephone` | `Table`、`Phone`、`Handset`（可拿起）、`Crank`、`Switchboard`、`Reel_Stand`、`Reel`（枢轴在轴心）、`NOCOL_Wires` | `ANCHOR_Operator`（操作员站位，面朝桌） |
+| `PROP_Suitcase` | `Case`、`Contents`、`Lid`（枢轴在后沿铰链） | 合 = `Lid` 旋转 0；开 = 绕本地 X 向后翻约 105° |
+
+### 给 A 的接入说明
+
+- 8 个新街坊直接用 `AC_Humanoid_Locomotion` + `Act1ClanActor`，常态动作用 `WatchLoop` / `CowerLoop`；母亲、老太太、逃难妇人适合放逃难队伍，学生和掌柜放告示墙前，乞丐放街角，挑夫配 `PROP_Load_Pole`。
+- 告示贴图要随 FBX 一起导入（`T_Poster_*_D.png` 和 FBX 在同一目录，材质名 `M_P1_Poster_A/B/C`）；贴图文字用思源宋体（SIL OFL）渲染，只是位图，不随仓库分发字体。
+- 道具类 `PROP_StreetFood_*` 尺寸接近摊位，可替换主街上的 `ENV_VendorStall_Snack` 或并排摆；`ENV_Barricade_*` 和 `PROP_Flag_Japan_Pole` 适合环海门校场哨卡和封锁街口。
+- 旋转部件（车轮、线轴、皮箱盖、车身）都已把枢轴放在转轴上，物体本身旋转为 0。
+
+### 重新生成
+
+```bash
+/Applications/Blender.app/Contents/MacOS/Blender -b --factory-startup -P Tools/blender/build_yongchang.py -- \
+  --only NPC_TownMother,NPC_TownPorter,NPC_TownBeggar,NPC_TownStudent,NPC_TownShopkeeper,NPC_TownOldWoman,NPC_TownToddler,NPC_TownRefugeeWoman,PROP_StreetFood_Noodle,PROP_StreetFood_Steamer,PROP_Load_Pole,PROP_Load_Cart,PROP_Flag_Japan_Pole,PROP_Flag_Japan_Wall,PROP_Poster_A,PROP_Poster_B,PROP_Poster_C,ENV_BombCrater_A,ENV_BombCrater_B,ENV_Barricade_A,ENV_Barricade_B,ENV_Barricade_C,PROP_Bicycle,PROP_Rickshaw,PROP_Telephone,PROP_Suitcase --force
+```
+
+告示贴图在生成 `PROP_Poster_*` 时一起重渲（需要本机有思源宋体 `~/Library/Fonts/SourceHanSerifCN-Heavy.otf`，或 Songti；都没有时退回墨块）。
+
 ## 还没做（P1 及以后）
 
 - 表情贴图、LOD、正式贴图；手指骨（现在拳头一块）。
-- 街坊扩展、黄包车/自行车/挑担、告示通缉文字贴图。
+- ~~街坊扩展、黄包车/自行车/挑担、告示通缉文字贴图~~：P1 已做（见上「P1 完成情况」），待导入团结并接进 `Act1_ROC` 场景。
+- P1 小吃摊/旗/告示/街垒/弹坑/车辆的场景摆放；告示「张贴/撕下」交互；旗面风动、车轮转动脚本。
 - 环海楼内景接入（第二/三幕军议）；燃烧铺面「烧尽」态用于第四幕 1941 冬。

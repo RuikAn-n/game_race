@@ -7,7 +7,10 @@
     "BLD_ROC_House_S_A",
     "BLD_ROC_House_S_B"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_House_S_A",
+    "BLD_MING_House_S_B"
+   ]
   },
   {
    "kind": "house_l",
@@ -15,7 +18,10 @@
     "BLD_ROC_House_L_A",
     "BLD_ROC_House_L_B"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_House_L_A",
+    "BLD_MING_House_L_B"
+   ]
   },
   {
    "kind": "shop",
@@ -23,63 +29,82 @@
     "BLD_ROC_Shop_A",
     "BLD_ROC_Shop_B"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_Shop_A",
+    "BLD_MING_Shop_B"
+   ]
   },
   {
    "kind": "shop_west",
    "roc": [
     "BLD_ROC_ShopWest"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_ShopWest"
+   ]
   },
   {
    "kind": "courtyard",
    "roc": [
     "BLD_ROC_Courtyard"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_Courtyard"
+   ]
   },
   {
    "kind": "hall_small",
    "roc": [
     "BLD_ROC_HallSmall"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_HallSmall"
+   ]
   },
   {
    "kind": "ancestral_hall",
    "roc": [
     "BLD_ROC_AncestralHall"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_AncestralHall"
+   ]
   },
   {
    "kind": "temple",
    "roc": [
     "BLD_ROC_Temple"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_Temple"
+   ]
   },
   {
    "kind": "granary",
    "roc": [
     "BLD_ROC_Granary"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_Granary"
+   ]
   },
   {
    "kind": "gate_tower",
    "roc": [
     "BLD_ROC_GateTower"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_GateTower"
+   ]
   },
   {
    "kind": "gate_tower_huanhai",
    "roc": [
     "BLD_ROC_HuanhaiLou"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_HuanhaiLou"
+   ]
   },
   {
    "kind": "checkpoint",
@@ -93,14 +118,18 @@
    "roc": [
     "BLD_ROC_Dock"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_Dock"
+   ]
   },
   {
    "kind": "salt_shed",
    "roc": [
     "BLD_ROC_SaltShed"
    ],
-   "ming": []
+   "ming": [
+    "BLD_MING_SaltShed"
+   ]
   },
   {
    "kind": "pole",
