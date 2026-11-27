@@ -1,5 +1,7 @@
 // 《入谱》导入规则：只在资产"第一次导入"时套默认值，之后美术在 Inspector 里改的设置不会被覆盖。
 // 规则来源：Docs/asset_spec.md（B 执行手册 §3）
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,6 +36,59 @@ namespace Rupu.EditorTools
                 mi.animationType = ModelImporterAnimationType.None;
                 mi.importAnimation = false;
             }
+        }
+
+        // ------------------------------------------------------------ LOD（Docs/act2_city_lod.md）
+        // rupu_pipeline.py 导出 BLD_MING_* 时自动带 LOD：<原名>_LOD0，其下子物体 NOCOL_<原名>_LOD1 / _LOD2。
+        // 这里每次导入都（重新）建一个 LODGroup 放在模型根上，并把 _LOD0 后缀去掉，让物体名和没有 LOD 时一样
+        // （脚本按名字找门扇、屋顶等不受影响）。不在任何一级里的网格（小件、NOCOL_ 旗面、COL_）始终显示。
+        static readonly Regex LodRx = new Regex(@"_LOD(\d+)$", RegexOptions.IgnoreCase);
+        // 各级切换的屏占比（物体高度 / 屏幕高度）。最后一级 0 = 永不剔除（俯视指挥要看到全城）。
+        public static readonly float[] LodScreenHeights = { 0.30f, 0.10f, 0f };
+
+        void OnPostprocessModel(GameObject root)
+        {
+            if (!IsArt(assetPath)) return;
+            var levels = new SortedDictionary<int, List<Renderer>>();
+            void Add(int lv, Renderer r)
+            {
+                if (!levels.TryGetValue(lv, out var list)) levels[lv] = list = new List<Renderer>();
+                if (!list.Contains(r)) list.Add(r);
+            }
+            foreach (var r in root.GetComponentsInChildren<Renderer>(true))
+            {
+                var m = LodRx.Match(r.gameObject.name);
+                if (!m.Success) continue;
+                int lv = int.Parse(m.Groups[1].Value);
+                Add(lv, r);
+                // LOD1+ 挂在 LOD0 下面；FBX 只有一个根时团结会把根节点并进模型根并改成文件名，所以按父物体认 LOD0
+                if (lv > 0 && r.transform.parent != null)
+                {
+                    var pr = r.transform.parent.GetComponent<Renderer>();
+                    if (pr != null && !LodRx.IsMatch(pr.gameObject.name)) Add(0, pr);
+                }
+            }
+            if (!levels.ContainsKey(0) || levels.Count < 2) return;
+
+            foreach (var g in root.GetComponentsInChildren<LODGroup>(true)) UnityEngine.Object.DestroyImmediate(g);
+            foreach (var r in levels[0])
+                if (r.gameObject != root) r.gameObject.name = LodRx.Replace(r.gameObject.name, "");
+
+            var lods = new List<LOD>();
+            int i = 0;
+            foreach (var kv in levels)
+            {
+                int n = LodScreenHeights.Length;
+                float h = i == levels.Count - 1 ? 0f
+                        : i < n - 1 ? LodScreenHeights[i]
+                        : LodScreenHeights[n - 2] * Mathf.Pow(0.5f, i - n + 2);   // 超过 3 级时逐级减半
+                lods.Add(new LOD(h, kv.Value.ToArray()));
+                i++;
+            }
+            var group = root.AddComponent<LODGroup>();
+            group.fadeMode = LODFadeMode.None;
+            group.SetLODs(lods.ToArray());
+            group.RecalculateBounds();
         }
 
         void OnPreprocessAnimation()

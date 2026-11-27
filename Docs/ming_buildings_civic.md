@@ -65,6 +65,8 @@
 
 锚点：`ANCHOR_walk_W / walk_E`（走道进出口）、`ANCHOR_lookout`（平座）。
 
+> **第二幕补充**（见 [`act2_site.md`](act2_site.md) §4）：加了可开合的城门门扇 `Gate_Door_L/R`（原点在门轴，放在城楼本地 z=−7.0 的门洞里）、门闩 `Gate_Bar`，以及一整套 `COL_*`（城楼底层和门洞），门洞净宽 3.9、净高 3.6。外轮廓占地没有变。
+
 ### 环海楼 `BLD_MING_HuanhaiLou`（20 × 8.8）
 
 尺寸照 `BLD_INT_HuanhaiLou` 做：底层净高 3.9，二层楼面 4.2，上层 3.1。
@@ -97,6 +99,8 @@
 | `FX_WaterFlow` / `FX_Splash` | 开闸后的水流、水花 |
 | `ANCHOR_Sluice_Spot_1..3` | 水下三个闸位（摸闸小游戏） |
 | `ANCHOR_Winch` / `ANCHOR_Latch` | 城顶绞盘操作位 / 水边拔门闩的站位 |
+
+> **第二幕补充**（见 [`act2_site.md`](act2_site.md) §3）：会切换的部件改成两组 `State_Closed` / `State_Open`，A 只需 SetActive。闭闸组是 `Sluice_Gate`、`Sluice_Latch`、`Sluice_StoneBar_1..3`、死水；开闸组是 `Sluice_Gate_Open`、流水、`Sluice_Boat`。上表的名字在闭闸组里都还在。
 
 `KIT_Ming_Wall` 的「墙身、垛口、马道、门洞、水门、台阶」都由现有的 `BLD_Wall_*` 换明代材质得到。明代特有的施工状态（夯土、半砌、留槎、合龙）放在下面的北门工地里。
 
@@ -171,6 +175,8 @@
 
 屋顶拆成 `ROOF_Gate / ROOF_Hall / ROOF_Study / ROOF_Wing`，在厅里拍拆梁、或者俯视的时候可以隐藏。
 
+> **第二幕补充**（见 [`act2_site.md`](act2_site.md) §5）：`Beam_Removable` 的**原点改到梁的前端**（前金柱 y=4.2 处的梁底），不再在梁中心。拆梁改成两组：`State_Beam_Intact`（梁、`Truss_Upper_E`、`ROOF_Hall`）和 `State_Beam_Removed`（`ROOF_Hall_Broken` 塌口、`Beam_Fallen`、`Rubble_Hall`）。正厅屋面改成不填实，梁架外露。另外补了 `ANCHOR_Shugao / Door / Interior_*` 等锚点。
+
 锚点：`ANCHOR_enter / gate_in / courtyard_talk / shugao_hall / yan_hall / beam_below / beam_drop / study_desk / study_seat / cam_hall / cam_top`。
 
 ### 盐场
@@ -188,11 +194,11 @@
 | ![](images/ming/civic_saltfurnace.jpg) | ![](images/ming/civic_brinevat.jpg) | ![](images/ming/civic_saltset.jpg) | ![](images/ming/civic_firewood.jpg) |
 
 - **`ENV_SaltFurnace`**：夯土灶台上架一口大铁锅，带锅沿。前面是火口（砖框、灶膛、余烬）和灰坑，后面是烟囱。+X 侧有卤槽，从缸位斜接到锅沿；−X 侧是起盐踏台；火口旁堆着几根柴。
-  - `Pan_Brine` 是卤水面，`Pan_Salt` 是结晶层（锅底几小堆盐）。两者叠放，卤水在上。煮盐过程就是把 `Pan_Brine` 慢慢下移或隐藏，露出 `Pan_Salt`。
+  - ~~`Pan_Brine` / `Pan_Salt`~~ **第二幕补充时已替换**（见 [`act2_site.md`](act2_site.md) §6）：改成三组三态 `Fire_0/1/2`、`Brine_Full/Half/Low`、`Salt_None/Crust/Heap`，每组三选一。
   - 特效挂点：`FX_Fire`（火口）、`FX_Smoke`（烟囱顶）、`FX_Steam`（锅面）。
   - 三拍小游戏的站位：`ANCHOR_Stoke`（火候）、`ANCHOR_Pour`（卤水）、`ANCHOR_Scoop`（起盐）。
 - **`PROP_BrineVat_S / M / L`**：陶缸，半径和高度分别是 0.32 × 0.6、0.48 × 0.85、0.68 × 1.1。子物体有 `Vat`、`Brine`（液面，上下平移表示卤水多少）、`Lid`（S 盖着，M 和 L 半开）、`Ladle`（只有 M 和 L 有）。
-- **`PROP_SaltSet`**：`SaltHeap`（盐堆）、`SaltBag_1..3`（盐袋，其中一袋叠放）、`SaltShovel`（盐铲）、`SaltBasket`（盐筐）、`SaltRake`（盐耙）。
+- **`PROP_SaltSet`**：`SaltHeap`（盐堆）、`SaltBag_1..3`（盐袋，其中一袋叠放）、`SaltShovel`（盐铲）、`SaltBasket`（盐筐）、`SaltRake`（盐耙）。第二幕补充了起盐产出：`SaltBasket_Full/Empty`、`SaltOutput_1/2/3`、`SaltPole`（见 [`act2_site.md`](act2_site.md) §6）。
 - **`PROP_Firewood`**：`WoodStack`（三层柴垛加两根桩）、`Kindling`（引火草捆）、`FireTongs`（火钳）。
 
 ## 材质

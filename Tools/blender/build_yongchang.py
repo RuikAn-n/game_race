@@ -1044,6 +1044,10 @@ RECIPES.update(rupu_act1.recipes())
 import importlib  # noqa: E402
 for _m in ("rupu_act1p1", "rupu_ming_house", "rupu_ming_civic", "rupu_act2", "rupu_enemy", "rupu_act45"):
     RECIPES.update(importlib.import_module(_m).recipes())
+# 第二幕补缺口（Docs/第二幕_策划对照与建模缺口.md）。排在后面，同名配方会覆盖前面的（用于包装已有资产）
+for _m in ("rupu_a2_sand", "rupu_a2_text", "rupu_a2_site", "rupu_a2_anim", "rupu_a2_city"):
+    if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), _m + ".py")):
+        RECIPES.update(importlib.import_module(_m).recipes())
 
 
 # ====================================================================== 驱动

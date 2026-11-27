@@ -16,7 +16,8 @@
 | `CHR_MingWoman` 2 | ✅ | `NPC_MingWoman_A`（送饭）/ `_B`（提灯） |
 | `CHR_MingChild` 1 | ✅ | `NPC_MingChild` |
 | `ENV_SandTable` | ✅ | `ENV_SandTable` |
-| `PROP_Sand_Wall` / `_Gate` / `_Tower` / `_House` / `_Flags` | ✅ | 同名，5 个资产 |
+| `PROP_Sand_Wall` / `_Gate` / `_Tower` / `_House` / `_Flags` | ✅ | 同名，5 个资产（2026-11 按靠山 B 案重生成，补墙线分段、水门起止位、纸卡贴图） |
+| 沙盘 1941 / 1945 皮肤 | ✅ | 断角/漏沙/蒙布几何 + `T_SandTable_Dust_Mask` + `RupuSandSkins` 生成 `_1941` / `_1945` 材质 |
 | `ENV_Stele` | ✅ | `ENV_Stele` |
 | `PROP_Covenant` 10 | ✅ | `PROP_Covenant`（`Board_01..10`） |
 | `PROP_Roster` | ✅ | `PROP_Roster` |
@@ -79,53 +80,122 @@
 
 ## 沙盘（策划案 §4.2–4.5）
 
+> 2026-11 补缺口（[`第二幕_策划对照与建模缺口.md`](第二幕_策划对照与建模缺口.md) §3、§5 P0 沙盘行）：靠山 B 案重生成、墙线分段隆起、木签变墙垛、水门两态起止位、王宅木片三个落位、1941/1945 皮肤材质、四张议题纸卡。几何仍在 `rupu_act2.py`，积灰遮罩和纸卡贴图在 `rupu_a2_sand.py`（覆盖 `ENV_SandTable` / `PROP_Sand_Flags` 两个配方），团结侧皮肤材质由 `RupuSandSkins.cs` 生成。
+
 ### 坐标约定
 
 - `ENV_SandTable` 是一张 1.2 × 0.8 m 的桌子，沙面高 0.86 m。永昌堡按 **1:500** 缩进沙面，数据直接读 `Data/map/yongchang_layout.json` 里的墙线、河、浃、护城河、内塘和田块。
 - 方向：堡的南北长轴沿桌子长边，**北 = 本地 +X**；**东 = 本地 −Y**，也就是桌子正面，海和东墙朝向玩家；西侧后沿是山。
-- 海和山都做了压缩，比实际离城更近。另外加了西北城外的坟地和东南海边的盐田，供拉墙线时避开。
-- 沙面是一张高度场：水面下凹成槽，后沿起山，平坦处已合并成大面，共 3666 三角面。
+- 海和山都做了压缩，比实际离城更近。山脚起坡在本地 Y=0.29（布局 x≈−145），靠山案西墙（x=−140 → Y=0.28）正好压在山脚。另外加了西北城外的坟地和东南海边的盐田，供拉墙线时避开。
+- 沙面是一张高度场：水面下凹成槽，后沿起山，平坦处已合并成大面。
 - 沙盘套件 `PROP_Sand_Wall` / `Gate` / `Tower` / `House` 的**原点都等于沙面中心**。在团结里把它们放到 `ENV_SandTable/ANCHOR_SandOrigin` 上（局部坐标 0、旋转 0）即可对齐，不需要逐件摆。
 
-### 墙线两案（演绎）
+![沙盘全景（靠山 B 案，1560 皮肤），前面斜托上是四张议题纸卡](images/act2/sandtable_q.jpg)
 
-![左：贴河（布局实际墙线）；右：靠山（西墙推到山脚，南墙北缩让出河岸）](images/act2/sandtable_river_vs_hill.jpg)
+### 墙线两案（靠山 = B 案：西墙 x=−140、南墙 z=−185）
 
-上图左半是贴河（布局实际墙线），右半是靠山（西墙推到山脚，南墙北缩让出河岸）。每种方案里，没选的那条线会显示为深色浅沟 `Trench_*`。
+![俯视，左：贴河；右：靠山（上方是西/山）。没选的那条线只剩深色浅沟](images/act2/sandtable_river_vs_hill.jpg)
+
+两案的北墙、东墙、南墙位置都一样（南墙都在 z=−185），**区别只在西侧**：贴河的西墙贴着护城河内岸（x=−113）；靠山把西墙推到山脚（x=−140），把西护城河和河岸圈进城里，南墙向西多出一段，北墙西端补一小段。
 
 | 组 | 内容 |
 |---|---|
-| `Wall_Fixed` | 北墙和东墙北段，两案共用 |
-| `Wall_River` | 东墙南段、实际的南墙和西墙，加 3 个转角 |
-| `Wall_Hill` | 南墙退到布局 z=−140，西墙推到 x=−140 |
+| `Wall_Fixed` | 北墙 + 东墙全段（两案共用），转角 2 个（东北、东南） |
+| `Wall_River` | 南墙（x 113 → −113）+ 西墙 x=−113，转角 2 个 |
+| `Wall_Hill` | 南墙（x 113 → −140）+ 西墙 x=−140 + 北墙西端补段（−140 → −113），转角 2 个 |
 
-### 子物体与接入说明
+两案各有一份南墙，整组开关时只会显示一份。南门和南水门也是一样：`GateTower_S` / `WaterGate_S1/S2` 跟贴河组，`GateTower_S_Hill` / `WaterGate_S1_Hill/S2_Hill` 跟靠山组，**B 案下两套位置相同**（名字保留，A 现有的开关逻辑不用改）。靠山组多两道涵洞水门 `WaterGate_SW_Hill` / `WaterGate_NW_Hill`，因为它的南墙西段和北墙补段各跨一次西护城河。
+
+### 墙线动画：沙沿线隆起、木签变墙垛
+
+![左：拉线中（木签插下，麻线铺在沙上，沙埂按序号逐段升起）；右：墙线固定（木签换成墙垛，墙条和西门出现）](images/act2/sand_ridge_rise.jpg)
+
+| 子物体（`ENV_SandTable`） | 用法 |
+|---|---|
+| `Ridge_<案>` → `Ridge_<案>_01..NN` | 沙埂分段（贴河 24 段、靠山 26 段，每段约 5 cm，梯形截面），**按墙线顺序编号**：从东南角沿南墙往西，再沿西墙往北。每段原点在段底中心，本地 +X = 前进方向。逐段把本地 Z 缩放从 0 拉到 1（每段约 0.06 s，错开播放）就是「沙沿着线隆起来」；整组缩放 `Ridge_<案>` 的 Z 也行（旧做法仍兼容） |
+| `Twine_<案>` → `Twine_<案>_01..NN` | 平铺在沙面的麻线段，与沙埂一一对应。拉线时逐段显示；沙埂那一段隆起完就把对应的麻线段隐藏，即「麻线被土盖住」 |
+| `Trench_River` / `Trench_Hill` | 没选的那一侧只剩的浅沟 |
+| `ANCHOR_Stake_<案>_A/B` | 两根木签插下的位置：A = 西南角，B = 西北角（两案分岔的地方） |
+| `StakeMerlon_<案>_A/B` | 「木签变墙垛」成对件，原点 = 插签点。`_Stake` 是木签（与 `PROP_Sand_Flags/Stake_NN` 同形，签尖没入沙里 6 mm）；`_Merlon` 是比墙角台大一圈、四角带垛口的墙垛。墙线固定时 `_Stake` 缩到 0 或隐藏，`_Merlon` 本地 Z 0→1 长出来 |
+| `FX_Stake_<案>_A/B`、`FX_SandDust_<案>` | 钉桩扬沙（插签时）、隆起尘浪（沿线中点） |
+| `COL_Hot_WallLine` | 墙线热区：西侧两案之间的那条带，点它开始拉线 |
+
+建议的播放顺序：插签 A、B（`A2_PlantStake`，`FX_Stake_*`）→ 麻线逐段出现（`A2_PullString`）→ 沙埂逐段隆起、麻线逐段隐藏（`FX_SandDust_<案>`）→ 木签换墙垛 → `Wall_<案>` 整组显示、`Trench_<另一案>` 显示 → 停 0.5 s。
+
+### 敌台、水门、王宅
 
 | 资产 | 子物体 / 挂点 | 用法 |
 |---|---|---|
-| `ENV_SandTable` | `Table`、`Sand`、`Static_Minis`（官道、坟地、盐田、东墙和北墙边插旗用的木牌） | 静态 |
-| | `Ridge_River` / `Ridge_Hill` | 隆起的沙埂，原点在沙面。本地 Z 缩放从 0 拉到 1，就是「沙沿着线隆起来」 |
-| | `Trench_River` / `Trench_Hill` | 没选的那一侧只剩的浅沟 |
-| | `ANCHOR_Stake_River_A/B`、`ANCHOR_Stake_Hill_A/B` | 两根木签插下的位置（墙线首尾） |
+| `ENV_SandTable` | `ANCHOR_Flag_East` / `ANCHOR_Flag_North` | 东墙/北墙木牌顶上的插旗点，`PROP_Sand_Flags/Flag_NN` 原点放这里 |
+| | `FX_Tower_East_Rise` / `FX_Tower_North_Rise` | 升台扬沙 |
+| `PROP_Sand_Tower` | `Tower_East`（东台·对海口）/ `Tower_North`（北台·对官道） | 「墙里凸出一座台」：本地 Z 从 −0.024（埋在沙面下）升到 0；小炮 `<台>_Cannon` 本地 Z 从 −0.012 升到 0 |
+| | `Tower_East_Flat` / `Tower_North_Flat` | 墙条在敌台处留了缺口，没选的那座显示这段平墙补上（与 `<台>` 二选一） |
+| `PROP_Sand_Gate` | `WaterGate_E` 下：`Gate_Board`、`Gate_StoneBar`、`Water_Still`、`Water_Flow`、`Water_Flow_Lines`、`Boat`、`StonePile` | 状态件，水门本地坐标（外侧 −Y） |
+| | `ANCHOR_GateBoard_In` → `_Up` → `_Out` | 开闸：闸板从槽里上提到顶，再平放到墙外岸上（`_Out` 带 X 90°） |
+| | `ANCHOR_StoneBar_Out` → `_In` | 闭闸：石条从城内岸边推进闸槽（`A2_PushLoop`） |
+| | `ANCHOR_Boat_In` → `_Out` | 开闸后小船从城内穿过水门到城外 |
+| | `ANCHOR_Water_High` → `_Low` | 闭闸：死水 `Water_Still` 从常水位降到 `_Low`，露出 `StonePile` |
+| | `Water_Flow_Lines` | 流水条纹（浅色短划，周期 12.5 mm）：开闸时沿本地 −Y（出城往海）每秒移 12.5 mm 循环；也可以对 `M_A2_MiniWaterFlow` 做 UV 滚动 |
+| | `FX_WaterGate_E_Splash`、`FX_WaterGate_E_Flow` | 石条入槽水花；流水（`PF_VFX_WaterFlow` 的本地 +Z 已朝出城方向） |
+| `PROP_Sand_House` | `House_20`（王叔杲宅，北墙外合院）+ `ANCHOR_House_20_Out`（原位）/ `_Over`（越墙中点，高 3 cm）/ `_In`（圈进墙内落位：北墙内、下河东岸，不压民居片和水田） | 「推一下，就是三百两」：Out → Over → In 两段插值；留在墙外就不动。`ENV_SandTable` 里同名的 `ANCHOR_House_20_Out/In` 是同一位置（在沙盘根下），另有 `FX_House_20` |
+
+![左：东水门开闸（闸板搁岸上、流水条纹、小船）；右：闭闸（石条入槽、死水）](images/act2/sand_watergate.jpg)
+
+### 纸卡（三议题 + 王宅）
+
+![四张议题纸卡贴图：墙线 / 敌台 / 水门 / 王宅](images/act2/sand_cards.jpg)
+
+- 贴图 `T_SandCard_Wall_D` / `_Tower_D` / `_Water_D` / `_House_D`（1024 方图，`Assets/Art/Props/PROP_Sand_Flags/`），Blender 文字（宋体）竖排右起 + Workbench 平光渲出，numpy 做旧纸纹。内容出自策划案 §4.1 / §5：右起第一列是议题，然后是**甲**（朱框）主列 + 副列、**乙**主列 + 副列，最左一列朱字是代价。
+- 3D：`PROP_Sand_Flags` 里的 `Card_Wall` / `Card_Tower` / `Card_Water` / `Card_House` 是 9 cm 方卡（正面 5×5 格、四角微翘，正面 UV 正好 0..1），原点在卡底中心。`ENV_SandTable` 正面挂了一条斜木托 `CardTray`，四个落位 `ANCHOR_Card_<议题>`（从左到右：墙线、敌台、水门、王宅，已带 14° 倾角）——卡片挂到锚点下，局部坐标、旋转清零。
+- **当 UI 用**：同一张贴图直接放 RawImage（或把导入类型改成 Sprite）。点选区按贴图横坐标 u（0 = 左，1 = 右）：议题 u 0.81–0.90；甲 u 0.57–0.73；乙 u 0.33–0.49；代价 u 0.17–0.24。
+
+![斜木托上的四张纸卡](images/act2/sand_card_tray.jpg)
+
+### 1941 / 1945 皮肤
+
+![左：1941 断角（劈裂残茬 + 漏下的沙）；右：王宅木片推进墙内](images/act2/sand_1941_house20.jpg)
+
+| 皮肤 | 几何 | 材质 |
+|---|---|---|
+| 1560 | 默认 | 导入的 `M_A2_*` |
+| 1941 | 隐藏 `Rim_Corner_FL`，显示 `Rim_Broken_FL_1941`（前左角劈裂的残茬、桌面裂开一块）和 `SandSpill_1941`（缺口塌下来的沙、地上一摊） | `Skins/M_A2_<名>_1941.mat`：饱和度 ×0.45、向灰土色靠 35%，叠积灰遮罩 |
+| 1945 | 同 1941，再显示 `Cover_1945`（蒙布），摆到祠堂角落 | `Skins/M_A2_<名>_1945.mat`：在 1941 上再压暗 30%，积灰略淡（盖着布） |
+
+- 积灰遮罩 `T_SandTable_Dust_Mask.png`（1024，可平铺，RGB = A = 积灰量，`Assets/Art/Environments/ENV_SandTable/`）在生成 `ENV_SandTable` 时由 numpy 程序化写出。
+- 皮肤材质在团结里生成：菜单 **入谱 / 第二幕 / 生成沙盘皮肤（1941 · 1945）**，或命令行 `-executeMethod Rupu.EditorTools.RupuSandSkins.BuildCLI`。它从 6 个沙盘 FBX 里收集 `M_A2_*`（含纸卡 `M_A2_Card_*`），复制出两套 .mat 到 `Assets/Art/Environments/ENV_SandTable/Skins/`。积灰用 URP Lit 自带的 Detail（`_DetailMask` 读 A 通道 + `_DetailAlbedoMap` 同一张图，`_DETAIL_SCALED`）：积灰处提亮、干净处略暗，不需要自定义着色器。可重复执行。
+- 切皮肤（A）：遍历沙盘根下所有 Renderer，把 `sharedMaterials` 里名为 `X` 的换成 `Skins/X_1941`（或 `_1945`）。切回 1560 用原材质。
+
+### 子物体总表（其余）
+
+| 资产 | 子物体 / 挂点 | 用法 |
+|---|---|---|
+| `ENV_SandTable` | `Table`、`Sand`、`Static_Minis`（官道、坟地、盐田、东墙和北墙边插旗用的木牌）、`CardTray` | 静态 |
 | | `CAM_Overview` / `CAM_East` / `CAM_North` + `LOOK_*` | 三个固定机位和对应的注视点（LookAt） |
-| | `COL_Hot_EastWall` / `NorthWall` / `WaterGate` / `WangHouse` | 沙盘模式 Raycast 用的 4 个热区，导入后去掉渲染器 |
+| | `COL_Hot_EastWall` / `NorthWall` / `WaterGate` / `WangHouse` / `WallLine` | 沙盘模式 Raycast 用的热区，导入后去掉渲染器 |
 | | `ANCHOR_SandOrigin`、`ANCHOR_Stand`、`ANCHOR_Stand_Shugao`、`ANCHOR_Stand_Pei` | 套件原点、王砚站位，王叔杲在右侧报数，王沛在左侧 |
-| | `Rim_Corner_FL`、`Cover_1945` | 1941 皮肤隐藏前左角做断角；1945 显示蒙布。积灰效果靠换材质 |
-| | `FX_SandDust`、`FX_SandDust_River/Hill`、`FX_Water_E` | 扬沙、水花 |
+| | `FX_SandDust`、`FX_Water_E` | 进沙盘扬沙、东水门水花 |
 | `PROP_Sand_Wall` | `Wall_Fixed/River/Hill`：组空物体，整组 SetActive；下面是 `<组>_NN` 墙条和 `<组>_Corner_N` 转角 | 每段墙条约 5 cm、原点在底中心、可单独复制拼接。`Kit_Straight_L`（5 cm）/ `Kit_Straight_S`（2.5 cm）/ `Kit_Corner` / `Kit_GateSeg` 是散件母版，摆在桌外 Y=−0.5 处 |
-| `PROP_Sand_Gate` | `GateTower_N/E/S/W`、`Wengcheng_E`、`WaterGate_E/N1/N2/S1/S2` | `GateTower_S`、`GateTower_W`、`WaterGate_S1/S2` 跟贴河组；`GateTower_S_Hill`、`GateTower_W_Hill`、`WaterGate_S1_Hill/S2_Hill` 跟靠山组 |
-| | `WaterGate_E` 下面：`Gate_Board`（闸板）、`Gate_StoneBar`（石条）、`Water_Still` / `Water_Flow`、`Boat`、`StonePile` | 开闸：抽走闸板，显示流水和小船。闭闸：推入石条，显示死水，水退时露出石堆 |
-| `PROP_Sand_Tower` | `Tower_East`（东敌台·北，对海口）、`Tower_North`（北敌台·西，对官道） | 小炮是 `Tower_East/Tower_East_Cannon` 和 `Tower_North/Tower_North_Cannon`，本地 Z 从 −0.012 升到 0 |
-| `PROP_Sand_House` | `House_01..19` 按布局抽样摆好；`House_20` 是王叔杲宅（北墙外，合院形） | 宅院抉择选「圈进墙内」时，把 `House_20` 推到 `ANCHOR_House_20_In` |
-| `PROP_Sand_Flags` | `Flag_01..06`（红、蓝、黄各两面）、`Stake_01..04`、`Twine`、`Rice_01..03`、`Card_Wall/Tower/Water` | 原点就是插入点。`Twine` 沿本地 +X 长 0.1 m、原点在一端，缩放 X 即可拉到两签之间 |
+| `PROP_Sand_Gate` | `GateTower_N/E/S/W`、`Wengcheng_E`、`WaterGate_E/N1/N2/S1/S2` + 靠山组 `GateTower_S_Hill/W_Hill`、`WaterGate_S1/S2/SW/NW_Hill` | 见上文 |
+| `PROP_Sand_Flags` | `Flag_01..06`（红、蓝、黄各两面）、`Stake_01..04`、`Twine`、`Rice_01..03`、`Card_*` | 原点就是插入点。`Twine` 沿本地 +X 长 0.1 m、原点在一端，缩放 X 即可拉到两签之间 |
 
 ![东墙近景：垛口朝外、环海门和瓮城、东台、东水门和浃](images/act2/sandtable_eastwall.jpg)
 
+### VFX 挂点（粒子在 `RupuVfx`，这里只留挂点）
+
+| 动作 | 挂点 | 建议粒子 |
+|---|---|---|
+| 进沙盘 / 插旗 | `FX_SandDust`、`FX_Tower_*_Rise` | `PF_VFX_SandPuff` |
+| 钉桩 | `FX_Stake_<案>_A/B` | `PF_VFX_SandPuff`（缩小） |
+| 墙线隆起 | `FX_SandDust_<案>`，或逐段在 `Ridge_<案>_NN` 原点播 | `PF_VFX_WallRise`（沿本地 X，缩放到 5 cm 段长） |
+| 推王宅木片 | `FX_House_20` | `PF_VFX_SandPuff` |
+| 石条入槽 / 开闸流水 | `FX_WaterGate_E_Splash`、`FX_WaterGate_E_Flow`、`FX_Water_E` | `PF_VFX_MortarSplash`（改色）/ `PF_VFX_WaterFlow` |
+| 凿碑火星 | `ENV_Stele/FX_Chisel_1..3` | `PF_VFX_StoneSparks` |
+
 ### 三角面与材质
 
-`ENV_SandTable` 3666，`PROP_Sand_Wall` 2122，`PROP_Sand_Gate` 980，`PROP_Sand_Tower` 232，`PROP_Sand_House` 556，`PROP_Sand_Flags` 960。
+`ENV_SandTable` 5220，`PROP_Sand_Wall` 2180，`PROP_Sand_Gate` 1292，`PROP_Sand_Tower` 272，`PROP_Sand_House` 556，`PROP_Sand_Flags` 1376（都在规格内）。
 
-策划案说「1 材质、顶点色」，这里没有照做，改为每种地物一个 `M_A2_*` 纯色材质（沙、深沙、苔、田、水、流水、山、木、墙、瓦、铁）。原因是管线目前只认 Base Color；如果要压成一个材质，可以在团结里烘成顶点色。
+策划案说「1 材质、顶点色」，这里没有照做，改为每种地物一个 `M_A2_*` 纯色材质（沙、深沙、苔、田、水、流水、流水条纹、山、木、墙、瓦、铁），纸卡各一个带贴图的 `M_A2_Card_*`。原因是管线目前只认 Base Color；如果要压成一个材质，可以在团结里烘成顶点色。
 
 ## 族约 / 名录 / 田契 / 图卷 / 筑堡道具
 
@@ -203,12 +273,20 @@ cd /Users/anruikang/Downloads/game_race
   --only ENV_SandTable,PROP_Sand_Wall,NPC_MingElder_A,CH_WangYan_1941@A2_SpearStamp,... --force
 ```
 
-沙盘套件依赖 `Data/map/yongchang_layout.json`。布局重新生成后，需要重跑 `ENV_SandTable` 和 `PROP_Sand_*`。
+沙盘套件依赖 `Data/map/yongchang_layout.json`。布局重新生成后，需要重跑 `ENV_SandTable` 和 `PROP_Sand_*`（`ENV_SandTable` 会顺带写出积灰遮罩，`PROP_Sand_Flags` 会顺带渲出四张纸卡贴图），然后在团结里重跑 `RupuSandSkins.BuildCLI`。
 
 ## 还没做
 
 - VFX 粒子：沙盘扬沙、墙线隆起、凿石火星、灰浆溅、夯土尘、墨迹、纸页、印章、水门水流、炊烟、雨。目前只留了挂点。
-- 沙盘「1 个材质 + 顶点色」版本，以及 1941（积灰）和 1945 的材质皮肤。几何上已有断角件和蒙布。
-- 妇人用的饭篮、明代灯笼道具。
-- 王叔杲拆梁的动作。
+- 沙盘「1 个材质 + 顶点色」版本。
 - 表情贴图、手指骨（手目前是一整块）。
+
+## 第二幕补缺口（2026-11-27，对照 [`第二幕_策划对照与建模缺口.md`](第二幕_策划对照与建模缺口.md)）
+
+| 文档 | 内容 | 生成模块 |
+|---|---|---|
+| 本文「沙盘」一节 | 靠山 B 案（西 −140 / 南 −185）、墙线分段隆起、木签变墙垛、水门开闭锚点、王宅木片三落位、1941/1945 皮肤（`RupuSandSkins.BuildCLI`）、纸卡 | `rupu_act2.py`、`rupu_a2_sand.py` |
+| [`act2_text.md`](act2_text.md) | 族约碑凿三下、名录 30 名（5 秒四段 + 空白格）、匾 / 旗 / 灯 / 印文字贴图 | `rupu_a2_text.py` |
+| [`act2_site.md`](act2_site.md) | 城墙生长四阶段、合龙缺口、工地 overlay、水门开闭、城门门扇与碰撞、王宅拆梁、盐场三阶段、北门战后现场 | `rupu_a2_site.py`、`rupu_ming_civic.py` |
+| [`act2_anim.md`](act2_anim.md) | 拆梁、看船、试炮、1v3 枪术、义师出战、护民、遗体、族老拂袖；饭篮、明代灯笼、撬杠、火绳杆 | `rupu_a2_anim.py` |
+| [`act2_city_lod.md`](act2_city_lod.md) | 明代建筑自动 LOD（导出时生成）、石板路路口 / 排水沟 / 墙外土路 / 市场货品、`Data/map/ming_footprints.json` 占地表 | `rupu_pipeline.py`、`rupu_a2_city.py` |

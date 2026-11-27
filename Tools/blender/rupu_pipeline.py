@@ -13,6 +13,15 @@
        -P Tools/blender/rupu_pipeline.py -- --export
    blender -b any.blend -P Tools/blender/rupu_pipeline.py -- --validate
    blender -b -P Tools/blender/rupu_pipeline.py -- --new-template Characters NPC_WangYan
+   导出参数：--no-lod 关掉自动 LOD；--lod 对任意资产强制生成 LOD
+
+自动 LOD（见 Docs/act2_city_lod.md）：
+- 默认对 Buildings 里 BLD_MING_* 开启。导出时把每个可见网格复制出 LOD1（约 50%）、LOD2（约 20%），
+  只写进 FBX，不保存进 .blend（导出后立即删掉、名字复原）。规格检查的三角面只算 LOD0。
+- FBX 里的结构：<原名>_LOD0（原网格），其下子物体 NOCOL_<原名>_LOD1 / NOCOL_<原名>_LOD2。
+  LOD1/2 挂在 LOD0 下面：门扇、屋顶这类会被脚本移动/隐藏的部件，远处的 LOD 跟着一起动；
+  NOCOL_ 前缀让场景生成器不给它们加 MeshCollider（碰撞只用 LOD0）。
+  团结里 RupuArtImporter 把 _LOD0 后缀去掉（名字和以前一样），在模型根上建 LODGroup。
 
 约定（与 Docs/asset_spec.md 一致）：
 - .blend 源文件放 ArtSource/<分类>/<资产名>.blend
@@ -33,8 +42,10 @@ bl_info = {
 }
 
 import os
+import re
 import sys
 
+import bmesh
 import bpy
 import mathutils
 
@@ -64,6 +75,14 @@ NAME_PREFIX = {
 
 REF_COLLECTION = "_REF"
 EPS = 1e-3
+
+# ---------------------------------------------------------------- LOD 参数
+# (级别, 目标三角面比例, 小件阈值：最长边 < a 或 第二长边 < b 的孤立件删掉, max_area)
+#  max_area：第二步按大小继续删件时，包围盒最大面面积小于它的件才可以删（m²）
+LOD_LEVELS = ((1, 0.50, 0.30, 0.06, 0.6), (2, 0.20, 0.80, 0.15, 3.0))
+LOD_MIN_TRIS = 200                     # 少于这个面数的网格不做 LOD（门闩、绳子这类小件，始终可见）
+LOD_SKIP_PREFIX = ("COL_", "NOCOL_", "ANCHOR_", "FX_", "REF_")
+LOD_SUFFIX = re.compile(r"_LOD(\d+)$")
 
 
 # ---------------------------------------------------------------- 路径
@@ -154,6 +173,9 @@ def validate(context=None):
                 errors.append(f"{o.name}: 缩放未应用 {tuple(round(s, 3) for s in o.scale)}（Ctrl+A > 缩放）")
             if any(abs(r) > EPS for r in o.rotation_euler) and o.type != "ARMATURE":
                 warnings.append(f"{o.name}: 旋转未应用（Ctrl+A > 旋转），进团结后可能带旋转")
+        m = LOD_SUFFIX.search(o.name)
+        if m and m.group(1) != "0":
+            continue                     # 只算 LOD0（LOD 只在导出时临时生成，正常不会出现在场景里）
         if o.type == "MESH":
             total_tris += tri_count(o, depsgraph)
             if len(o.data.materials) == 0:
@@ -183,7 +205,144 @@ def validate(context=None):
 
 # ---------------------------------------------------------------- 导出
 
-def do_export(context=None):
+def lod_enabled(category, name, argv=None):
+    """默认：Buildings 且名字以 BLD_MING_ 开头。命令行 --no-lod 关、--lod 对任意资产强制开。"""
+    argv = sys.argv if argv is None else argv
+    if "--no-lod" in argv:
+        return False
+    if "--lod" in argv:
+        return True
+    return category == "Buildings" and name.startswith("BLD_MING_")
+
+
+def _bm_tris(bm):
+    return sum(len(f.verts) - 2 for f in bm.faces)
+
+
+def _islands(bm):
+    """按共享顶点分出孤立件，返回 [[face, ...], ...]。"""
+    parent = list(range(len(bm.verts)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+    bm.verts.index_update()
+    for f in bm.faces:
+        r0 = find(f.verts[0].index)
+        for v in f.verts[1:]:
+            r = find(v.index)
+            if r != r0:
+                parent[r] = r0
+    groups = {}
+    for f in bm.faces:
+        groups.setdefault(find(f.verts[0].index), []).append(f)
+    return list(groups.values())
+
+
+def _lod_mesh(src, depsgraph, ratio, min_long, min_mid, max_area, name):
+    """从 src（含修改器的求值结果）做一份 LOD 网格。白模是盒子拼的，所以优先「整件删掉小件」（形状干净），
+    不够再 Decimate(Collapse)：
+      1) 最长边 < min_long 或 第二长边 < min_mid 的孤立件（门钉、窗棂、栏杆、椽头）一律删；
+      2) 仍超目标时，按包围盒最大面面积从小到大继续删，面积 < max_area 的件才允许删；
+      3) 还超目标 25% 以上，才用 Collapse 把剩下的压到目标。"""
+    me = bpy.data.meshes.new_from_object(src.evaluated_get(depsgraph))
+    me.name = name
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    tri0 = _bm_tris(bm)
+    target = max(12, int(tri0 * ratio))
+    small, rest, keep_tris = [], [], 0
+    for faces in _islands(bm):
+        vs = {v for f in faces for v in f.verts}
+        dims = sorted(max(v.co[i] for v in vs) - min(v.co[i] for v in vs) for i in range(3))
+        t = sum(len(f.verts) - 2 for f in faces)
+        if dims[2] < min_long or dims[1] < min_mid:
+            small.append(faces)
+        else:
+            rest.append((dims[2] * dims[1], t, faces))
+            keep_tris += t
+    if keep_tris >= min(target, tri0) * 0.3:        # 全是小件的网格（不太可能）就不删，只靠 Decimate
+        rest.sort(key=lambda r: r[0])
+        for area, t, faces in rest:
+            if keep_tris <= target or area >= max_area:
+                break
+            small.append(faces)
+            keep_tris -= t
+        dead = [f for faces in small for f in faces]
+        bmesh.ops.delete(bm, geom=dead, context="FACES")
+        loose = [v for v in bm.verts if not v.link_faces]
+        if loose:
+            bmesh.ops.delete(bm, geom=loose, context="VERTS")
+    bm.to_mesh(me)
+    bm.free()
+    cur = sum(len(p.vertices) - 2 for p in me.polygons)
+    if cur > target * 1.25:
+        tmp = bpy.data.objects.new("__lod_tmp", me)
+        bpy.context.scene.collection.objects.link(tmp)
+        mod = tmp.modifiers.new("Decimate", "DECIMATE")
+        mod.decimate_type = "COLLAPSE"
+        mod.ratio = max(0.02, target / cur)
+        mod.use_collapse_triangulate = True
+        dg = bpy.context.evaluated_depsgraph_get()
+        me2 = bpy.data.meshes.new_from_object(tmp.evaluated_get(dg))
+        bpy.data.objects.remove(tmp, do_unlink=True)
+        bpy.data.meshes.remove(me)
+        me2.name = name
+        me = me2
+    for p in me.polygons:
+        p.use_smooth = False
+    return me
+
+
+def build_lods(objs, context=None):
+    """给 objs 里够大的网格临时生成 LOD1/LOD2。返回 (新物体, 改名记录, 统计)，用 remove_lods 撤回。"""
+    context = context or bpy.context
+    depsgraph = context.evaluated_depsgraph_get()
+    created, renamed, report = [], [], []
+    for o in objs:
+        if o.type != "MESH" or o.name.startswith(LOD_SKIP_PREFIX) or LOD_SUFFIX.search(o.name):
+            continue
+        if o.parent is not None and o.parent.type == "ARMATURE":
+            continue
+        if any(m.type == "ARMATURE" for m in o.modifiers):
+            continue
+        t0 = tri_count(o, depsgraph)
+        if t0 < LOD_MIN_TRIS:
+            continue
+        base = o.name
+        row = [base, t0]
+        coll = o.users_collection[0] if o.users_collection else context.scene.collection
+        for lv, ratio, a, b, area in LOD_LEVELS:
+            nm = f"NOCOL_{base}_LOD{lv}"
+            me = _lod_mesh(o, depsgraph, ratio, a, b, area, nm)
+            lo = bpy.data.objects.new(nm, me)
+            coll.objects.link(lo)
+            lo.parent = o
+            lo.matrix_parent_inverse = mathutils.Matrix.Identity(4)
+            created.append(lo)
+            me.calc_loop_triangles()
+            row.append(len(me.loop_triangles))
+        renamed.append((o, base))
+        report.append(tuple(row))
+    for o, base in renamed:
+        o.name = base + "_LOD0"
+    return created, renamed, report
+
+
+def remove_lods(created, renamed):
+    for lo in created:
+        me = lo.data
+        bpy.data.objects.remove(lo, do_unlink=True)
+        if me is not None and me.users == 0:
+            bpy.data.meshes.remove(me)
+    for o, base in renamed:
+        o.name = base
+
+
+def do_export(context=None, lod=None):
+    """lod=None 时按 lod_enabled() 自动决定。"""
     context = context or bpy.context
     errors, warnings, stats = validate(context)
     if errors:
@@ -192,11 +351,27 @@ def do_export(context=None):
     target = stats["target"]
     os.makedirs(os.path.dirname(target), exist_ok=True)
 
-    # 只选中可导出物体
     objs = exportable_objects(context.scene)
-    for o in context.scene.objects:
-        o.select_set(o in objs)
+    if lod is None:
+        lod = lod_enabled(stats["category"], stats["name"])
+    created, renamed = [], []
+    try:
+        if lod:
+            created, renamed, rep = build_lods(objs, context)
+            stats["lod"] = rep
+            for r in rep:
+                print(f"[LOD] {r[0]}: " + " / ".join(str(t) for t in r[1:]) + " tris (LOD0/1/2)")
+            objs = objs + created
+        # 只选中可导出物体
+        for o in context.scene.objects:
+            o.select_set(o in objs)
+        _export_fbx(objs, target)
+    finally:
+        remove_lods(created, renamed)
+    return True, errors, warnings, stats
 
+
+def _export_fbx(objs, target):
     has_anim = any(o.animation_data for o in objs) or any(o.type == "ARMATURE" for o in objs)
     bpy.ops.export_scene.fbx(
         filepath=target,
@@ -221,7 +396,6 @@ def do_export(context=None):
         path_mode="AUTO",
         embed_textures=False,
     )
-    return True, errors, warnings, stats
 
 
 # ---------------------------------------------------------------- 模板

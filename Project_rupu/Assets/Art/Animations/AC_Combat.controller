@@ -1,6 +1,286 @@
 %YAML 1.1
 %TAG !u! tag:yousandi.cn,2023:
---- !u!1102 &-9098680648670913394
+--- !u!1102 &-9014988933377513814
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoPhaseChange
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 8942303095212049695, guid: 59eb10b1a357c49c790fae9ec5aed8a4, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-7711793847272576204
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_SwordAttack1
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 8040451968132216124, guid: 2b219dbf30709484494d20075d4083c9, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-7198997830567775195
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanPotThrow
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 6273885152265733492, guid: 77bc595d5c826458f8185deb055e93fc, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-6956987526501574671
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoIdleLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 7662818099079031233, guid: 76b1a3375bcb6403cb3ad223aeaea9c3, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-6600644176672453940
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanStaggerLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -1843467933090399332, guid: dc50dc2552c67447ebfee8b130b23641, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-6374794847651190195
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_PotIdleLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 3795351789611621073, guid: 853f941f905b74f7b9b3d8155bc6fef8, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-6135092976169211324
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoIaiDash
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -7403420264817764270, guid: ac5c47a5b250f4232a484f539097508a, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-6028870820075017384
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_SwordHit
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 217644455879627440, guid: c2f3dd00c349a43cc9b0754c1a1ff9d8, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-4793279824236084357
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_SwordAttack2
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -7688530565433615015, guid: d814c6f2a970b40d9be0e771e67167d2, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-3769299578268159387
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_ShieldBlockLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -9152485950560816383, guid: a7945ff7be8014e858e73b4f7c06253c, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-3486477505754135625
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
@@ -28,7 +308,259 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!206 &-7715541550257808385
+--- !u!1102 &-3081100673401720683
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanPhaseChange
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -6272004844569961468, guid: 6d828013045da44b192bbb273be543fc, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-2720194198103881882
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoStaggerLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -8456805512280885806, guid: 479e44777206b494190107bbdb5a750c, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-2710969804075490297
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanAxeChop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -5012357634274193027, guid: 38cbe1dde6f13460391b5bfcff5f60b3, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-1928688726588367561
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_SwordDeath
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 4528034312708732522, guid: 715c80b98e2434ba78c103b5e58007ca, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-1917762520472254257
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_ShieldWalk
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 391888608550566187, guid: 75a084a42457b4d7d8970c0fe95d6820, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &-607310435959900060
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_BowIdleLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -1210043393868978558, guid: a6ad936502e774eeea814c4fd5517fd0, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!91 &9100000
+AnimatorController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: AC_Combat
+  serializedVersion: 5
+  m_AnimatorParameters:
+  - m_Name: Speed
+    m_Type: 1
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  m_AnimatorLayers:
+  - serializedVersion: 5
+    m_Name: Base Layer
+    m_StateMachine: {fileID: 5278443575671742986}
+    m_Mask: {fileID: 0}
+    m_Motions: []
+    m_Behaviours: []
+    m_BlendingMode: 0
+    m_SyncedLayerIndex: -1
+    m_DefaultWeight: 0
+    m_IKPass: 0
+    m_SyncedLayerAffectsTiming: 0
+    m_Controller: {fileID: 9100000}
+--- !u!1102 &423149579755183907
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanExecuted
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 6217335851566143802, guid: b2892e102d0874fe38f3df6493b1361f, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &579952286792685667
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_ShieldBash
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -2358663626567697669, guid: 52e49202d7dcd4b0394a758c9fc504a6, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!206 &762410294881640681
 BlendTree:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,931 +599,7 @@ BlendTree:
   m_UseAutomaticThresholds: 0
   m_NormalizedBlendValues: 0
   m_BlendType: 0
---- !u!1102 &-7157510750857518375
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoNaginataSweep
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -8227061960503072148, guid: c5e116a5e1f344fe5bad817c090266c4, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-7060648286969642553
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoExecuted
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 9188875100030348267, guid: c88e5af38ba374e3a919a791b248c640, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-6960333127867213902
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoPhaseChange
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 8942303095212049695, guid: 59eb10b1a357c49c790fae9ec5aed8a4, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-5461571603625487067
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanIdleLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 2571042078824773619, guid: 19468b6f9718348b2b77bccda689ef1e, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-5401577745116623447
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_PotThrow
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 7126845651852041998, guid: 1234a835adb0d4208adcb36f945988bf, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-5182163984182294651
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanAxeSpin
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -6792680616520520311, guid: 375e0ca68960a4f0985a8f51380ef0b0, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-5122424593681768748
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_PotHit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 5862590286355129218, guid: c0f544486b7b8420c8465d47ba54adc4, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-4551267014388397689
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoIdleLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 7662818099079031233, guid: 76b1a3375bcb6403cb3ad223aeaea9c3, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-4206612631234747149
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_SwordAttack2
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -7688530565433615015, guid: d814c6f2a970b40d9be0e771e67167d2, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-4017490452053888932
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanWeakHit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 7889026717494817804, guid: 32d17bd589e5d4630ad132ef4e8babf5, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-3171875017697528979
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoCombo3
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 4921298524420580031, guid: 9f6fb55772ec34302816cc15e79d0b1a, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-2959307574197416550
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanStaggerLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -1843467933090399332, guid: dc50dc2552c67447ebfee8b130b23641, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-2948214020898155002
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoNodachiCleave
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 6873978483812359240, guid: 9661caf52946a4e0c8548c4264c9fe68, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-1998325396648128183
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_BowIdleLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -1210043393868978558, guid: a6ad936502e774eeea814c4fd5517fd0, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-1705031162297069101
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_ShieldBlockLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -9152485950560816383, guid: a7945ff7be8014e858e73b4f7c06253c, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-837583083310038432
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_ShieldHit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 5856820600095509058, guid: e14bb65918d984292bf8ac76841f3178, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-331774032513433976
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_BowShoot
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 2046821912038794192, guid: fea2583ce81de4d6280f0dbcac68f72a, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &-288951954827225889
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_SwordAttack1
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 8040451968132216124, guid: 2b219dbf30709484494d20075d4083c9, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!91 &9100000
-AnimatorController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: AC_Combat
-  serializedVersion: 5
-  m_AnimatorParameters:
-  - m_Name: Speed
-    m_Type: 1
-    m_DefaultFloat: 0
-    m_DefaultInt: 0
-    m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  m_AnimatorLayers:
-  - serializedVersion: 5
-    m_Name: Base Layer
-    m_StateMachine: {fileID: 8336882904765832735}
-    m_Mask: {fileID: 0}
-    m_Motions: []
-    m_Behaviours: []
-    m_BlendingMode: 0
-    m_SyncedLayerIndex: -1
-    m_DefaultWeight: 0
-    m_IKPass: 0
-    m_SyncedLayerAffectsTiming: 0
-    m_Controller: {fileID: 9100000}
---- !u!1102 &525175466041894509
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoIaiDash
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -7403420264817764270, guid: ac5c47a5b250f4232a484f539097508a, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &695087929378852629
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_SwordHit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 217644455879627440, guid: c2f3dd00c349a43cc9b0754c1a1ff9d8, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &1490300499562611242
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanAxeChop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -5012357634274193027, guid: 38cbe1dde6f13460391b5bfcff5f60b3, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &2579928687789139890
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_ShieldIdleLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -8321693289782488352, guid: 128bf8354c6534e758459b894cc7c716, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &3282071087244853230
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_ShieldBash
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -2358663626567697669, guid: 52e49202d7dcd4b0394a758c9fc504a6, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &3445295917665608728
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanLeap
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -964309767916558994, guid: 7cb92e204919548ff81ecc270caf3f5f, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &4588703990575142902
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanPotThrow
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 6273885152265733492, guid: 77bc595d5c826458f8185deb055e93fc, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &4606651916431120571
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_PotDeath
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -5528739022898480229, guid: 4f90d2e8460d8490c99a0c79a2655620, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &4726309945064070755
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoWeakHit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -1637635156907282925, guid: 504ccc3a745d44fb1b92b41f9fe5bcee, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &5191735731574762646
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Locomotion
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -7715541550257808385}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &5779859613919391296
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_BowDeath
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 2032592865916083143, guid: 21d35adf8135d43189e53ed40f093049, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &6540686944901016980
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_BowHit
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: 3480165515968952308, guid: b660429b41a9243e9aee112ee7ec2054, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &7352335460255174233
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: EN_SwordIdleLoop
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -2123199175971276616, guid: 36ff57467f4ea435ab0d576cc4a4bcbf, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &7459838942165410431
-AnimatorState:
-  serializedVersion: 7
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanPhaseChange
-  m_Speed: 1
-  m_CycleOffset: 0
-  m_OverrideDuration: 1
-  m_Transitions: []
-  m_StateMachineBehaviours: []
-  m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
-  m_WriteDefaultValues: 1
-  m_Mirror: 0
-  m_SpeedParameterActive: 0
-  m_MirrorParameterActive: 0
-  m_CycleOffsetParameterActive: 0
-  m_TimeParameterActive: 0
-  m_UseOverrideDuration: 0
-  m_Motion: {fileID: -6272004844569961468, guid: 6d828013045da44b192bbb273be543fc, type: 3}
-  m_Tag: 
-  m_SpeedParameter: 
-  m_MirrorParameter: 
-  m_CycleOffsetParameter: 
-  m_TimeParameter: 
---- !u!1102 &7585740831130111776
+--- !u!1102 &1018298185445805473
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
@@ -1019,14 +627,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &7654300954704686059
+--- !u!1102 &1893489890452451578
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EN_ShieldWalk
+  m_Name: EN_SwordIdleLoop
   m_Speed: 1
   m_CycleOffset: 0
   m_OverrideDuration: 1
@@ -1041,159 +649,20 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_UseOverrideDuration: 0
-  m_Motion: {fileID: 391888608550566187, guid: 75a084a42457b4d7d8970c0fe95d6820, type: 3}
+  m_Motion: {fileID: -2123199175971276616, guid: 36ff57467f4ea435ab0d576cc4a4bcbf, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1107 &8336882904765832735
-AnimatorStateMachine:
-  serializedVersion: 6
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Base Layer
-  m_ChildStates:
-  - serializedVersion: 1
-    m_State: {fileID: 5191735731574762646}
-    m_Position: {x: 200, y: 0, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 5779859613919391296}
-    m_Position: {x: 300, y: 0, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 6540686944901016980}
-    m_Position: {x: 300, y: 60, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -1998325396648128183}
-    m_Position: {x: 300, y: 120, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -331774032513433976}
-    m_Position: {x: 300, y: 180, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 4606651916431120571}
-    m_Position: {x: 300, y: 240, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5122424593681768748}
-    m_Position: {x: 300, y: 300, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8680817717870180377}
-    m_Position: {x: 300, y: 360, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5401577745116623447}
-    m_Position: {x: 300, y: 420, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3282071087244853230}
-    m_Position: {x: 300, y: 480, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -1705031162297069101}
-    m_Position: {x: 300, y: 540, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7585740831130111776}
-    m_Position: {x: 300, y: 600, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -837583083310038432}
-    m_Position: {x: 300, y: 660, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 2579928687789139890}
-    m_Position: {x: 300, y: 720, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7654300954704686059}
-    m_Position: {x: 300, y: 780, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -288951954827225889}
-    m_Position: {x: 300, y: 840, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4206612631234747149}
-    m_Position: {x: 300, y: 900, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8479546407428887681}
-    m_Position: {x: 300, y: 960, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 695087929378852629}
-    m_Position: {x: 300, y: 1020, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7352335460255174233}
-    m_Position: {x: 300, y: 1080, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 1490300499562611242}
-    m_Position: {x: 300, y: 1140, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8952094148924645391}
-    m_Position: {x: 560, y: 0, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5182163984182294651}
-    m_Position: {x: 560, y: 60, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8500468306380493811}
-    m_Position: {x: 560, y: 120, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -5461571603625487067}
-    m_Position: {x: 560, y: 180, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 3445295917665608728}
-    m_Position: {x: 560, y: 240, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 7459838942165410431}
-    m_Position: {x: 560, y: 300, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 4588703990575142902}
-    m_Position: {x: 560, y: 360, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -2959307574197416550}
-    m_Position: {x: 560, y: 420, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4017490452053888932}
-    m_Position: {x: 560, y: 480, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -3171875017697528979}
-    m_Position: {x: 560, y: 540, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7060648286969642553}
-    m_Position: {x: 560, y: 600, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 525175466041894509}
-    m_Position: {x: 560, y: 660, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -4551267014388397689}
-    m_Position: {x: 560, y: 720, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -7157510750857518375}
-    m_Position: {x: 560, y: 780, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -9098680648670913394}
-    m_Position: {x: 560, y: 840, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -2948214020898155002}
-    m_Position: {x: 560, y: 900, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: -6960333127867213902}
-    m_Position: {x: 560, y: 960, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 8969419916302044989}
-    m_Position: {x: 560, y: 1020, z: 0}
-  - serializedVersion: 1
-    m_State: {fileID: 4726309945064070755}
-    m_Position: {x: 560, y: 1080, z: 0}
-  m_ChildStateMachines: []
-  m_AnyStateTransitions: []
-  m_EntryTransitions: []
-  m_StateMachineTransitions: {}
-  m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 50, y: 120, z: 0}
-  m_ExitPosition: {x: 800, y: 120, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 5191735731574762646}
---- !u!1102 &8479546407428887681
+--- !u!1102 &2000002920265253478
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EN_SwordDeath
+  m_Name: BS_ChiyanWeakHit
   m_Speed: 1
   m_CycleOffset: 0
   m_OverrideDuration: 1
@@ -1208,20 +677,20 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_UseOverrideDuration: 0
-  m_Motion: {fileID: 4528034312708732522, guid: 715c80b98e2434ba78c103b5e58007ca, type: 3}
+  m_Motion: {fileID: 7889026717494817804, guid: 32d17bd589e5d4630ad132ef4e8babf5, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &8500468306380493811
+--- !u!1102 &2136227386909078629
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BS_ChiyanExecuted
+  m_Name: EN_ShieldIdleLoop
   m_Speed: 1
   m_CycleOffset: 0
   m_OverrideDuration: 1
@@ -1236,20 +705,20 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_UseOverrideDuration: 0
-  m_Motion: {fileID: 6217335851566143802, guid: b2892e102d0874fe38f3df6493b1361f, type: 3}
+  m_Motion: {fileID: -8321693289782488352, guid: 128bf8354c6534e758459b894cc7c716, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &8680817717870180377
+--- !u!1102 &2300217286677700055
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: EN_PotIdleLoop
+  m_Name: BS_GuiwoWeakHit
   m_Speed: 1
   m_CycleOffset: 0
   m_OverrideDuration: 1
@@ -1264,13 +733,13 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_UseOverrideDuration: 0
-  m_Motion: {fileID: 3795351789611621073, guid: 853f941f905b74f7b9b3d8155bc6fef8, type: 3}
+  m_Motion: {fileID: -1637635156907282925, guid: 504ccc3a745d44fb1b92b41f9fe5bcee, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &8952094148924645391
+--- !u!1102 &3187376615738923760
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
@@ -1298,14 +767,14 @@ AnimatorState:
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
---- !u!1102 &8969419916302044989
+--- !u!1102 &3678812152382767611
 AnimatorState:
   serializedVersion: 7
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BS_GuiwoStaggerLoop
+  m_Name: EN_PotHit
   m_Speed: 1
   m_CycleOffset: 0
   m_OverrideDuration: 1
@@ -1320,7 +789,538 @@ AnimatorState:
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
   m_UseOverrideDuration: 0
-  m_Motion: {fileID: -8456805512280885806, guid: 479e44777206b494190107bbdb5a750c, type: 3}
+  m_Motion: {fileID: 5862590286355129218, guid: c0f544486b7b8420c8465d47ba54adc4, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &3933225768697105218
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoNaginataSweep
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -8227061960503072148, guid: c5e116a5e1f344fe5bad817c090266c4, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4035360222741991865
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_ShieldHit
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 5856820600095509058, guid: e14bb65918d984292bf8ac76841f3178, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4115448683746436793
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_PotThrow
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 7126845651852041998, guid: 1234a835adb0d4208adcb36f945988bf, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4382270630483300964
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_PotDeath
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -5528739022898480229, guid: 4f90d2e8460d8490c99a0c79a2655620, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &4452322161525421933
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoCombo3
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 4921298524420580031, guid: 9f6fb55772ec34302816cc15e79d0b1a, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1107 &5278443575671742986
+AnimatorStateMachine:
+  serializedVersion: 6
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Base Layer
+  m_ChildStates:
+  - serializedVersion: 1
+    m_State: {fileID: 7645551868765356679}
+    m_Position: {x: 200, y: 0, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6496494034746682492}
+    m_Position: {x: 300, y: 0, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6211692607951829737}
+    m_Position: {x: 300, y: 60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -607310435959900060}
+    m_Position: {x: 300, y: 120, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8629940677096825030}
+    m_Position: {x: 300, y: 180, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4382270630483300964}
+    m_Position: {x: 300, y: 240, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3678812152382767611}
+    m_Position: {x: 300, y: 300, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6374794847651190195}
+    m_Position: {x: 300, y: 360, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4115448683746436793}
+    m_Position: {x: 300, y: 420, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 579952286792685667}
+    m_Position: {x: 300, y: 480, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3769299578268159387}
+    m_Position: {x: 300, y: 540, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1018298185445805473}
+    m_Position: {x: 300, y: 600, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4035360222741991865}
+    m_Position: {x: 300, y: 660, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2136227386909078629}
+    m_Position: {x: 300, y: 720, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -1917762520472254257}
+    m_Position: {x: 300, y: 780, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -7711793847272576204}
+    m_Position: {x: 300, y: 840, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -4793279824236084357}
+    m_Position: {x: 300, y: 900, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -1928688726588367561}
+    m_Position: {x: 300, y: 960, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6028870820075017384}
+    m_Position: {x: 300, y: 1020, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 1893489890452451578}
+    m_Position: {x: 300, y: 1080, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2710969804075490297}
+    m_Position: {x: 300, y: 1140, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3187376615738923760}
+    m_Position: {x: 560, y: 0, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 5754389490261276214}
+    m_Position: {x: 560, y: 60, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 423149579755183907}
+    m_Position: {x: 560, y: 120, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8364502383791999350}
+    m_Position: {x: 560, y: 180, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 6418268190266667526}
+    m_Position: {x: 560, y: 240, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3081100673401720683}
+    m_Position: {x: 560, y: 300, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -7198997830567775195}
+    m_Position: {x: 560, y: 360, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6600644176672453940}
+    m_Position: {x: 560, y: 420, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2000002920265253478}
+    m_Position: {x: 560, y: 480, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 4452322161525421933}
+    m_Position: {x: 560, y: 540, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 5979630053612213743}
+    m_Position: {x: 560, y: 600, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6135092976169211324}
+    m_Position: {x: 560, y: 660, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -6956987526501574671}
+    m_Position: {x: 560, y: 720, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 3933225768697105218}
+    m_Position: {x: 560, y: 780, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -3486477505754135625}
+    m_Position: {x: 560, y: 840, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 7094872955330091964}
+    m_Position: {x: 560, y: 900, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -9014988933377513814}
+    m_Position: {x: 560, y: 960, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: -2720194198103881882}
+    m_Position: {x: 560, y: 1020, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 2300217286677700055}
+    m_Position: {x: 560, y: 1080, z: 0}
+  m_ChildStateMachines: []
+  m_AnyStateTransitions: []
+  m_EntryTransitions: []
+  m_StateMachineTransitions: {}
+  m_StateMachineBehaviours: []
+  m_AnyStatePosition: {x: 50, y: 20, z: 0}
+  m_EntryPosition: {x: 50, y: 120, z: 0}
+  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_DefaultState: {fileID: 7645551868765356679}
+--- !u!1102 &5754389490261276214
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanAxeSpin
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -6792680616520520311, guid: 375e0ca68960a4f0985a8f51380ef0b0, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &5979630053612213743
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoExecuted
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 9188875100030348267, guid: c88e5af38ba374e3a919a791b248c640, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &6211692607951829737
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_BowHit
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 3480165515968952308, guid: b660429b41a9243e9aee112ee7ec2054, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &6418268190266667526
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanLeap
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: -964309767916558994, guid: 7cb92e204919548ff81ecc270caf3f5f, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &6496494034746682492
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_BowDeath
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 2032592865916083143, guid: 21d35adf8135d43189e53ed40f093049, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &7094872955330091964
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_GuiwoNodachiCleave
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 6873978483812359240, guid: 9661caf52946a4e0c8548c4264c9fe68, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &7645551868765356679
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Locomotion
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 762410294881640681}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &8364502383791999350
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: BS_ChiyanIdleLoop
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 2571042078824773619, guid: 19468b6f9718348b2b77bccda689ef1e, type: 3}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
+--- !u!1102 &8629940677096825030
+AnimatorState:
+  serializedVersion: 7
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EN_BowShoot
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_OverrideDuration: 1
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_UseOverrideDuration: 0
+  m_Motion: {fileID: 2046821912038794192, guid: fea2583ce81de4d6280f0dbcac68f72a, type: 3}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

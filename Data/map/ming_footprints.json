@@ -1,0 +1,2386 @@
+{
+ "_doc": "明代建筑/场景件占地（Tools/map/export_footprints.py 生成，不手改）。团结局部坐标：x 东、y 上、z 北(正面)，模型旋转 0 时；摆放后按物体的 position / rotationY 变换。base = 离地 1 m 以下的可见网格包围盒（台基/墙脚，建筑互不重叠检查用）；full = 含屋檐的全包围盒；col = COL_* 碰撞体；plot = 布局 kind 的占地 w×d；overhang = base 超出 plot 的距离 [西,东,南(背),北(正面)]；fits = max(overhang) <= 0.35。说明见 Docs/act2_city_lod.md。",
+ "base_height": 1.0,
+ "plot_tolerance": 0.35,
+ "assets": {
+  "BLD_MING_AncestralHall": {
+   "base": {
+    "min": [
+     -10.15,
+     -0.3,
+     -18.15
+    ],
+    "max": [
+     10.15,
+     0.9,
+     19.8
+    ],
+    "size": [
+     20.3,
+     1.2,
+     37.95
+    ]
+   },
+   "full": {
+    "min": [
+     -10.25,
+     -0.3,
+     -18.8
+    ],
+    "max": [
+     10.25,
+     10.05,
+     19.8
+    ],
+    "size": [
+     20.5,
+     10.35,
+     38.6
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_hall_front": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_hall_door": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_door_front": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_courtyard": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "ancestral_hall"
+   ],
+   "plot": [
+    20,
+    36
+   ],
+   "fits": false,
+   "overhang": [
+    0.15,
+    0.15,
+    0.15,
+    1.8
+   ]
+  },
+  "BLD_MING_Courtyard": {
+   "base": {
+    "min": [
+     -10.1,
+     -0.3,
+     -9.1
+    ],
+    "max": [
+     10.1,
+     0.96,
+     9.3
+    ],
+    "size": [
+     20.2,
+     1.26,
+     18.4
+    ]
+   },
+   "full": {
+    "min": [
+     -10.5,
+     -0.3,
+     -9.6
+    ],
+    "max": [
+     10.5,
+     7.02,
+     10.0
+    ],
+    "size": [
+     21.0,
+     7.32,
+     19.6
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Yard": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_MainDoor": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "courtyard"
+   ],
+   "plot": [
+    20,
+    18
+   ],
+   "fits": true,
+   "overhang": [
+    0.1,
+    0.1,
+    0.1,
+    0.3
+   ]
+  },
+  "BLD_MING_Dock": {
+   "base": {
+    "min": [
+     -10.0,
+     -3.2,
+     -9.0
+    ],
+    "max": [
+     10.0,
+     0.947,
+     9.0
+    ],
+    "size": [
+     20.0,
+     4.147,
+     18.0
+    ]
+   },
+   "full": {
+    "min": [
+     -10.0,
+     -3.2,
+     -9.0
+    ],
+    "max": [
+     10.0,
+     5.62,
+     9.0
+    ],
+    "size": [
+     20.0,
+     8.82,
+     18.0
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Steps": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Jetty": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "dock"
+   ],
+   "plot": [
+    20,
+    18
+   ],
+   "fits": true,
+   "overhang": [
+    0.0,
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  "BLD_MING_GateTower": {
+   "base": {
+    "min": [
+     -6.0,
+     -7.02,
+     -3.2
+    ],
+    "max": [
+     6.0,
+     0.9,
+     3.2
+    ],
+    "size": [
+     12.0,
+     7.92,
+     6.4
+    ]
+   },
+   "full": {
+    "min": [
+     -7.25,
+     -7.02,
+     -4.45
+    ],
+    "max": [
+     7.25,
+     9.98,
+     4.45
+    ],
+    "size": [
+     14.5,
+     17.0,
+     8.9
+    ]
+   },
+   "col": {
+    "min": [
+     -7.2,
+     -7.5,
+     -3.5
+    ],
+    "max": [
+     7.2,
+     9.0,
+     3.5
+    ],
+    "size": [
+     14.4,
+     16.5,
+     7.0
+    ]
+   },
+   "anchors": {
+    "ANCHOR_walk_W": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_walk_E": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_lookout": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Gate_Out": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Gate_In": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Gate_Door_R_Open": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Gate_Door_L_Open": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Gate_Bar": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "gate_tower"
+   ],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "BLD_MING_Granary": {
+   "base": {
+    "min": [
+     -10.2,
+     -0.3,
+     -6.2
+    ],
+    "max": [
+     10.2,
+     0.9,
+     7.8
+    ],
+    "size": [
+     20.4,
+     1.2,
+     14.0
+    ]
+   },
+   "full": {
+    "min": [
+     -10.45,
+     -0.3,
+     -6.8
+    ],
+    "max": [
+     10.45,
+     9.7,
+     7.8
+    ],
+    "size": [
+     20.9,
+     10.0,
+     14.6
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "granary"
+   ],
+   "plot": [
+    20,
+    12
+   ],
+   "fits": false,
+   "overhang": [
+    0.2,
+    0.2,
+    0.2,
+    1.8
+   ]
+  },
+  "BLD_MING_HallSmall": {
+   "base": {
+    "min": [
+     -7.15,
+     -0.3,
+     -10.15
+    ],
+    "max": [
+     7.15,
+     0.95,
+     10.6
+    ],
+    "size": [
+     14.3,
+     1.25,
+     20.75
+    ]
+   },
+   "full": {
+    "min": [
+     -7.52,
+     -0.3,
+     -11.02
+    ],
+    "max": [
+     7.52,
+     8.67,
+     11.1
+    ],
+    "size": [
+     15.04,
+     8.97,
+     22.12
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Hall": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Censer": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "hall_small"
+   ],
+   "plot": [
+    14,
+    20
+   ],
+   "fits": false,
+   "overhang": [
+    0.15,
+    0.15,
+    0.15,
+    0.6
+   ]
+  },
+  "BLD_MING_House_L_A": {
+   "base": {
+    "min": [
+     -6.15,
+     -0.3,
+     -4.15
+    ],
+    "max": [
+     6.15,
+     0.35,
+     4.47
+    ],
+    "size": [
+     12.3,
+     0.65,
+     8.62
+    ]
+   },
+   "full": {
+    "min": [
+     -6.5,
+     -0.3,
+     -4.6
+    ],
+    "max": [
+     6.5,
+     8.92,
+     4.95
+    ],
+    "size": [
+     13.0,
+     9.22,
+     9.55
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "house_l"
+   ],
+   "plot": [
+    12,
+    8
+   ],
+   "fits": false,
+   "overhang": [
+    0.15,
+    0.15,
+    0.15,
+    0.47
+   ]
+  },
+  "BLD_MING_House_L_B": {
+   "base": {
+    "min": [
+     -6.15,
+     -0.3,
+     -4.15
+    ],
+    "max": [
+     6.15,
+     0.95,
+     4.15
+    ],
+    "size": [
+     12.3,
+     1.25,
+     8.3
+    ]
+   },
+   "full": {
+    "min": [
+     -6.35,
+     -0.3,
+     -4.5
+    ],
+    "max": [
+     6.15,
+     8.98,
+     4.55
+    ],
+    "size": [
+     12.5,
+     9.28,
+     9.05
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "house_l"
+   ],
+   "plot": [
+    12,
+    8
+   ],
+   "fits": true,
+   "overhang": [
+    0.15,
+    0.15,
+    0.15,
+    0.15
+   ]
+  },
+  "BLD_MING_House_S_A": {
+   "base": {
+    "min": [
+     -5.15,
+     -0.3,
+     -3.65
+    ],
+    "max": [
+     5.15,
+     0.5,
+     3.97
+    ],
+    "size": [
+     10.3,
+     0.8,
+     7.62
+    ]
+   },
+   "full": {
+    "min": [
+     -5.5,
+     -0.3,
+     -4.15
+    ],
+    "max": [
+     5.5,
+     6.12,
+     4.15
+    ],
+    "size": [
+     11.0,
+     6.42,
+     8.3
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "house_s"
+   ],
+   "plot": [
+    10,
+    7
+   ],
+   "fits": false,
+   "overhang": [
+    0.15,
+    0.15,
+    0.15,
+    0.47
+   ]
+  },
+  "BLD_MING_House_S_B": {
+   "base": {
+    "min": [
+     -5.15,
+     -0.3,
+     -3.65
+    ],
+    "max": [
+     5.15,
+     0.9,
+     3.97
+    ],
+    "size": [
+     10.3,
+     1.2,
+     7.62
+    ]
+   },
+   "full": {
+    "min": [
+     -5.15,
+     -0.3,
+     -4.0
+    ],
+    "max": [
+     5.15,
+     6.08,
+     4.15
+    ],
+    "size": [
+     10.3,
+     6.38,
+     8.15
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "house_s"
+   ],
+   "plot": [
+    10,
+    7
+   ],
+   "fits": false,
+   "overhang": [
+    0.15,
+    0.15,
+    0.15,
+    0.47
+   ]
+  },
+  "BLD_MING_HuanhaiLou": {
+   "base": {
+    "min": [
+     -11.6,
+     0.0,
+     -4.5
+    ],
+    "max": [
+     10.0,
+     0.45,
+     4.5
+    ],
+    "size": [
+     21.6,
+     0.45,
+     9.0
+    ]
+   },
+   "full": {
+    "min": [
+     -13.6,
+     0.0,
+     -5.95
+    ],
+    "max": [
+     11.35,
+     13.0,
+     6.15
+    ],
+    "size": [
+     24.95,
+     13.0,
+     12.1
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_walk_W": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_walk_E": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_muster_table": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_gate_out": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_gate_in": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_flagpole": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_top_upper": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_balcony": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "gate_tower_huanhai"
+   ],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "BLD_MING_SaltShed": {
+   "base": {
+    "min": [
+     -5.85,
+     -0.005,
+     -3.85
+    ],
+    "max": [
+     5.85,
+     0.95,
+     3.83
+    ],
+    "size": [
+     11.7,
+     0.955,
+     7.68
+    ]
+   },
+   "full": {
+    "min": [
+     -6.4,
+     -0.005,
+     -4.45
+    ],
+    "max": [
+     6.4,
+     5.55,
+     4.45
+    ],
+    "size": [
+     12.8,
+     5.555,
+     8.9
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Stove": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "salt_shed"
+   ],
+   "plot": [
+    12,
+    8
+   ],
+   "fits": true,
+   "overhang": [
+    -0.15,
+    -0.15,
+    -0.15,
+    -0.17
+   ]
+  },
+  "BLD_MING_ShopWest": {
+   "base": {
+    "min": [
+     -4.05,
+     -0.3,
+     -6.05
+    ],
+    "max": [
+     4.05,
+     0.5,
+     6.37
+    ],
+    "size": [
+     8.1,
+     0.8,
+     12.42
+    ]
+   },
+   "full": {
+    "min": [
+     -4.52,
+     -0.3,
+     -6.52
+    ],
+    "max": [
+     4.52,
+     10.17,
+     6.55
+    ],
+    "size": [
+     9.04,
+     10.47,
+     13.07
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "shop_west"
+   ],
+   "plot": [
+    8,
+    12
+   ],
+   "fits": false,
+   "overhang": [
+    0.05,
+    0.05,
+    0.05,
+    0.37
+   ]
+  },
+  "BLD_MING_Shop_A": {
+   "base": {
+    "min": [
+     -3.05,
+     -0.3,
+     -5.05
+    ],
+    "max": [
+     3.05,
+     0.25,
+     5.05
+    ],
+    "size": [
+     6.1,
+     0.55,
+     10.1
+    ]
+   },
+   "full": {
+    "min": [
+     -3.25,
+     -0.3,
+     -5.5
+    ],
+    "max": [
+     3.25,
+     9.02,
+     5.7
+    ],
+    "size": [
+     6.5,
+     9.32,
+     11.2
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Counter": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "shop"
+   ],
+   "plot": [
+    6,
+    10
+   ],
+   "fits": true,
+   "overhang": [
+    0.05,
+    0.05,
+    0.05,
+    0.05
+   ]
+  },
+  "BLD_MING_Shop_B": {
+   "base": {
+    "min": [
+     -3.05,
+     -0.3,
+     -5.05
+    ],
+    "max": [
+     3.05,
+     0.95,
+     5.05
+    ],
+    "size": [
+     6.1,
+     1.25,
+     10.1
+    ]
+   },
+   "full": {
+    "min": [
+     -3.3,
+     -0.3,
+     -5.4
+    ],
+    "max": [
+     3.3,
+     7.02,
+     5.2
+    ],
+    "size": [
+     6.6,
+     7.32,
+     10.6
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "shop"
+   ],
+   "plot": [
+    6,
+    10
+   ],
+   "fits": true,
+   "overhang": [
+    0.05,
+    0.05,
+    0.05,
+    0.05
+   ]
+  },
+  "BLD_MING_SlabBridge": {
+   "base": {
+    "min": [
+     -1.15,
+     0.0,
+     -1.6
+    ],
+    "max": [
+     1.15,
+     0.47,
+     1.6
+    ],
+    "size": [
+     2.3,
+     0.47,
+     3.2
+    ]
+   },
+   "full": {
+    "min": [
+     -1.6,
+     0.0,
+     -1.6
+    ],
+    "max": [
+     1.6,
+     0.47,
+     1.6
+    ],
+    "size": [
+     3.2,
+     0.47,
+     3.2
+    ]
+   },
+   "col": null,
+   "anchors": {},
+   "category": "Buildings",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "BLD_MING_Temple": {
+   "base": {
+    "min": [
+     -8.15,
+     -0.3,
+     -11.0
+    ],
+    "max": [
+     8.15,
+     0.95,
+     11.8
+    ],
+    "size": [
+     16.3,
+     1.25,
+     22.8
+    ]
+   },
+   "full": {
+    "min": [
+     -8.15,
+     -0.3,
+     -11.15
+    ],
+    "max": [
+     8.15,
+     10.05,
+     11.95
+    ],
+    "size": [
+     16.3,
+     10.35,
+     23.1
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_procession_start": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_incense": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_hall_front": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_gate_in": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_altar": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [
+    "temple"
+   ],
+   "plot": [
+    16,
+    22
+   ],
+   "fits": false,
+   "overhang": [
+    0.15,
+    0.15,
+    0.0,
+    0.8
+   ]
+  },
+  "BLD_MING_WaterGate_Sluice": {
+   "base": {
+    "min": [
+     -3.22,
+     -1.9,
+     -2.4
+    ],
+    "max": [
+     3.22,
+     0.75,
+     2.608
+    ],
+    "size": [
+     6.44,
+     2.65,
+     5.008
+    ]
+   },
+   "full": {
+    "min": [
+     -3.22,
+     -1.9,
+     -3.1
+    ],
+    "max": [
+     3.22,
+     8.33,
+     3.1
+    ],
+    "size": [
+     6.44,
+     10.23,
+     6.2
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Winch": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Sluice_Spot_3": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Sluice_Spot_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Sluice_Spot_1": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Latch": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Buildings",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_DirtRoad_Bend": {
+   "base": {
+    "min": [
+     -3.0,
+     -0.004,
+     -0.337
+    ],
+    "max": [
+     8.18,
+     0.488,
+     10.786
+    ],
+    "size": [
+     11.18,
+     0.492,
+     11.123
+    ]
+   },
+   "full": {
+    "min": [
+     -3.0,
+     -0.004,
+     -0.337
+    ],
+    "max": [
+     8.18,
+     0.488,
+     10.786
+    ],
+    "size": [
+     11.18,
+     0.492,
+     11.123
+    ]
+   },
+   "col": {
+    "min": [
+     -2.744,
+     0.0,
+     -0.18
+    ],
+    "max": [
+     8.18,
+     0.05,
+     10.744
+    ],
+    "size": [
+     10.924,
+     0.05,
+     10.924
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_DirtRoad_Ridge": {
+   "base": {
+    "min": [
+     -0.73,
+     0.0,
+     -5.021
+    ],
+    "max": [
+     0.73,
+     0.596,
+     5.021
+    ],
+    "size": [
+     1.46,
+     0.596,
+     10.042
+    ]
+   },
+   "full": {
+    "min": [
+     -0.73,
+     0.0,
+     -5.021
+    ],
+    "max": [
+     0.73,
+     0.596,
+     5.021
+    ],
+    "size": [
+     1.46,
+     0.596,
+     10.042
+    ]
+   },
+   "col": null,
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_DirtRoad_Straight": {
+   "base": {
+    "min": [
+     -3.331,
+     -0.004,
+     -5.116
+    ],
+    "max": [
+     3.166,
+     0.485,
+     5.169
+    ],
+    "size": [
+     6.497,
+     0.489,
+     10.284
+    ]
+   },
+   "full": {
+    "min": [
+     -3.331,
+     -0.004,
+     -5.116
+    ],
+    "max": [
+     3.166,
+     0.485,
+     5.169
+    ],
+    "size": [
+     6.497,
+     0.489,
+     10.284
+    ]
+   },
+   "col": {
+    "min": [
+     -2.75,
+     0.0,
+     -5.0
+    ],
+    "max": [
+     2.75,
+     0.05,
+     5.0
+    ],
+    "size": [
+     5.5,
+     0.05,
+     10.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_MarketRow": {
+   "base": {
+    "min": [
+     -5.45,
+     -0.002,
+     -1.808
+    ],
+    "max": [
+     6.788,
+     0.95,
+     1.968
+    ],
+    "size": [
+     12.238,
+     0.952,
+     3.776
+    ]
+   },
+   "full": {
+    "min": [
+     -5.65,
+     -0.002,
+     -1.808
+    ],
+    "max": [
+     6.891,
+     2.52,
+     1.968
+    ],
+    "size": [
+     12.541,
+     2.522,
+     3.776
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Vendor_3": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Vendor_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Vendor_1": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_top": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Buyer_3": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Buyer_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Buyer_1": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Corner": {
+   "base": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.155,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.155,
+     6.0
+    ]
+   },
+   "full": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.155,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.155,
+     6.0
+    ]
+   },
+   "col": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.12,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.12,
+     6.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Corner_L4": {
+   "base": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.155,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.155,
+     4.0
+    ]
+   },
+   "full": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.155,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.155,
+     4.0
+    ]
+   },
+   "col": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.12,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.12,
+     4.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Cross": {
+   "base": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.14,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.14,
+     6.0
+    ]
+   },
+   "full": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.14,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.14,
+     6.0
+    ]
+   },
+   "col": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.12,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.12,
+     6.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Cross_L4": {
+   "base": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.14,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.14,
+     4.0
+    ]
+   },
+   "full": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.14,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.14,
+     4.0
+    ]
+   },
+   "col": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.12,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.12,
+     4.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Straight": {
+   "base": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.155,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.155,
+     6.0
+    ]
+   },
+   "full": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.155,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.155,
+     6.0
+    ]
+   },
+   "col": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.12,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.12,
+     6.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Straight_L4": {
+   "base": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.155,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.155,
+     4.0
+    ]
+   },
+   "full": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.155,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.155,
+     4.0
+    ]
+   },
+   "col": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.12,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.12,
+     4.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Tee": {
+   "base": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.155,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.155,
+     6.0
+    ]
+   },
+   "full": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.155,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.155,
+     6.0
+    ]
+   },
+   "col": {
+    "min": [
+     -3.0,
+     0.0,
+     -3.0
+    ],
+    "max": [
+     3.0,
+     0.12,
+     3.0
+    ],
+    "size": [
+     6.0,
+     0.12,
+     6.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_MING_Road_Tee_L4": {
+   "base": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.155,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.155,
+     4.0
+    ]
+   },
+   "full": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.155,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.155,
+     4.0
+    ]
+   },
+   "col": {
+    "min": [
+     -2.0,
+     0.0,
+     -2.0
+    ],
+    "max": [
+     2.0,
+     0.12,
+     2.0
+    ],
+    "size": [
+     4.0,
+     0.12,
+     4.0
+    ]
+   },
+   "anchors": {},
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_WangHouse": {
+   "base": {
+    "min": [
+     -9.15,
+     -0.2,
+     -11.15
+    ],
+    "max": [
+     9.15,
+     0.962,
+     11.6
+    ],
+    "size": [
+     18.3,
+     1.162,
+     22.75
+    ]
+   },
+   "full": {
+    "min": [
+     -9.55,
+     -0.2,
+     -11.9
+    ],
+    "max": [
+     9.55,
+     8.62,
+     11.6
+    ],
+    "size": [
+     19.1,
+     8.82,
+     23.5
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_yan_hall": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_study_seat": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_study_desk": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_shugao_hall": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Shugao_Gate": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Shugao": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Interior_Wing": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Interior_Study": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Interior_Hall": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Interior_GateHall": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Interior_Courtyard": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_gate_in": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_enter": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door_R_Open": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door_L_Open": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door_Inner": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Door": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_courtyard_talk": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Cost_Outside": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Cost_Inside": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_wallview": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_top": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_hall": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Beam_Ladder": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_beam_drop": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Beam_Carry_Out": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_beam_below": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_SaltField": {
+   "base": {
+    "min": [
+     -16.0,
+     -0.32,
+     -11.0
+    ],
+    "max": [
+     16.0,
+     0.75,
+     11.0
+    ],
+    "size": [
+     32.0,
+     1.07,
+     22.0
+    ]
+   },
+   "full": {
+    "min": [
+     -16.0,
+     -0.32,
+     -11.0
+    ],
+    "max": [
+     16.0,
+     2.1,
+     11.0
+    ],
+    "size": [
+     32.0,
+     2.42,
+     22.0
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Path_W": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Path_E": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_8": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_7": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_6": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_5": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_4": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_3": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pan_1": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Furnace": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_top": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_SaltFurnace": {
+   "base": {
+    "min": [
+     -2.798,
+     -0.06,
+     -1.95
+    ],
+    "max": [
+     2.5,
+     0.99,
+     2.55
+    ],
+    "size": [
+     5.298,
+     1.05,
+     4.5
+    ]
+   },
+   "full": {
+    "min": [
+     -2.802,
+     -0.06,
+     -1.95
+    ],
+    "max": [
+     2.5,
+     3.96,
+     2.55
+    ],
+    "size": [
+     5.302,
+     4.02,
+     4.5
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Stoke": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Scoop": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Pour": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  },
+  "ENV_NorthGate_Build": {
+   "base": {
+    "min": [
+     -26.0,
+     -0.5,
+     -20.0
+    ],
+    "max": [
+     26.0,
+     0.98,
+     12.0
+    ],
+    "size": [
+     52.0,
+     1.48,
+     32.0
+    ]
+   },
+   "full": {
+    "min": [
+     -26.0,
+     -0.5,
+     -20.0
+    ],
+    "max": [
+     26.0,
+     9.047,
+     12.0
+    ],
+    "size": [
+     52.0,
+     9.547,
+     32.0
+    ]
+   },
+   "col": null,
+   "anchors": {
+    "ANCHOR_Winch": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_WangPei_Watch": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_WangDe": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_StoneYard": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Stake_B": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Stake_A": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_RosterDesk": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Ramp_Top": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Ram_2": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Ram_1": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Mortar": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Gantry_Hook": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Closure": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Climb": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Carry_To": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_Carry_From": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "ANCHOR_cam_top": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "category": "Environments",
+   "kinds": [],
+   "plot": null,
+   "fits": null,
+   "overhang": null
+  }
+ }
+}

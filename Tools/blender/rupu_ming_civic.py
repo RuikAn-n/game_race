@@ -41,6 +41,14 @@ MC_PALETTE = {
     "M_MC_Reed": "#8f8458",          # 芦席风障
     "M_MC_Log": "#6e5236",           # 柴
     "M_MC_LogEnd": "#b09468",        # 柴截面
+    # 第二幕补缺口（Docs/act2_site.md）：盐灶三档火、卤水 / 盐三态、水门开闭水面
+    "M_MC_Flame": "#c9622f",         # 火舌（火色 #C4552E 提亮一档）
+    "M_MC_FlameCore": "#dc9a4e",     # 火芯
+    "M_MC_Ember": "#7e3424",         # 暗炭火
+    "M_MC_PanWet": "#4a4842",        # 锅底湿膜（未出盐）
+    "M_MC_WaterFlow": "#5d7a77",     # 开闸流水（比水色浅）
+    "M_MC_WaterStill": "#3f5452",    # 闭闸死水（深、发暗）
+    "M_MC_Foam": "#b9c2b8",          # 水花 / 流水白纹
 }
 K.PALETTE.update(MC_PALETTE)
 # 引用的 era_materials 语义材质，在 K.PALETTE 里没有的补上预览色（团结里由年代材质库覆盖）
@@ -78,6 +86,28 @@ def anchor(name, x, y, z=0.0):
 
 def fx(name, x, y, z):
     return _empty(name, (x, y, z), "SPHERE", 0.12)
+
+
+def group(name, loc=(0.0, 0.0, 0.0)):
+    """状态组空物体（团结里整组 SetActive）。放在原点，子物体的位置不受影响。"""
+    return _empty(name, loc, "PLAIN_AXES", 0.4)
+
+
+def under(g, *obs):
+    """挂到组下（组只有平移），保持世界位置不变。"""
+    for ob in obs:
+        if ob is None:
+            continue
+        ob.parent = g
+        ob.location = ob.location - g.location
+    return obs[0] if obs else None
+
+
+def ref_rot(name, loc, rz_deg):
+    """带旋转的参考空物体：团结里把门扇 / 构件的 localRotation 插值到它的 localRotation 即为「开」（避开坐标轴换算）。"""
+    e = _empty(name, loc, "ARROWS", 0.5)
+    e.rotation_euler = (0.0, 0.0, math.radians(rz_deg))
+    return e
 
 
 def beam(mb, p0, p1, w, mat, h=None):
@@ -483,10 +513,105 @@ def r_gate_tower():
     """明代城门楼（通市 / 迎川 / 镇山三门），12 x 6.4，坐在 BLD_Wall_GateBase 上（原点 = 城墙顶 y=7.0，对齐方式同 ROC 城楼）。"""
     mb = K.MB()
     gate_tower_ming(mb, 6.0, 3.2, 3.4, 2.6)
+    gate_doors_frame(mb)
     mb.to_object("BLD_MING_GateTower")
     anchor("ANCHOR_walk_W", -6.6, 0.2, 0.08)
     anchor("ANCHOR_walk_E", 6.6, 0.2, 0.08)
     anchor("ANCHOR_lookout", 0, -3.3, 3.7)
+    gate_doors_and_cols()
+
+
+# 城门洞（BLD_Wall_GateBase：门洞宽 4.4、拱脚 3.6、拱顶 5.8、洞深 y ±3.5；GateBase 原点在地面，城楼原点在其上 7.0 m）
+GATE_ZG = -7.0          # 门洞地面（城楼本地）
+GATE_TW, GATE_SPRING, GATE_YH = 4.4, 3.6, 3.5
+GATE_HX, GATE_HY = 2.05, -2.45      # 门轴（铰链）位置：贴门洞内壁、靠城外一侧，与 GateBase 烘焙的开启门扇重合
+GATE_LEAF_W = 2.04                  # 每扇宽（两扇中缝 2 cm）
+
+
+def _arch_top(x):
+    r = GATE_TW / 2
+    return GATE_SPRING + math.sqrt(max(0.0, r * r - x * x)) - 0.06
+
+
+def gate_doors_frame(mb):
+    """门框（门轴立枋 + 门闩托 + 低门槛），并进城楼主网格。都在门洞两侧 0.15 m 内，不挡通道。"""
+    zg = GATE_ZG
+    for s in (-1, 1):
+        x0, x1 = sorted((s * 2.08, s * 2.2))
+        mb.box(x0, GATE_HY - 0.15, zg, x1, GATE_HY + 0.15, zg + _arch_top(2.1) - 0.05, "M_Wood_Dark")   # 门轴立枋
+        mb.box(x0, GATE_HY + 0.12, zg + 1.45, x1, GATE_HY + 0.42, zg + 1.75, "M_Wood_Dark")  # 门闩托
+    mb.box(-2.2, GATE_HY - 0.12, zg - 0.02, 2.2, GATE_HY + 0.12, zg + 0.06, "M_Stone_Base")          # 门槛石（6 cm，可直接走过）
+
+
+def gate_doors_and_cols():
+    """城门门扇 Gate_Door_L/R（原点 = 门轴底端；闭合时横在门洞里，开 = 绕 Z 转 90° 朝城内贴到洞壁）、门闩 Gate_Bar，
+    以及 COL_*（有 COL_ 时团结只用 COL_ 做碰撞）：城楼底层（楼板、柱、穿堂墙）、上层体块、门洞两侧墩台、券顶，门扇各带一块 COL 随门转。"""
+    zg = GATE_ZG
+    for nm, s in (("Gate_Door_L", -1), ("Gate_Door_R", 1)):
+        d = K.MB()
+        # 本地坐标：门轴在原点，门扇朝门洞中线伸出（左扇 +X，右扇 -X）
+        us = [0.0, 0.5, 1.0, 1.5, 1.8, GATE_LEAF_W]
+        top = [(u, _arch_top(s * (GATE_HX - u))) for u in us]
+        pts = [(-s * 0.0, 0.0), (-s * GATE_LEAF_W, 0.0)] + [(-s * u, z) for u, z in reversed(top)]
+        d.prism(pts, "y", -0.06, 0.06, "M_Wood_Dark")
+        for k in range(1, 5):                                              # 拼板缝（城外面）
+            u = GATE_LEAF_W * k / 5
+            d.box(-s * u - 0.012, -0.075, 0.1, -s * u + 0.012, -0.06, _arch_top(s * (GATE_HX - u)) - 0.15, "M_Wood")
+        for z in (0.5, 1.6, 2.7, 3.6):                                     # 铁叶（横带）
+            ua = GATE_LEAF_W - 0.05
+            d.box(min(0, -s * ua), -0.08, z, max(0, -s * ua), -0.06, z + 0.12, "M_MC_Iron")
+        for r, z in enumerate((0.95, 1.4, 2.15, 3.15)):                    # 门钉
+            for c in range(4):
+                u = 0.3 + c * 0.45
+                d.box(-s * u - 0.05, -0.1, z - 0.05, -s * u + 0.05, -0.06, z + 0.05, "M_Bronze")
+        for z in (0.8, 2.9):                                               # 城内面穿带
+            d.box(min(0, -s * 1.95), 0.06, z, max(0, -s * 1.95), 0.12, z + 0.2, "M_Wood")
+        d.box(-s * (GATE_LEAF_W - 0.35) - 0.1, -0.1, 1.5, -s * (GATE_LEAF_W - 0.35) + 0.1, -0.06, 1.7, "M_MC_Iron")   # 门环座
+        leaf = obj(d, nm, (s * GATE_HX, GATE_HY, zg))
+        c = K.MB()
+        c.box(min(0, -s * GATE_LEAF_W), -0.09, 0.0, max(0, -s * GATE_LEAF_W), 0.13, 4.3, "M_Wood_Dark")
+        cob = obj(c, "COL_" + nm, (s * GATE_HX, GATE_HY, zg))
+        cob.parent = leaf
+        cob.location = (0.0, 0.0, 0.0)
+        # 开门参考：左扇 Blender rz +90°、右扇 -90°（门扇转到 +Y = 城内，贴洞壁）
+        ref_rot(f"ANCHOR_{nm}_Open", (s * GATE_HX, GATE_HY, zg), -90 * s)
+    gb = K.MB()                                                            # 门闩（关门时横架在门闩托上，开门前抽走）
+    gb.box(-2.18, -0.1, -0.12, 2.18, 0.1, 0.12, "M_Wood")
+    for x in (-1.2, 1.2):
+        gb.box(x - 0.06, -0.12, -0.14, x + 0.06, 0.12, 0.14, "M_MC_Iron")
+    obj(gb, "Gate_Bar", (0, GATE_HY + 0.27, zg + 1.6 + 0.15 + 0.12))
+    # ---- COL_*：城楼（原点 = 城墙顶 7.0；走道面 0.08，楼板 0.2）
+    half, hd, h1 = 6.0, 3.2, 3.4
+    cb = lambda nm, *b: obj(_colbox(*b), nm)
+    cb("COL_Tower_Floor", -half, -hd, -0.1, half, hd, 0.2)
+    xs = [-half + 0.4 + (2 * half - 0.8) * i / 3 for i in range(4)]
+    for i, x in enumerate(xs):
+        for j, y in enumerate((-hd + 0.4, hd - 0.4)):
+            cb(f"COL_Tower_Col_{i + 1}{'FB'[j]}", x - 0.2, y - 0.2, 0.2, x + 0.2, y + 0.2, h1)
+    cx0, cx1, cy0, cy1, ym = -half + 1.8, half - 1.8, -hd + 2.0, hd - 1.4, (-hd + 2.0 + hd - 1.4) / 2
+    cb("COL_Tower_HallFront", cx0, cy0 - 0.06, 0.2, cx1, cy0 + 0.08, h1)
+    cb("COL_Tower_HallBack", cx0, cy1 - 0.16, 0.2, cx1, cy1, h1)
+    for k, x in enumerate((cx0, cx1 - 0.16)):                          # 两端墙，留 1.6 m 门
+        cb(f"COL_Tower_HallEnd_{k + 1}a", x, cy0, 0.2, x + 0.16, ym - 0.8, h1)
+        cb(f"COL_Tower_HallEnd_{k + 1}b", x, ym + 0.8, 0.2, x + 0.16, cy1, h1)
+        cb(f"COL_Tower_HallEnd_{k + 1}c", x, ym - 0.8, 2.5, x + 0.16, ym + 0.8, h1)
+    cb("COL_Tower_Upper", -half - 0.2, -hd - 0.2, h1, half + 0.2, hd + 0.2, 9.0)
+    # ---- COL_*：门洞（与 BLD_Wall_GateBase 重合；通道 x ±2.08 净宽 4.16、净高到拱脚 3.6）
+    for s, nm in ((-1, "L"), (1, "R")):
+        pa, pb = sorted((s * 2.2, s * 7.2))                                # 门洞两侧墩台（到 ±7.2，不超出城楼占地 ±7.25）
+        cb(f"COL_Gate_Pier_{nm}", pa, -GATE_YH, zg - 0.5, pb, GATE_YH, 0.0)
+        ja, jb = sorted((s * 2.08, s * 2.2))
+        cb(f"COL_Gate_Jamb_{nm}", ja, GATE_HY - 0.15, zg, jb, GATE_HY + 0.15, zg + 4.2)
+    cb("COL_Gate_Vault", -2.2, -GATE_YH, zg + GATE_SPRING + GATE_TW / 2, 2.2, GATE_YH, 0.0)
+    anchor("ANCHOR_Gate_Out", 0, -GATE_YH - 2.0, zg)
+    anchor("ANCHOR_Gate_In", 0, GATE_YH + 2.0, zg)
+    anchor("ANCHOR_Gate_Bar", 0, GATE_HY + 1.0, zg)
+
+
+def _colbox(x0, y0, z0, x1, y1, z1):
+    c = K.MB()
+    c.box(x0, y0, z0, x1, y1, z1, "M_Stone_Base")
+    return c
 
 
 def r_huanhai():
@@ -593,7 +718,9 @@ def r_sluice():
     """水门闸套件（配合 BLD_Wall_WaterGate 使用，放在同一位置、同一旋转）。
     水门门洞：x ±3.2、洞底 z=-1.8、拱脚 1.6、拱顶 4.8、洞深 y ±2.5；原有外侧闸槽在 y≈-0.7。
     本套件在城内一侧加：木闸槽（y≈1.15）+ 可升降闸板 Sluice_Gate + 门闩 Sluice_Latch + 石条槽（y≈1.75）三根石条
-    Sluice_StoneBar_1..3（闭闸）+ 城顶绞盘 Sluice_Winch / Sluice_WinchDrum。"""
+    Sluice_StoneBar_1..3（闭闸）+ 城顶绞盘 Sluice_Winch / Sluice_WinchDrum。
+    会切换的件分两组：State_Closed（闸板落下、门闩、石条、死水 NOCOL_Water_Still）/ State_Open（闸板升起 Sluice_Gate_Open、
+    短吊绳、流水 NOCOL_Water_Flow、小船 Sluice_Boat、FX_WaterFlow/FX_Splash），团结里二选一 SetActive。"""
     F = K.MB()
     zb = -1.8
     # 闸槽（两侧石槽柱，贴在门洞内壁）
@@ -611,33 +738,74 @@ def r_sluice():
         beam(F, (x, 0.65, WALK + 0.2), (x, 1.15, WALK + 1.2), 0.1, "M_Wood_Dark")
         beam(F, (x, 1.65, WALK + 0.2), (x, 1.15, WALK + 1.2), 0.1, "M_Wood_Dark")
     obj(F, "BLD_MING_WaterGate_Sluice")
-    # 闸板（枢轴在底边中心；向上平移约 2.0 m 为开闸）
-    g = K.MB()
-    g.box(-2.94, -0.08, 0, 2.94, 0.08, 2.6, "M_Wood")
-    for z in (0.3, 1.0, 1.7, 2.35):
-        g.box(-2.94, -0.11, z, 2.94, 0.11, z + 0.14, "M_MC_Iron")
-    for x in (-1.2, 1.2):
-        g.box(x - 0.08, -0.13, 2.45, x + 0.08, 0.13, 2.75, "M_MC_Iron")              # 吊环
-    for i in range(-5, 6):
-        g.box(i * 0.52 - 0.012, -0.085, 0, i * 0.52 + 0.012, 0.085, 2.6, "M_Wood_Dark")
-    obj(g, "Sluice_Gate", (0, 1.15, zb))
-    # 吊绳（随闸板一起显示 / 可缩放）
-    rp = K.MB()
-    for x in (-1.2, 1.2):
-        rp.box(x - 0.02, -0.02, 0, x + 0.02, 0.02, WALK + 0.7 - (zb + 2.75), "M_MC_Rope")
-    obj(rp, "NOCOL_Sluice_Rope", (0, 1.15, zb + 2.75))
-    # 门闩
+    # ---- 两套状态组：State_Closed / State_Open（团结里二选一 SetActive；绞盘鼓、闸槽是公用的）
+    gc, go = group("State_Closed"), group("State_Open")
+
+    def gate_board(name, z):
+        """闸板（枢轴在底边中心）。闭：底边在洞底 z=-1.8；开：升 1.8 m（底边 0.0，露出水面 0.9 m）。"""
+        g = K.MB()
+        g.box(-2.94, -0.08, 0, 2.94, 0.08, 2.6, "M_Wood")
+        for zz in (0.3, 1.0, 1.7, 2.35):
+            g.box(-2.94, -0.11, zz, 2.94, 0.11, zz + 0.14, "M_MC_Iron")
+        for x in (-1.2, 1.2):
+            g.box(x - 0.08, -0.13, 2.45, x + 0.08, 0.13, 2.75, "M_MC_Iron")          # 吊环
+        for i in range(-5, 6):
+            g.box(i * 0.52 - 0.012, -0.085, 0, i * 0.52 + 0.012, 0.085, 2.6, "M_Wood_Dark")
+        return obj(g, name, (0, 1.15, z))
+
+    def rope(name, z_gate):
+        rp = K.MB()
+        for x in (-1.2, 1.2):
+            rp.box(x - 0.02, -0.02, 0, x + 0.02, 0.02, WALK + 0.7 - (z_gate + 2.75), "M_MC_Rope")
+        return obj(rp, name, (0, 1.15, z_gate + 2.75))
+
+    def water(name, mat, z, streaks):
+        """门洞里的水面（地图总水面 -0.9，这里抬 2–3 cm 防闪烁），y 覆盖洞深 ±2.5 再各伸 0.6 m。"""
+        w = K.MB()
+        w.box(-3.18, -3.1, z - 0.02, 3.18, 3.1, z, mat)
+        if streaks:                                                        # 流水白纹（顺洞身方向的细长条）+ 闸下翻花
+            rng = random.Random(15)
+            for i in range(14):
+                x = -2.8 + i * 0.43 + rng.uniform(-0.08, 0.08)
+                y0 = rng.uniform(-3.0, -0.6)
+                w.box(x - 0.035, y0, z, x + 0.035, y0 + rng.uniform(1.2, 2.4), z + 0.008, "M_MC_Foam")
+            for i in range(9):
+                x = -2.7 + i * 0.68
+                w.box(x - 0.22, 1.32, z, x + 0.22, 1.32 + rng.uniform(0.35, 0.8), z + 0.05, "M_MC_Foam")
+        return obj(w, name, uv=1.0)
+
+    # 闭闸：闸板落到底 + 门闩 + 三根石条 + 死水
+    under(gc, gate_board("Sluice_Gate", zb), rope("NOCOL_Sluice_Rope", zb))
     lt = K.MB()
     lt.box(-3.15, -0.09, -0.1, 3.15, 0.09, 0.1, "M_Wood_Dark")
     for x in (-1.0, 1.0):
         lt.box(x - 0.06, -0.11, -0.12, x + 0.06, 0.11, 0.12, "M_MC_Iron")
-    obj(lt, "Sluice_Latch", (0, 1.37, 0.85))
-    # 石条（闭闸时推进外侧石槽，三根叠放）
-    for i in range(3):
+    under(gc, obj(lt, "Sluice_Latch", (0, 1.37, 0.85)))
+    for i in range(3):                                                     # 石条（推进外侧石槽，三根叠放）
         sb = K.MB()
         sb.box(-2.94, -0.13, 0, 2.94, 0.13, 0.48, "M_MC_StoneNew")
         sb.box(-2.94, -0.135, 0.22, 2.94, 0.135, 0.26, "M_Stone_Base")
-        obj(sb, f"Sluice_StoneBar_{i + 1}", (0, 1.76, zb + 0.5 * i))
+        under(gc, obj(sb, f"Sluice_StoneBar_{i + 1}", (0, 1.76, zb + 0.5 * i)))
+    under(gc, water("NOCOL_Water_Still", "M_MC_WaterStill", -0.87, False))
+    # 开闸：闸板升 1.8 m（吊绳变短）+ 流水面（白纹、闸下翻花）+ 一条过闸小船；门闩、石条不在
+    under(go, gate_board("Sluice_Gate_Open", zb + 1.8), rope("NOCOL_Sluice_Rope_Open", zb + 1.8))
+    under(go, water("NOCOL_Water_Flow", "M_MC_WaterFlow", -0.86, True))
+    bt = K.MB()                                                            # 小船（敞口舢板，长 4.4 m，沿 Y 停在城内一侧）
+    bt.box(-0.5, -1.7, 0.0, 0.5, 1.7, 0.08, "M_Wood_Dark")                   # 船底
+    for sx in (-1, 1):                                                     # 两舷（外倾）
+        bt.prism([(sx * 0.5, 0.0), (sx * 0.56, 0.0), (sx * 0.8, 0.5), (sx * 0.74, 0.5)], "y", -1.7, 1.7, "M_Wood")
+        bt.box(min(sx * 0.72, sx * 0.84), -1.7, 0.48, max(sx * 0.72, sx * 0.84), 1.7, 0.54, "M_Wood_Dark")   # 舷缘
+    for y0, y1, tip in ((1.7, 2.4, 2.4), (-1.7, -2.1, -2.1)):              # 船头 / 船尾（收尖、上翘）
+        bt.prism([(-0.8, 0.5), (0.8, 0.5), (0.5, 0.0), (-0.5, 0.0)], "y", min(y0, y0 + (y1 - y0) * 0.01), max(y0, y0 + (y1 - y0) * 0.01), "M_Wood")
+        bt.hexa([(-0.5, y0, 0.0), (0.5, y0, 0.0), (0.06, tip, 0.25), (-0.06, tip, 0.25),
+                 (-0.8, y0, 0.54), (0.8, y0, 0.54), (0.08, tip, 0.7), (-0.08, tip, 0.7)], "M_Wood")
+    for y in (-0.9, 0.7):                                                  # 横梁（坐板）
+        bt.box(-0.74, y - 0.1, 0.36, 0.74, y + 0.1, 0.43, "M_Wood_Dark")
+    bt.box(-0.25, -1.4, 0.08, 0.25, -1.1, 0.4, "M_MC_Sack")                 # 一袋货
+    beam(bt, (0.3, 1.0, 0.45), (0.9, -2.6, 0.05), 0.06, "M_Wood")           # 篙
+    under(go, obj(bt, "Sluice_Boat", (0.6, 4.6, -0.95)))
+    fxw, fxs = fx("FX_WaterFlow", 0, 1.15, -0.4), fx("FX_Splash", 0, 2.4, -0.5)
+    under(go, fxw, fxs)
     # 绞盘鼓（枢轴在轴心，绕 X 转）
     dr = K.MB()
     with dr.at(0, 0, 0, 0, 0, 90):
@@ -652,8 +820,6 @@ def r_sluice():
         with dr.at(0, 0, 0, 0, 0, 90):
             dr.cyl(0, 0, x - 0.12, x + 0.12, 0.27, "M_MC_Rope", seg=10)
     obj(dr, "Sluice_WinchDrum", (0, 1.15, WALK + 1.2))
-    fx("FX_WaterFlow", 0, 1.15, -0.4)
-    fx("FX_Splash", 0, 2.4, -0.5)
     for i, (x, y, z) in enumerate(((-2.85, 1.15, -1.5), (2.85, 1.15, -1.5), (0, 1.76, -1.6))):
         anchor(f"ANCHOR_Sluice_Spot_{i + 1}", x, y, z)
     anchor("ANCHOR_Winch", 0, 2.1, WALK)
@@ -969,7 +1135,7 @@ def r_wanghouse():
     S.box(-8.6, 9.35, 4.5, 8.6, 9.65, 4.9, "M_Wood")
     for x in (-4.5, -1.5, 4.5):                                             # 五架梁（x=1.5 那根单独做 Beam_Removable）
         S.box(x - 0.17, 4.2, 4.5, x + 0.17, 9.5, 4.95, "M_Wood")
-    for x in (-4.5, -1.5, 1.5, 4.5):                                        # 瓜柱 + 三架梁
+    for x in (-4.5, -1.5, 4.5):                                             # 瓜柱 + 三架梁（x=1.5 那一缝单独做 Truss_Upper_E）
         for y in (5.6, 8.1):
             S.box(x - 0.1, y - 0.1, 4.95, x + 0.1, y + 0.1, 5.6, "M_Wood_Dark")
         S.box(x - 0.14, 5.4, 5.6, x + 0.14, 8.3, 5.9, "M_Wood")
@@ -989,21 +1155,97 @@ def r_wanghouse():
         for y in (5.6, 7.4):
             chair(S, sx * 3.2, y, zf, face=2 if sx < 0 else 3)
         S.box(sx * 3.2 - 0.25, 6.3, zf, sx * 3.2 + 0.25, 6.7, zf + 0.7, "M_Wood_Dark")
-    RH.gable_roof(-9.0, 9.0, 2.5, 11.0, 5.0, 2.9, ohf=0.9, ohs=0.3)
+    # 正厅屋面不填实（抬梁、檩外露，拆梁后的塌口能看见天），两端山尖单独补墙
+    RH.gable_roof(-9.0, 9.0, 2.5, 11.0, 5.0, 2.9, ohf=0.9, ohs=0.3, fill=False)
+    for xa, xb in ((-9.0, -8.6), (8.6, 9.0)):
+        S.gable_fill(xa, xb, 2.5, 11.0, 5.0, 2.9, "M_Plaster")
     S.to_object("ENV_WangHouse")
     obj(RG, "ROOF_Gate")
     obj(RH, "ROOF_Hall")
     obj(RS, "ROOF_Study")
     obj(RW, "ROOF_Wing")
-    # 可拆的梁（枢轴在梁中心，团结里先抬起再放到 ANCHOR_beam_drop）
-    bm = K.MB()
-    bm.box(-0.17, -2.65, -0.225, 0.17, 2.65, 0.225, "M_Wood")
-    obj(bm, "Beam_Removable", (1.5, 6.85, 4.725))
+    wanghouse_beam_states(zf)
     for nm, p in (("ANCHOR_enter", (0, -12.3, 0)), ("ANCHOR_gate_in", (0, -6.4, 0.1)), ("ANCHOR_courtyard_talk", (0, -0.8, 0.12)),
                   ("ANCHOR_shugao_hall", (0, 8.0, zf)), ("ANCHOR_yan_hall", (0, 5.6, zf)), ("ANCHOR_beam_below", (1.5, 6.85, zf)),
                   ("ANCHOR_beam_drop", (3.0, -1.2, 0.12)), ("ANCHOR_study_desk", (7.3, -1.5, 1.12)), ("ANCHOR_study_seat", (8.2, -1.5, 0.3)),
-                  ("ANCHOR_cam_hall", (0, -2.0, 3.4)), ("ANCHOR_cam_top", (0, 0, 32.0))):
+                  ("ANCHOR_cam_hall", (0, -2.0, 3.4)), ("ANCHOR_cam_top", (0, 0, 32.0)),
+                  # 第二幕宅院抉择（Docs/act2_site.md）：人物默认站位、门、室内各间、墙内外代价镜头
+                  ("ANCHOR_Shugao", (0, 8.0, zf)), ("ANCHOR_Shugao_Gate", (0.9, -12.0, 0)),
+                  ("ANCHOR_Door", (0, -11.9, 0.0)), ("ANCHOR_Door_Inner", (0, -9.0, 0.35)),
+                  ("ANCHOR_Interior_Hall", (0, 6.6, zf)), ("ANCHOR_Interior_Study", (6.6, -2.6, 0.3)),
+                  ("ANCHOR_Interior_Wing", (-6.6, -2.0, 0.3)), ("ANCHOR_Interior_Courtyard", (0, -4.8, 0.12)),
+                  ("ANCHOR_Interior_GateHall", (0, -9.0, 0.35)),
+                  ("ANCHOR_Beam_Ladder", (2.1, 6.85, zf)), ("ANCHOR_Beam_Carry_Out", (0, -12.8, 0)),
+                  ("ANCHOR_Cost_Outside", (0, -18.0, 0)), ("ANCHOR_Cost_Inside", (0, 18.0, 0)),
+                  ("ANCHOR_cam_wallview", (-14.0, -20.0, 9.0))):
         anchor(nm, *p)
+    for nm, hx, sgn in (("Door_L", -0.95, 1), ("Door_R", 0.95, -1)):       # 门扇开启参考（转 90° 朝院内）
+        ref_rot(f"ANCHOR_{nm}_Open", (hx, -10.8, 0.35), 90 * sgn)
+
+
+def wanghouse_beam_states(zf):
+    """拆梁两态。State_Beam_Intact：Beam_Removable（五架梁，原点在前端 = 前金柱 y=4.2 的梁底中心，梁沿 +Y 伸 5.3 m）、
+    Truss_Upper_E（这一缝的瓜柱 + 三架梁 + 脊瓜柱）、ROOF_Hall（完整屋面）。
+    State_Beam_Removed：ROOF_Hall_Broken（东次间屋脊塌口 x 0.3..2.7）、Beam_Fallen（拆下的梁，横在天井两块垫木上）、
+    Rubble_Hall（厅里塌下的瓦、断椽和三架梁）、FX_RoofDust。"""
+    gi, gr = group("State_Beam_Intact"), group("State_Beam_Removed")
+    roof_hall = bpy.data.objects.get("ROOF_Hall")
+    under(gi, roof_hall)
+    bm = K.MB()
+    bm.box(-0.17, 0.0, 0.0, 0.17, 5.3, 0.45, "M_Wood")
+    for y in (0.0, 5.12):                                                  # 梁头榫（深一档）
+        bm.box(-0.175, y, 0.05, 0.175, y + 0.18, 0.4, "M_Wood_Dark")
+    under(gi, obj(bm, "Beam_Removable", (1.5, 4.2, 4.5)))
+    tr = K.MB()
+    for y in (5.6, 8.1):
+        tr.box(-0.1, y - 0.1, 4.95, 0.1, y + 0.1, 5.6, "M_Wood_Dark")
+    tr.box(-0.14, 5.4, 5.6, 0.14, 8.3, 5.9, "M_Wood")
+    tr.box(-0.1, 6.75, 5.9, 0.1, 6.95, 6.7, "M_Wood_Dark")
+    under(gi, obj(tr, "Truss_Upper_E", (1.5, 0, 0)))
+    # 塌口屋面：x 0.3..2.7 去掉脊和上段坡，只剩檐口一段；塌口边挂一片下垂的瓦面、几根断椽
+    rb = K.MB()
+    for xa, xb in ((-9.3, 0.3), (2.7, 9.3)):
+        rb.gable_roof(xa, xb, 2.5, 11.0, 5.0, 2.9, ohf=0.9, ohs=0.0, fill=False, curl=False)
+    ym, zr = 6.75, 5.0 + 2.9 + 0.12
+    for xe in (-9.3, 9.3 - 0.55):
+        rb.box(xe, ym - 0.22, zr + 0.2, xe + 0.55, ym + 0.22, zr + 0.6, "M_Roof_Ridge")
+    half, ku, kz = 4.25, 4.25 * K.MB.KU, K.MB.KZ
+    zk = 5.0 + 2.9 * (1 - kz) + 0.12
+    slope2 = 2.9 * (1 - kz) / (half - ku)
+    for sgn in (-1, 1):                                                    # 塌口里保留的下段坡
+        yk, ya = ym + sgn * ku, ym + sgn * (half + 0.9)
+        ze = 5.0 + 0.12 - slope2 * 0.9
+        rb.prism([(yk, zk), (ya, ze), (ya, ze - 0.18), (yk, zk - 0.22)], "x", 0.3, 2.7, "M_Roof_Tile")
+    with rb.at(1.5, ym - ku + 0.2, zk - 0.1, 0, -28, 0):                   # 前坡上段断下来，挂在檩上斜插进厅
+        rb.box(-1.0, -0.05, -1.5, 0.9, 0.18, 0.0, "M_Roof_Tile")
+    for i, (x, a) in enumerate(((0.6, 18), (1.3, -12), (2.2, 25), (1.8, 40))):   # 断椽
+        beam(rb, (x, ym - ku - 0.2, zk - 0.05), (x + 0.15 * (i - 1.5), ym - 0.6 + i * 0.35, zk + 0.6 - i * 0.45), 0.08, "M_Wood_Dark")
+    rb.box(0.2, ym - ku - 0.25, zk - 0.25, 2.8, ym - ku + 0.05, zk - 0.05, "M_Roof_Ridge")    # 塌口边的碎瓦檐
+    rb.box(0.2, ym + ku - 0.05, zk - 0.25, 2.8, ym + ku + 0.25, zk - 0.05, "M_Roof_Ridge")
+    under(gr, obj(rb, "ROOF_Hall_Broken"))
+    # 拆下的梁：平放在天井两块垫木上（与 Beam_Removable 同截面，原点同样在梁一端）
+    bf = K.MB()
+    with bf.at(0, 0, 0, -90):                                              # 沿 +X 横放（x -2.4..2.9，避开太平缸）
+        bf.box(-0.17, 0.0, 0.0, 0.17, 5.3, 0.45, "M_Wood")
+        for y in (0.0, 5.12):
+            bf.box(-0.175, y, 0.05, 0.175, y + 0.18, 0.4, "M_Wood_Dark")
+        for y in (0.7, 4.4):
+            bf.box(-0.35, y - 0.12, -0.18, 0.35, y + 0.12, 0.0, "M_Wood_Dark")
+    under(gr, obj(bf, "Beam_Fallen", (-2.4, -1.0, 0.12 + 0.18)))
+    # 厅里的塌落物：瓦堆、碎瓦、断下的三架梁、瓜柱
+    rh = K.MB()
+    rng = random.Random(41)
+    rh.cyl(1.5, 6.9, zf, zf + 0.45, 0.9, "M_Roof_Tile", seg=8, r_top=0.25)
+    for _ in range(14):
+        x, y = 1.5 + rng.uniform(-1.4, 1.4), 6.9 + rng.uniform(-1.6, 1.6)
+        a = rng.uniform(0, 180)
+        with rh.at(x, y, zf, a):
+            rh.box(-0.16, -0.12, 0, 0.16, 0.12, 0.04, "M_Roof_Tile" if rng.random() < 0.7 else "M_Roof_Ridge")
+    beam(rh, (0.6, 5.5, zf + 0.12), (2.6, 8.2, zf + 0.6), 0.28, "M_Wood")   # 三架梁斜搭在瓦堆上
+    beam(rh, (2.3, 5.8, zf + 0.1), (2.9, 6.4, zf + 0.1), 0.2, "M_Wood_Dark")
+    beam(rh, (0.4, 7.9, zf + 0.1), (0.5, 8.6, zf + 0.1), 0.2, "M_Wood_Dark")
+    under(gr, obj(rh, "Rubble_Hall"))
+    under(gr, fx("FX_RoofDust", 1.5, 6.85, 6.0))
 
 
 # ---------------------------------------------------------------------- 盐场
@@ -1106,7 +1348,7 @@ def r_furnace():
     mb.box(-0.62, -1.52, 0.7, 0.62, -1.35, 0.86, "M_Brick_Red")
     for sx in (-1, 1):
         mb.box(min(sx * 0.5, sx * 0.62), -1.52, 0.12, max(sx * 0.5, sx * 0.62), -1.35, 0.7, "M_Brick_Red")
-    mb.box(-0.35, -1.46, 0.14, 0.35, -1.38, 0.3, "M_Fire")                   # 余烬
+    mb.box(-0.42, -1.49, 0.12, 0.42, -1.45, 0.16, "M_MC_Ash")               # 火口灰（余烬 / 火苗在 Fire_0/1/2 里）
     mb.box(-0.9, -2.5, -0.06, 0.9, -1.45, 0.02, "M_MC_Ash")                 # 灰坑
     # 烟囱（后 +Y）
     mb.frustum((-0.45, 1.15, 0.45, 1.95), (-0.3, 1.3, 0.3, 1.8), 0, 3.8, "M_MC_StoveMud")
@@ -1125,21 +1367,92 @@ def r_furnace():
         with mb.at(x, -2.0, z, 0, 0, 0):
             beam(mb, (0, -0.55, 0), (0, 0.55, 0), 0.15, "M_MC_Log")
     obj(mb, "ENV_SaltFurnace", uv=1.0)
-    b = K.MB()
-    b.cyl(0, 0, -0.02, 0.0, 0.98, "M_MC_Brine", seg=16)
-    obj(b, "Pan_Brine", (0, 0, 1.08))
-    s = K.MB()
-    s.cyl(0, 0, -0.02, 0.0, 0.88, "M_Salt", seg=16)
-    for a in range(5):
-        ang = a * 1.3
-        s.cyl(0.45 * math.cos(ang), 0.45 * math.sin(ang), 0, 0.05, 0.22, "M_Salt", seg=6, r_top=0.04)
-    obj(s, "Pan_Salt", (0, 0, 0.99))
+    furnace_states()
     fx("FX_Fire", 0, -1.2, 0.35)
     fx("FX_Smoke", 0, 1.55, 4.0)
     fx("FX_Steam", 0, 0, 1.15)
     anchor("ANCHOR_Stoke", 0, -2.3, 0)
     anchor("ANCHOR_Pour", 3.2, 0, 0)
     anchor("ANCHOR_Scoop", -2.1, 0, 0.35)
+
+
+def _flame(mb, x, y, z, r, h, lean=0.0):
+    """低模火舌：外焰四棱锥（火色）+ 内焰小锥（火芯色）。"""
+    with mb.at(x, y, z, 45, 0, lean):
+        mb.cyl(0, 0, 0, h, r, "M_MC_Flame", seg=4, r_top=0.005)
+        mb.cyl(0, 0, 0, h * 0.55, r * 0.55, "M_MC_FlameCore", seg=4, r_top=0.005)
+
+
+def furnace_states():
+    """煮盐三拍的三组状态，每组三选一 SetActive：
+    Fire：Fire_0（熄：灰 + 两根黑炭）/ Fire_1（文火：三根柴、暗炭火、三簇小火舌）/ Fire_2（旺火：柴满、火舌窜出火口舔上灶脸）
+    Brine：Brine_Full（满锅 z 1.10）/ Brine_Half（半锅 1.03，锅沿析出一圈盐霜）/ Brine_Low（见底 0.975，盐堆冒出液面）
+    Salt：Salt_None（锅底湿膜）/ Salt_Crust（锅底薄盐壳 + 锅沿盐圈 + 浮花）/ Salt_Heap（耙成的盐堆 + 盐耙印）
+    推荐组合：火候拍 Fire_1→2 + Brine_Full + Salt_None；卤水拍 Brine_Half + Salt_Crust；起盐拍 Fire_0 + Brine_Low + Salt_Heap。"""
+    gf, gb, gs = group("Fire"), group("Brine"), group("Salt")
+    y0 = -1.5                                                              # 火口外沿
+    # ---- 火
+    f0 = K.MB()
+    f0.box(-0.45, y0 - 0.25, 0.12, 0.45, y0 + 0.05, 0.17, "M_MC_Ash")
+    for x, a in ((-0.15, 15), (0.18, -10)):
+        with f0.at(x, y0 - 0.1, 0.2, a):
+            beam(f0, (0, -0.25, 0), (0, 0.25, 0), 0.09, "M_MC_Char")
+    under(gf, obj(f0, "Fire_0", uv=0.5))
+    f1 = K.MB()
+    f1.box(-0.4, y0 - 0.2, 0.12, 0.4, y0 + 0.05, 0.18, "M_MC_Ember")
+    for x, a in ((-0.2, 20), (0.0, 0), (0.22, -18)):
+        with f1.at(x, y0 - 0.1, 0.22, a):
+            beam(f1, (0, -0.3, 0), (0, 0.35, 0), 0.1, "M_MC_Log")
+    for x, h in ((-0.18, 0.22), (0.05, 0.3), (0.24, 0.2)):
+        _flame(f1, x, y0 - 0.05, 0.25, 0.09, h)
+    under(gf, obj(f1, "Fire_1", uv=0.5))
+    f2 = K.MB()
+    f2.box(-0.48, y0 - 0.3, 0.12, 0.48, y0 + 0.05, 0.2, "M_MC_Ember")
+    for x, z, a in ((-0.3, 0.22, 22), (-0.1, 0.22, 5), (0.12, 0.22, -8), (0.32, 0.22, -25), (-0.18, 0.34, -12), (0.15, 0.34, 15)):
+        with f2.at(x, y0 - 0.12, z, a):
+            beam(f2, (0, -0.4, 0), (0, 0.4, 0), 0.1, "M_MC_Log")
+    for x, h, ln in ((-0.32, 0.38, -12), (-0.12, 0.55, -4), (0.08, 0.62, 3), (0.28, 0.45, 10), (-0.02, 0.4, 0), (0.4, 0.3, 18)):
+        _flame(f2, x, y0 - 0.08, 0.3, 0.12, h, ln)
+    for x in (-0.25, 0.0, 0.25):                                           # 舔上灶脸的火舌
+        _flame(f2, x, y0 + 0.04, 0.72, 0.08, 0.32, 0)
+    f2.box(-0.62, -1.535, 0.7, 0.62, -1.525, 0.9, "M_MC_Char")              # 火口上沿熏黑
+    under(gf, obj(f2, "Fire_2", uv=0.5))
+    # ---- 卤水（锅腹内径 0.98，锅底 0.95，锅沿顶 1.16）
+    for nm, z, r in (("Brine_Full", 1.10, 0.98), ("Brine_Half", 1.03, 0.97), ("Brine_Low", 0.975, 0.96)):
+        b = K.MB()
+        b.cyl(0, 0, -0.02, 0.0, r, "M_MC_Brine", seg=16)
+        if nm == "Brine_Half":                                             # 液面浮花 + 锅沿盐霜圈
+            rng = random.Random(3)
+            for _ in range(9):
+                a, rr = rng.uniform(0, 6.28), rng.uniform(0.2, 0.8)
+                b.cyl(rr * math.cos(a), rr * math.sin(a), 0.0, 0.006, rng.uniform(0.05, 0.11), "M_Salt", seg=5)
+            ring(b, 0, 0, 0.0, 0.06, 0.9, 0.975, "M_Salt", seg=16)
+        if nm == "Brine_Low":
+            ring(b, 0, 0, 0.0, 0.12, 0.88, 0.975, "M_Salt", seg=16)
+        under(gb, obj(b, nm, (0, 0, z)))
+    # ---- 盐
+    s0 = K.MB()
+    s0.cyl(0, 0, 0.0, 0.006, 0.97, "M_MC_PanWet", seg=16)
+    under(gs, obj(s0, "Salt_None", (0, 0, 0.95)))
+    s1 = K.MB()
+    s1.cyl(0, 0, 0.0, 0.015, 0.95, "M_Salt", seg=16)
+    rng = random.Random(9)
+    for _ in range(12):
+        a, rr = rng.uniform(0, 6.28), rng.uniform(0.1, 0.8)
+        s1.cyl(rr * math.cos(a), rr * math.sin(a), 0.015, 0.04, rng.uniform(0.06, 0.14), "M_Salt", seg=5, r_top=0.03)
+    ring(s1, 0, 0, 0.0, 0.14, 0.9, 0.975, "M_Salt", seg=16)
+    under(gs, obj(s1, "Salt_Crust", (0, 0, 0.95)))
+    s2 = K.MB()
+    s2.cyl(0, 0, 0.0, 0.02, 0.95, "M_Salt", seg=16)
+    s2.cyl(0, 0, 0.02, 0.36, 0.55, "M_Salt", seg=10, r_top=0.1)
+    for a in range(5):
+        ang = a * 1.26 + 0.3
+        s2.cyl(0.62 * math.cos(ang), 0.62 * math.sin(ang), 0.02, 0.17, 0.2, "M_Salt", seg=6, r_top=0.04)
+    for k in range(4):                                                     # 耙印（暗槽）
+        ang = k * 1.57 + 0.6
+        with s2.at(0.75 * math.cos(ang), 0.75 * math.sin(ang), 0.02, math.degrees(ang)):
+            s2.box(-0.12, -0.015, 0, 0.12, 0.015, 0.006, "M_MC_PanWet")
+    under(gs, obj(s2, "Salt_Heap", (0, 0, 0.95)))
 
 
 def r_saltset():
@@ -1171,6 +1484,45 @@ def r_saltset():
         rk.box(x - 0.015, -0.1, 0, x + 0.015, -0.04, 0.06, "M_Wood_Dark")
     beam(rk, (0, 0.04, 0.04), (0, 1.6, 0.06), 0.04, "M_Wood_Dark")
     obj(rk, "SaltRake", (-1.6, -0.9, 0), uv=0.5)
+    saltset_output()
+
+
+def _basket(mb, x, y, full=True, r=0.34):
+    mb.cyl(x, y, 0, 0.36, r * 0.82, "M_MC_Bamboo", seg=10, r_top=r)
+    mb.cyl(x, y, 0.34, 0.38, r + 0.02, "M_Wood_Dark", seg=10)
+    if full:
+        mb.cyl(x, y, 0.36, 0.62, r * 0.96, "M_Salt", seg=10, r_top=0.08)
+
+
+def saltset_output():
+    """起盐后的产出：盐筐满 / 空两态、三档盐产出堆（每煮一锅多一档）、挑盐扁担（两筐满盐）。
+    SaltBasket_Full / SaltBasket_Empty 二选一；SaltOutput_1/2/3 三选一（越往后越大，盐袋越多）；SaltPole 起盐完成后显示。"""
+    bf = K.MB()
+    _basket(bf, 0, 0, True)
+    obj(bf, "SaltBasket_Full", (2.0, -0.6, 0), uv=0.5)
+    be = K.MB()
+    _basket(be, 0, 0, False)
+    be.cyl(0, 0, 0.0, 0.02, 0.27, "M_Salt", seg=8)
+    obj(be, "SaltBasket_Empty", (2.0, -0.6, 0), uv=0.5)
+    for k in (1, 2, 3):
+        o = K.MB()
+        r = 0.45 + 0.25 * k
+        o.cyl(0, 0, 0, r * 0.75, r, "M_Salt", seg=10, r_top=0.1)
+        for j in range(k):
+            o.cyl(r * 0.8 * math.cos(j * 2.1), r * 0.8 * math.sin(j * 2.1), 0, r * 0.4, r * 0.45, "M_Salt", seg=8, r_top=0.06)
+        for j in range(2 * k):                                             # 扎好的盐袋
+            with o.at(r + 0.45, -0.6 + j * 0.5, 0, 8 * (j % 3 - 1)):
+                o.frustum((-0.3, -0.2, 0.3, 0.2), (-0.26, -0.17, 0.26, 0.17), 0, 0.34, "M_MC_Sack")
+                o.frustum((-0.26, -0.17, 0.26, 0.17), (-0.09, -0.07, 0.09, 0.07), 0.34, 0.44, "M_MC_Sack")
+        obj(o, f"SaltOutput_{k}", (1.0, 2.8, 0), uv=0.5)
+    p = K.MB()                                                             # 扁担 + 两筐（平放地上，原点在扁担中点下地面）
+    for x in (-0.75, 0.75):
+        _basket(p, x, 0, True, r=0.28)
+        for a in (0, 90, 180, 270):                                        # 筐绳
+            dx, dy = 0.26 * math.cos(math.radians(a)), 0.26 * math.sin(math.radians(a))
+            beam(p, (x + dx, dy, 0.36), (x, 0, 1.05), 0.012, "M_MC_Rope")
+    beam(p, (-1.0, 0, 1.05), (1.0, 0, 1.05), 0.06, "M_Wood", h=0.04)
+    obj(p, "SaltPole", (-2.2, 2.3, 0), uv=0.5)
 
 
 def r_firewood():

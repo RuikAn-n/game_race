@@ -49,7 +49,7 @@ A2_PALETTE = {
     "M_A2C_CH_Coat": "#7a5a48", "M_A2C_CH_Pants": "#4a4438", "M_A2C_Silver": "#a8a49a",
     # ---- 道具（M_A2_）
     "M_A2_Sand": "#c8b58e", "M_A2_SandDark": "#9e8a66", "M_A2_SandRidge": "#b8a47c", "M_A2_Moss": "#6f7a52",
-    "M_A2_Field": "#8a8a5c", "M_A2_MiniWater": "#4F6B6A", "M_A2_MiniWaterFlow": "#5f7f7c", "M_A2_HillMini": "#7a7a58",
+    "M_A2_Field": "#8a8a5c", "M_A2_MiniWater": "#4F6B6A", "M_A2_MiniWaterFlow": "#5f7f7c", "M_A2_MiniWaterLine": "#a9c0b8", "M_A2_HillMini": "#7a7a58",
     "M_A2_TableWood": "#6b4a32", "M_A2_TableDark": "#3e2c20", "M_A2_MiniWood": "#a08060", "M_A2_MiniWall": "#7c7466",
     "M_A2_MiniRoof": "#4a4a46", "M_A2_MiniIron": "#2e3030", "M_A2_Twine": "#b8a882", "M_A2_Rice": "#e8e2d2",
     "M_A2_FlagRed": "#9a3a2c", "M_A2_FlagBlue": "#3e5260", "M_A2_FlagYellow": "#b0924a", "M_A2_Grave": "#8a8678",
@@ -623,21 +623,31 @@ def _layout():
 
 HX, HY = TABLE_W / 2 - RIM, TABLE_D / 2 - RIM      # 沙面可用半宽
 SEA_Y = -0.345                                     # 东侧海岸线（压缩：海离城比实际近）
-HILL_Y = 0.30                                      # 西侧山脚（压缩）
+HILL_Y = 0.32                                      # 西侧山脚（压缩）：起坡在 Y=0.29，靠山 B 案西墙（x=-140 → Y=0.28）正好压在山脚
 
-# 墙线三组（演绎）：固定 = 北墙 + 东墙北段；贴河 = 实际布局的南墙/西墙；靠山 = 西推到山脚、南墙北缩让出河岸
-WALL_FIXED = [[(-113, 185), (113, 185), (113, -140)]]
-WALL_RIVER = [[(113, -140), (113, -185), (-113, -185), (-113, 185)]]
-WALL_HILL = [[(113, -140), (-140, -140), (-140, 185), (-113, 185)]]
+# 墙线三组（演绎，靠山 B 案：西墙 x=-140、南墙 z=-185）：
+#   固定 = 北墙 + 东墙全段（两案共用）；贴河 = 南墙 + 西墙 x=-113（布局实际墙线）；靠山 = 南墙西延到 -140 + 西墙 x=-140 + 北墙西端补段。
+#   两案的南墙同在 z=-185（各组各有一份，整组开关时只显示一份），区别只在西侧：贴河贴着护城河内岸，靠山把墙推到山脚、圈进护城河和河岸。
+#   折线都按俯视顺时针走（城外在行进方向左手），沙埂 Ridge_<案>_NN 也按这个顺序编号。
+WALL_FIXED = [[(-113, 185), (113, 185), (113, -185)]]
+WALL_RIVER = [[(113, -185), (-113, -185), (-113, 185)]]
+WALL_HILL = [[(113, -185), (-140, -185), (-140, 185), (-113, 185)]]
 # 各组的转角台位置（固定组接缝处不出转角）
-CORNERS = {"Wall_Fixed": [(113, 185)], "Wall_River": [(113, -185), (-113, -185), (-113, 185)],
-           "Wall_Hill": [(113, -140), (-140, -140), (-140, 185)]}
+CORNERS = {"Wall_Fixed": [(113, 185), (113, -185)], "Wall_River": [(-113, -185), (-113, 185)],
+           "Wall_Hill": [(-140, -185), (-140, 185)]}
+# 两根木签（墙线首尾）= 两案分岔的西南角、西北角
+STAKES = {"River": [(-113, -185), (-113, 185)], "Hill": [(-140, -185), (-140, 185)]}
 GATES = {"GateTower_N": (4, 185, 0), "GateTower_E": (113, 40, 90), "GateTower_S": (-12, -185, 180),
-         "GateTower_W": (-113, 12, 270), "GateTower_S_Hill": (-12, -140, 180), "GateTower_W_Hill": (-140, 12, 270)}
+         "GateTower_W": (-113, 12, 270), "GateTower_S_Hill": (-12, -185, 180), "GateTower_W_Hill": (-140, 12, 270)}
 WATERGATES = {"WaterGate_E": (113, -56, 90), "WaterGate_N1": (-40, 185, 0), "WaterGate_N2": (48, 185, 0),
               "WaterGate_S1": (-40, -185, 180), "WaterGate_S2": (48, -185, 180),
-              "WaterGate_S1_Hill": (-40, -140, 180), "WaterGate_S2_Hill": (48, -140, 180)}
+              "WaterGate_S1_Hill": (-40, -185, 180), "WaterGate_S2_Hill": (48, -185, 180),
+              # 靠山案的墙把西护城河圈进来：南墙西段、北墙西补段各跨一次护城河，各开一道涵洞水门
+              "WaterGate_SW_Hill": (-127.5, -185, 180), "WaterGate_NW_Hill": (-127.5, 185, 0)}
 TOWERS = {"Tower_East": (113, 112, 90), "Tower_North": (-72, 185, 0)}
+HOUSE20_OUT = (60, 222)        # 王叔杲宅：北墙外（布局坐标）
+HOUSE20_IN = (66, 168)         # 「圈进墙内」落位：北墙内、下河东岸，避开环城路以北的民居片和东北水田
+SAND_CARDS = ("Wall", "Tower", "Water", "House")   # 纸卡议题（纸卡托上从左到右：墙线 / 敌台 / 水门 / 王宅）
 
 
 def _water_rects(L):
@@ -665,7 +675,7 @@ def _hill(X, Y):
                          (0.25, 0.36, 0.065, 0.12), (0.47, 0.37, 0.04, 0.09), (0.12, 0.33, 0.02, 0.06)):
         d2 = ((X - cx) ** 2 + (Y - cy) ** 2) / (r * r)
         hgt += a * math.exp(-d2 * 2.0)
-    return hgt * max(0.0, min(1.0, (Y - HILL_Y + 0.03) / 0.05))
+    return hgt * max(0.0, min(1.0, (Y - HILL_Y + 0.03) / 0.07)) ** 1.5
 
 
 def build_sand_surface(L):
@@ -676,7 +686,7 @@ def build_sand_surface(L):
         X0, Y0, X1, Y1 = mrect(f["x0"], f["z0"], f["x1"], f["z1"])
         fields.append((X0, Y0, X1, Y1, f["kind"]))
     bed = []
-    for pts in WALL_FIXED + WALL_RIVER:
+    for pts in WALL_FIXED + WALL_RIVER + WALL_HILL:
         for a, b in zip(pts, pts[1:]):
             A, B = m2t(*a), m2t(*b)
             bed.append((min(A[0], B[0]) - 0.008, min(A[1], B[1]) - 0.008, max(A[0], B[0]) + 0.008, max(A[1], B[1]) + 0.008))
@@ -759,6 +769,74 @@ def _poly_strips(mb, pts, wd, z0, z1, mat, ext=0.0):
             mb.box(x0 - wd / 2, min(y0, y1) - ext, z0, x0 + wd / 2, max(y0, y1) + ext, z1, mat)
 
 
+RIDGE_SEG = 0.05      # 沙埂分段长（约 5 cm = 布局 25 m，与墙条一致）
+
+
+def build_ridge_segments(key, pts):
+    """沙埂分段：Ridge_<key> 组空物体在沙面中心，子物体 Ridge_<key>_NN 沿折线顺序排；每段梯形截面（底宽 2.6 cm、高 5 mm），
+    原点在段底中心、本地 +X 沿墙线前进方向。两端各多伸 2 mm 与相邻段搭接，折角处多伸半个底宽补满转角。
+    同时生成 Twine_<key> 组：沿同一折线平铺在沙面的麻线段（Twine_<key>_NN，与沙埂一一对应）。"""
+    g = group("Ridge_" + key, (0, 0, SAND_Z))
+    tg = group("Twine_" + key, (0, 0, SAND_Z))
+    wd, top, hgt = 0.026, 0.012, 0.005
+    k = 0
+    for ei, (a, b) in enumerate(zip(pts, pts[1:])):
+        A, B = V((a[0], a[1], 0)), V((b[0], b[1], 0))
+        d = B - A
+        Ltot = d.length
+        u = d / Ltot
+        ang = math.degrees(math.atan2(u.y, u.x))
+        n = max(1, round(Ltot / RIDGE_SEG))
+        for i in range(n):
+            t0, t1 = Ltot * i / n, Ltot * (i + 1) / n
+            e0 = wd / 2 if (i == 0 and ei > 0) else 0.002
+            e1 = wd / 2 if (i == n - 1 and ei < len(pts) - 2) else 0.002
+            if i == 0 and ei == 0:
+                e0 = wd / 2
+            if i == n - 1 and ei == len(pts) - 2:
+                e1 = wd / 2
+            half = (t1 - t0) / 2
+            c = A + u * ((t0 + t1) / 2)
+            k += 1
+            mb = K.MB()
+            mb.prism([(-wd / 2, 0), (wd / 2, 0), (top / 2, hgt), (-top / 2, hgt)], "x", -half - e0, half + e1, "M_A2_SandRidge")
+            ob = obj(mb, f"Ridge_{key}_{k:02d}", (c.x, c.y, SAND_Z), uv=0.25)
+            ob.rotation_euler = (0, 0, math.radians(ang))
+            child(ob, g)
+            mb = K.MB()
+            mb.box(-half - 0.001, -0.0005, 0, half + 0.001, 0.0005, 0.0009, "M_A2_Twine")
+            ob = obj(mb, f"Twine_{key}_{k:02d}", (c.x, c.y, SAND_Z), uv=0.1)
+            ob.rotation_euler = (0, 0, math.radians(ang))
+            child(ob, tg)
+    return g
+
+
+def _stake_mesh(mb):
+    """木签（与 PROP_Sand_Flags 的 Stake_NN 同形）：原点在插入点（沙面），签尖没入沙里 6 mm。"""
+    mb.cyl(0, 0, 0.0, 0.084, 0.0022, "M_A2_MiniWood", seg=5)
+    mb.cyl(0, 0, -0.006, 0.0, 0.0002, "M_A2_MiniWood", seg=5, r_top=0.0022)
+    mb.cyl(0, 0, 0.069, 0.074, 0.0028, "M_A2_Twine", seg=5)
+
+
+def build_stake_merlon(name, loc):
+    """「木签变墙垛」成对件：组 <name>（原点 = 插签点，沙面）下 <name>_Stake（木签）与 <name>_Merlon（墙角垛台，比墙角台大一圈、带四角垛口），
+    墙线固定时 Stake 缩下去/隐藏、Merlon 从本地 Z 0→1 长出来。"""
+    g = group(name, loc)
+    mb = K.MB()
+    _stake_mesh(mb)
+    child(obj(mb, name + "_Stake", loc, uv=0.1), g)
+    mb = K.MB()
+    s = 0.014
+    mb.box(-s, -s, 0, s, s, MH + 0.006, "M_A2_MiniWall", skip_bottom=True)
+    for sx in (-1, 1):
+        for sy in (-1, 1):
+            mb.box(sx * s - (0.006 if sx > 0 else 0), sy * s - (0.006 if sy > 0 else 0), MH + 0.006,
+                   sx * s + (0.006 if sx < 0 else 0), sy * s + (0.006 if sy < 0 else 0), MH + 0.011, "M_A2_MiniWall")
+    mb.box(-s + 0.003, -s + 0.003, MH + 0.006, s - 0.003, s - 0.003, MH + 0.0068, "M_A2_SandRidge")
+    child(obj(mb, name + "_Merlon", loc, uv=0.1), g)
+    return g
+
+
 def build_sandtable():
     L = _layout()
     # ---- 桌子：面板、沙框、四腿、横枨
@@ -807,17 +885,19 @@ def build_sandtable():
         mb.box(X + dx - 0.006, Y + dy - 0.0015, 0, X + dx + 0.006, Y + dy + 0.0015, 0.022, "M_A2_MiniWood")
     obj(mb, "Static_Minis", (0, 0, SAND_Z), uv=0.25)
 
-    # ---- 墙线两案：隆起的沙埂（Ridge_*，原点在沙面，Z 缩放 0→1 做「沙沿着线隆起」）与浅沟（Trench_*）
+    # ---- 墙线两案：沙埂（Ridge_<案> 组 → Ridge_<案>_NN 分段，按墙线顺序，原点在段底中心，本地 Z 缩放 0→1 逐段隆起）、
+    #      浅沟（Trench_*）、麻线（Twine_<案>_NN，平铺沙面，沙埂隆起时被盖住）、两根木签 ↔ 墙垛（StakeMerlon_<案>_A/B）
     for key, lines in (("River", WALL_RIVER), ("Hill", WALL_HILL)):
         pts = [m2t(*p) for p in lines[0]]
-        mb = K.MB()
-        _poly_strips(mb, pts, 0.026, 0, 0.005, "M_A2_SandRidge", ext=0.013)
-        obj(mb, "Ridge_" + key, (0, 0, SAND_Z), uv=0.25)
+        build_ridge_segments(key, pts)
         mb = K.MB()
         _poly_strips(mb, pts, 0.012, -0.001, 0.0008, "M_A2_TableDark", ext=0.006)
         obj(mb, "Trench_" + key, (0, 0, SAND_Z), uv=0.25)
-        anchor(f"ANCHOR_Stake_{key}_A", (pts[0][0], pts[0][1], SAND_Z), 0.03)
-        anchor(f"ANCHOR_Stake_{key}_B", (pts[-1][0], pts[-1][1], SAND_Z), 0.03)
+        for tag, p in zip("AB", STAKES[key]):
+            X, Y = m2t(*p)
+            anchor(f"ANCHOR_Stake_{key}_{tag}", (X, Y, SAND_Z), 0.03)
+            build_stake_merlon(f"StakeMerlon_{key}_{tag}", (X, Y, SAND_Z))
+            fx(f"FX_Stake_{key}_{tag}", (X, Y, SAND_Z + 0.004))
         mid = pts[len(pts) // 2]
         fx(f"FX_SandDust_{key}", (mid[0], mid[1], SAND_Z + 0.01))
 
@@ -848,6 +928,50 @@ def build_sandtable():
     col_box("COL_Hot_WaterGate", (wx, wy, SAND_Z + 0.02), (0.06, 0.06, 0.05))
     col_box("COL_Hot_WangHouse", (hx_, hy_, SAND_Z + 0.02), (0.05, 0.05, 0.05))
     fx("FX_Water_E", (wx, wy - 0.02, SAND_Z + 0.004))
+    # 墙线热区：西墙两案之间那条带（贴河 x=-113 ~ 靠山 x=-140），沙盘模式下点它 = 开始拉墙线
+    lx0, ly0, lx1, ly1 = mrect(-145, -190, -108, 190)
+    col_box("COL_Hot_WallLine", ((lx0 + lx1) / 2, (ly0 + ly1) / 2, SAND_Z + 0.02), (lx1 - lx0, ly1 - ly0, 0.05))
+    # 敌台议题：东墙/北墙木牌顶上的插旗点（PROP_Sand_Flags 的 Flag_NN 原点放这里）+ 插旗/升台扬沙
+    for nm, (x, z, rot) in TOWERS.items():
+        X, Y = m2t(x, z)
+        dx, dy = (0.0, -0.03) if rot == 90 else (0.03, 0.0)
+        anchor(f"ANCHOR_Flag_{nm.split('_')[1]}", (X + dx, Y + dy, SAND_Z + 0.022), 0.02)
+        fx(f"FX_{nm}_Rise", (X, Y, SAND_Z + 0.006))
+    # 王宅木片：墙外原位 / 推进墙内的落位（与 PROP_Sand_House 的 House_20 一致），推木片时的扬沙
+    for nm, (x, z) in (("Out", HOUSE20_OUT), ("In", HOUSE20_IN)):
+        X, Y = m2t(x, z)
+        anchor(f"ANCHOR_House_20_{nm}", (X, Y, SAND_Z), 0.02)
+    X, Y = m2t(*HOUSE20_IN)
+    fx("FX_House_20", (X, Y, SAND_Z + 0.004))
+
+    # ---- 纸卡托：桌子正面挂一条斜木托，放四张议题纸卡（PROP_Sand_Flags 的 Card_* 原点对 ANCHOR_Card_*，局部旋转清零）
+    tray = group("CardTray_Root", (0, -hd, TABLE_TOP))
+    mb = K.MB()
+    with mb.at(0, 0, 0, rx=14):
+        mb.box(-0.27, -0.13, -0.018, 0.27, 0.0, 0.0, "M_A2_TableWood")
+        mb.box(-0.27, -0.135, 0.0, 0.27, -0.125, 0.008, "M_A2_TableDark")               # 前挡条（卡片不滑落）
+    for sx in (-1, 1):                                                                    # 两个托架
+        mb.prism([(0.0, -0.02), (-0.1, -0.046), (0.0, -0.11)], "x", sx * 0.22 - 0.012, sx * 0.22 + 0.012, "M_A2_TableDark")
+    child(obj(mb, "CardTray", (0, -hd, TABLE_TOP), uv=0.5), tray)
+    import mathutils
+    tilt = mathutils.Matrix.Rotation(math.radians(14), 3, "X")
+    for i, key in enumerate(SAND_CARDS):
+        p = tilt @ V((-0.195 + i * 0.13, -0.065, 0.0))
+        e = anchor(f"ANCHOR_Card_{key}", (p.x, -hd + p.y, TABLE_TOP + p.z), 0.03)
+        e.rotation_euler = (math.radians(14), 0, 0)
+
+    # ---- 1941：断角（Rim_Corner_FL 隐藏后显示劈裂的残茬）+ 从缺口漏到桌面和地上的沙堆
+    mb = K.MB()
+    for k, (x0, x1, h_) in enumerate(((0.0, 0.012, 0.07), (0.012, 0.022, 0.045), (0.022, 0.03, 0.06), (0.03, 0.035, 0.03))):
+        mb.box(0.2 - x1, 0, TABLE_TOP, 0.2 - x0, RIM, TABLE_TOP + h_, "M_A2_TableWood")      # 前沿残茬（参差）
+        mb.box(0, 0.2 - x1, TABLE_TOP, RIM, 0.2 - x0, TABLE_TOP + h_ * 0.8, "M_A2_TableWood")  # 左沿残茬
+    mb.prism([(0.0, 0.0), (0.06, 0.0), (0.0, 0.05)], "z", TABLE_TOP, TABLE_TOP + 0.012, "M_A2_TableDark")  # 桌面裂开的一块
+    obj(mb, "Rim_Broken_FL_1941", (-hw, -hd, 0), uv=0.5)
+    mb = K.MB()
+    el(mb, (0.06, 0.05, SAND_Z - 0.012), 0.07, 0.06, 0.012, "M_A2_Sand", seg=8, rings=2, zmin=0.0)        # 缺口处塌下来的沙
+    el(mb, (-0.05, -0.04, 0.0), 0.09, 0.07, 0.018, "M_A2_Sand", seg=8, rings=2, zmin=0.0)                # 地上一摊
+    el(mb, (0.02, -0.08, 0.0), 0.05, 0.04, 0.01, "M_A2_SandDark", seg=6, rings=2, zmin=0.0)
+    obj(mb, "SandSpill_1941", (-hw, -hd, 0), uv=0.25)
 
 
 # ====================================================================== 沙盘套件（原点 = 沙面中心 ANCHOR_SandOrigin）
@@ -1015,14 +1139,38 @@ def build_sand_gate():
     for i, (px, py, r) in enumerate(((0, 0, 0.004), (0.003, 0.004, 0.003), (-0.003, 0.003, 0.0028), (0.001, -0.004, 0.0025))):
         el(mb, (px, py, 0), r, r, r * 0.7, "M_A2_StoneDark", seg=6, rings=2, zmin=0.0)
     parts.append(("StonePile", mb, (0, 0.02, -0.004)))                     # 闭闸：水退露出石堆
+    mb = K.MB()                                                            # 流水条纹：浅色短划，周期 12.5 mm
+    for k in range(8):
+        y0 = -0.05 + k * 0.0125
+        for j, (x, dy) in enumerate(((-0.0022, 0.0), (0.0018, 0.006))):
+            mb.box(x - 0.0006, y0 + dy, 0, x + 0.0006, y0 + dy + 0.005, 0.0002, "M_A2_MiniWaterLine")
+    parts.append(("Water_Flow_Lines", mb, (0, 0, -0.003 + 0.0006)))       # 开闸：沿本地 -Y（出城、往海）每秒移 12.5 mm 循环
     wg = bpy.data.objects["WaterGate_E"]
     for nm, mb_, loc in parts:
         ob = obj(mb_, nm, loc, uv=0.1)
         ob.parent = wg
+    # 两态的起止位（水门本地坐标；动画 = 子物体从一个锚点 Lerp 到另一个）
+    for nm, loc in (("ANCHOR_GateBoard_In", (0, -MW / 2 - 0.0006, 0.0)),            # 闸板在槽里（闭）
+                    ("ANCHOR_GateBoard_Up", (0, -MW / 2 - 0.0006, MH * 0.62)),      # 闸板沿槽上提到顶（开 · 中途）
+                    ("ANCHOR_GateBoard_Out", (0.016, -0.012, 0.0006)),              # 抽走后平放在墙外岸上（开 · 终点，带 X 旋转 90°）
+                    ("ANCHOR_StoneBar_Out", (0, 0.028, 0.0)),                       # 石条在城内岸边待推（开）
+                    ("ANCHOR_StoneBar_In", (0, 0.0, 0.0)),                          # 石条推进闸槽（闭）
+                    ("ANCHOR_Boat_In", (0, 0.025, -0.0025)),                        # 小船在城内（开 · 起点）
+                    ("ANCHOR_Boat_Out", (0, -0.03, -0.0025)),                       # 小船穿过水门到城外（开 · 终点）
+                    ("ANCHOR_Water_High", (0, 0, -0.0035)),                         # 死水水位
+                    ("ANCHOR_Water_Low", (0, 0, -0.0058))):                         # 水退（闭 · 露出石堆）
+        e = anchor(nm, loc, 0.006, parent=wg)
+        if nm == "ANCHOR_GateBoard_Out":
+            e.rotation_euler = (math.radians(90), 0, 0)
+    for nm, loc in (("FX_WaterGate_E_Splash", (0, 0.004, 0.0)), ("FX_WaterGate_E_Flow", (0, -0.006, -0.002))):
+        e = fx(nm, loc)
+        e.empty_display_size = 0.01
+        e.parent = wg
 
 
 def build_sand_tower():
-    """敌台 2 座（东台对海口 / 北台对官道），台上小炮是子物体 <台名>_Cannon（原点在炮架底，升起：本地 Z 从 -0.012 到 0）。"""
+    """敌台 2 座（东台对海口 / 北台对官道），台上小炮是子物体 <台名>_Cannon（原点在炮架底，升起：本地 Z 从 -0.012 到 0）。
+    「墙里凸出一座台」：<台名> 本地 Z 从 -0.024（埋在沙面下）升到 0；没选的那座显示 <台名>_Flat（补缺口的平墙）。"""
     for nm, (x, z, rot) in TOWERS.items():
         mb = K.MB()
         w, d = 0.026, 0.03
@@ -1038,6 +1186,10 @@ def build_sand_tower():
             mb.cyl(0, 0, -0.002, 0.011, 0.002, "M_A2_MiniIron", seg=6, r_top=0.0016)
         c = obj(mb, nm + "_Cannon", (0, -d / 2 + MW / 2 - 0.004, MH + 0.004), uv=0.1)
         c.parent = t
+        # 没选这座台时补上的平墙（墙条在敌台处留了缺口）：<台名>_Flat，与 <台名> 二选一显示
+        mb = K.MB()
+        _wall_piece(mb, 0.028)
+        _place(obj(mb, nm + "_Flat", (0, 0, 0), uv=0.1), x, z, rot)
 
 
 def _house(mb, kind, s=1.0):
@@ -1066,7 +1218,7 @@ def build_sand_house():
     L = _layout()
     def ok(p):
         X, Y = m2t(p["x"], p["z"])
-        return abs(X) < HX - 0.03 and SEA_Y + 0.04 < Y < HILL_Y - 0.02
+        return abs(X) < HX - 0.03 and SEA_Y + 0.04 < Y < 0.28
     hs = [p for p in L["plots"] if p["kind"] in ("house_s", "house_l", "courtyard", "shop", "hall_small") and ok(p)]
     hs.sort(key=lambda p: (round(p["z"] / 60), p["x"]))
     step = max(1, len(hs) // 19)
@@ -1080,14 +1232,17 @@ def build_sand_house():
         ob.rotation_euler = (0, 0, math.radians(-p.get("rot", 0)))
     mb = K.MB()
     _house(mb, 3, 1.1)
-    X, Y = m2t(60, 222)
+    X, Y = m2t(*HOUSE20_OUT)
     obj(mb, "House_20", (X, Y, 0), uv=0.1)
-    X2, Y2 = m2t(60, 175)
-    anchor("ANCHOR_House_20_In", (X2, Y2, 0), 0.02)       # 「圈进墙内」时推到这里
+    anchor("ANCHOR_House_20_Out", (X, Y, 0), 0.02)        # 「留在墙外」= 原位
+    X2, Y2 = m2t(*HOUSE20_IN)
+    anchor("ANCHOR_House_20_In", (X2, Y2, 0), 0.02)       # 「圈进墙内」时推到这里（中途抬高约 3 cm 越过北墙）
+    X3, Y3 = m2t(HOUSE20_OUT[0] + 3, 185)
+    anchor("ANCHOR_House_20_Over", (X3, Y3, 0.03), 0.02)  # 推木片越墙的中间点
 
 
 def build_sand_flags():
-    """小旗 6 / 木签 4 / 麻线 / 米粒 3 堆 / 三议题纸卡（排成一排；单件原点在底中心，插入点 = 原点）。"""
+    """小旗 6 / 木签 4 / 麻线 / 米粒 3 堆（排成一排；单件原点在底中心，插入点 = 原点）。返回排到的 x，纸卡接着往后排。"""
     x = -0.2
     for i, mat in enumerate(("M_A2_FlagRed", "M_A2_FlagRed", "M_A2_FlagBlue", "M_A2_FlagBlue", "M_A2_FlagYellow", "M_A2_FlagYellow")):
         mb = K.MB()
@@ -1115,13 +1270,8 @@ def build_sand_flags():
                    0.0009 + 0.0004 * (k % 3 == 0), "M_A2_Rice")
         obj(mb, f"Rice_{i + 1:02d}", (x, 0, 0), uv=0.1)
         x += 0.03
-    for nm in ("Card_Wall", "Card_Tower", "Card_Water"):
-        mb = K.MB()
-        mb.box(-0.04, -0.025, 0, 0.04, 0.025, 0.0008, "M_A2_Paper")
-        for k in range(3):
-            mb.box(0.025 - k * 0.012, -0.018, 0.0008, 0.028 - k * 0.012, 0.018, 0.001, "M_A2_Ink")
-        obj(mb, nm, (x + 0.03, 0, 0), uv=0.1)
-        x += 0.09
+    # 议题纸卡 Card_Wall/Tower/Water/House 带贴图，见 rupu_a2_sand.build_cards（PROP_Sand_Flags 的配方在那里包了一层）
+    return x
 
 
 # ====================================================================== 族约碑 / 木牌 / 名录 / 田契 / 图卷
