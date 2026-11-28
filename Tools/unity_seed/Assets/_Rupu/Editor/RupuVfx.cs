@@ -18,6 +18,7 @@
 //               PF_VFX_FirePotBurst 火罐炸开(一次) PF_VFX_FireSpread 火势蔓延(循环，本地 4×4m 区域，改 shape 可放大)
 //               PF_VFX_BattleSmoke 战场灰烟(循环) PF_VFX_ArrowTrail 箭矢尾迹(TrailRenderer，挂在箭上)
 //   第四幕 寻谱：PF_VFX_Dust 废墟浮尘(循环) PF_VFX_Snow 1941 冬落雪(循环，挂相机)
+//   第三幕补充 12 个 PF_VFX_A3_*：见下面 BuildAct3()
 using System;
 using System.IO;
 using UnityEditor;
@@ -390,6 +391,158 @@ namespace Rupu.EditorTools
                 var col = ps.collision; col.enabled = true; col.type = ParticleSystemCollisionType.World;
                 col.mode = ParticleSystemCollisionMode.Collision3D; col.quality = ParticleSystemCollisionQuality.Low;
                 col.lifetimeLoss = 1f; col.bounce = 0f; col.maxCollisionShapes = 64;
+            });
+            BuildAct3(alpha, add);
+        }
+
+        // ------------------------------------------------------------ 第三幕补充（Docs/第三幕_建模清单.md §8.1，Docs/act3_assets.md）
+        //   PF_VFX_A3_ArrowVolley 12 支箭齐射(一次，沿本地 +Z 抛物线)  PF_VFX_A3_RockFall 落石 + 尘(一次，向下)
+        //   PF_VFX_A3_OilPour 油流(循环，向下) + 子物体 FireLine 火线(循环，沿本地 X 3m，脚本按需打开)
+        //   PF_VFX_A3_WaterBurst 开闸水柱(循环，沿本地 +Z)  PF_VFX_A3_Steam 蒸汽(循环)  PF_VFX_A3_GateSplinter 门板碎裂(一次，大块)
+        //   PF_VFX_A3_WallCollapse 缺口塌落：石块 + 大尘(一次，8m 宽)  PF_VFX_A3_InkLine 墨迹逐行出现(一次，沿本地 -Y 一行)
+        //   PF_VFX_A3_RainSplash 雨打石面/水面溅点(循环，10×10m)  PF_VFX_A3_CrowdDust 百姓跑动扬尘(循环，挂在人群中心)
+        //   PF_VFX_A3_FlagRip 旗面撕裂碎布(一次)  PF_VFX_A3_BloodMist 暗色点状血雾(一次，不血腥)
+        static void BuildAct3(Material alpha, Material add)
+        {
+            Save("PF_VFX_A3_ArrowVolley", go =>
+            {
+                var ps = PS(go, alpha, 1.6f, 22f, 0.05f, 24, new Color(0.3f, 0.25f, 0.2f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 12); Gravity(ps, 1.0f);
+                var main = ps.main; main.startSpeed = new ParticleSystem.MinMaxCurve(19f, 24f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(6f, 0.5f, 0.5f);
+                go.transform.localRotation = Quaternion.Euler(-25f, 0f, 0f);
+                var r = go.GetComponent<ParticleSystemRenderer>();
+                r.renderMode = ParticleSystemRenderMode.Stretch; r.velocityScale = 0.04f; r.lengthScale = 6f;
+                Collide(ps, 1f);
+                var tr = ps.trails; tr.enabled = true; tr.lifetime = 0.15f; tr.widthOverTrail = new ParticleSystem.MinMaxCurve(0.4f);
+                tr.colorOverLifetime = new ParticleSystem.MinMaxGradient(new Color(0.9f, 0.88f, 0.82f, 0.35f));
+                go.GetComponent<ParticleSystemRenderer>().trailMaterial = alpha;
+            });
+            Save("PF_VFX_A3_RockFall", go =>
+            {
+                var ps = PS(go, alpha, 2f, 1f, 0.3f, 20, new Color(0.45f, 0.44f, 0.4f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 8); Gravity(ps, 2f);
+                var main = ps.main; main.startSize = new ParticleSystem.MinMaxCurve(0.2f, 0.4f);
+                main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(1.2f, 0.6f, 0.4f);
+                var rot = ps.rotationOverLifetime; rot.enabled = true; rot.z = new ParticleSystem.MinMaxCurve(-5f, 5f);
+                Collide(ps, 0.3f);
+                var dust = Child(go, "Dust");
+                dust.transform.localPosition = new Vector3(0f, -6f, 0f);
+                var dps = PS(dust, alpha, 2.5f, 1.5f, 1.2f, 40, new Color(0.55f, 0.5f, 0.42f, 0.5f), ParticleSystemSimulationSpace.World);
+                Burst(dps, 24);
+                var main2 = dps.main; main2.startDelay = 0.9f;
+                var dsh = dps.shape; dsh.shapeType = ParticleSystemShapeType.Sphere; dsh.radius = 1f;
+                Grow(dps, 1f, 3f); Fade(dps, new Color(0.55f, 0.5f, 0.42f), 0.5f);
+            });
+            Save("PF_VFX_A3_OilPour", go =>
+            {
+                var ps = PS(go, alpha, 0.8f, 0.5f, 0.06f, 80, new Color(0.12f, 0.1f, 0.06f, 0.9f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 60); Gravity(ps, 1.5f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Cone; sh.angle = 3f; sh.radius = 0.03f;
+                go.transform.localRotation = Quaternion.Euler(90f, 0f, 0f);
+                Stretch(go, 0.1f); Collide(ps, 1f);
+                var fl = Child(go, "FireLine");
+                fl.transform.localRotation = Quaternion.Euler(-180f, 0f, 0f);
+                var fps = PS(fl, add, 0.8f, 1f, 0.4f, 160, new Color(1f, 0.55f, 0.15f, 0.85f), ParticleSystemSimulationSpace.World);
+                Emit(fps, 60);
+                var fsh = fps.shape; fsh.shapeType = ParticleSystemShapeType.Box; fsh.scale = new Vector3(3f, 0.3f, 0.1f);
+                Grow(fps, 1f, 0.2f); Fade(fps, new Color(1f, 0.5f, 0.15f), 0.9f);
+                var fmain = fps.main; fmain.playOnAwake = false;
+            });
+            Save("PF_VFX_A3_WaterBurst", go =>
+            {
+                var ps = PS(go, alpha, 1.2f, 7f, 0.35f, 400, new Color(0.62f, 0.72f, 0.72f, 0.6f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 220); Gravity(ps, 0.8f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(4f, 1.2f, 0.2f);
+                Grow(ps, 1f, 2.5f); Fade(ps, new Color(0.7f, 0.8f, 0.8f), 0.6f);
+                Stretch(go, 0.05f);
+                var foam = Child(go, "Foam");
+                foam.transform.localPosition = new Vector3(0f, -0.8f, 3f);
+                var fps = PS(foam, alpha, 1.5f, 1.5f, 0.6f, 120, new Color(0.88f, 0.9f, 0.9f, 0.5f), ParticleSystemSimulationSpace.World);
+                Emit(fps, 40);
+                var fsh = fps.shape; fsh.shapeType = ParticleSystemShapeType.Box; fsh.scale = new Vector3(4f, 0.2f, 1.5f);
+                Fade(fps, new Color(0.9f, 0.92f, 0.92f), 0.5f);
+            });
+            Save("PF_VFX_A3_Steam", go =>
+            {
+                var ps = PS(go, alpha, 3f, 1.2f, 0.6f, 80, new Color(0.9f, 0.9f, 0.88f, 0.45f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 14);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Cone; sh.angle = 18f; sh.radius = 0.4f;
+                go.transform.localRotation = Quaternion.Euler(-90f, 0f, 0f);
+                Grow(ps, 1f, 4f); Fade(ps, new Color(0.9f, 0.9f, 0.88f), 0.45f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.4f; n.frequency = 0.5f;
+            });
+            Save("PF_VFX_A3_GateSplinter", go =>
+            {
+                var ps = PS(go, alpha, 1.8f, 6f, 0.2f, 40, new Color(0.38f, 0.28f, 0.2f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 20); Gravity(ps, 1.4f);
+                var main = ps.main; main.startSize3D = true;
+                main.startSizeX = new ParticleSystem.MinMaxCurve(0.08f, 0.16f); main.startSizeY = new ParticleSystem.MinMaxCurve(0.5f, 1.1f);
+                main.startSizeZ = new ParticleSystem.MinMaxCurve(0.05f);
+                main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(4f, 4f, 0.2f);
+                var rot = ps.rotationOverLifetime; rot.enabled = true; rot.z = new ParticleSystem.MinMaxCurve(-6f, 6f);
+                Collide(ps, 0.2f);
+            });
+            Save("PF_VFX_A3_WallCollapse", go =>
+            {
+                var ps = PS(go, alpha, 2.5f, 2f, 0.5f, 60, new Color(0.5f, 0.5f, 0.46f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 30); Gravity(ps, 1.6f);
+                var main = ps.main; main.startSize = new ParticleSystem.MinMaxCurve(0.25f, 0.7f);
+                main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(8f, 3f, 1f);
+                go.transform.localPosition = new Vector3(0f, 5f, 0f);
+                Collide(ps, 0.2f);
+                var dust = Child(go, "Dust");
+                dust.transform.localPosition = new Vector3(0f, -4f, 0f);
+                var dps = PS(dust, alpha, 5f, 2f, 3f, 80, new Color(0.6f, 0.56f, 0.48f, 0.55f), ParticleSystemSimulationSpace.World);
+                Burst(dps, 40);
+                var dsh = dps.shape; dsh.shapeType = ParticleSystemShapeType.Box; dsh.scale = new Vector3(9f, 2f, 3f);
+                Grow(dps, 1f, 3f); Fade(dps, new Color(0.6f, 0.56f, 0.48f), 0.55f);
+            });
+            Save("PF_VFX_A3_InkLine", go =>
+            {
+                var ps = PS(go, alpha, 4f, 0f, 0.012f, 200, new Color(0.08f, 0.07f, 0.06f, 0.95f), ParticleSystemSimulationSpace.Local);
+                var main = ps.main; main.loop = false; main.playOnAwake = false; main.duration = 1.6f;
+                var e = ps.emission; e.enabled = true; e.rateOverTime = 90f;
+                // 一条 0.24 m 的边，发射点沿边匀速扫过一次（1.6 s）＝墨迹从右往左一笔写出；粒子停留 4 s
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.SingleSidedEdge; sh.radius = 0.12f;
+                sh.radiusMode = ParticleSystemShapeMultiModeValue.Loop; sh.radiusSpeed = 0.625f;
+                main.startSpeed = 0f;
+                Grow(ps, 0.6f, 1.2f);
+            });
+            Save("PF_VFX_A3_RainSplash", go =>
+            {
+                var ps = PS(go, alpha, 0.25f, 0.8f, 0.06f, 600, new Color(0.8f, 0.84f, 0.86f, 0.5f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 400); Gravity(ps, 0.6f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(10f, 0.05f, 10f);
+                var main = ps.main; main.startSpeed = new ParticleSystem.MinMaxCurve(0.4f, 1.2f);
+                Grow(ps, 0.5f, 1.6f); Fade(ps, new Color(0.85f, 0.88f, 0.9f), 0.5f);
+            });
+            Save("PF_VFX_A3_CrowdDust", go =>
+            {
+                var ps = PS(go, alpha, 2.5f, 0.4f, 0.8f, 80, new Color(0.62f, 0.56f, 0.46f, 0.3f), ParticleSystemSimulationSpace.World);
+                Emit(ps, 12);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(6f, 0.2f, 6f);
+                Grow(ps, 1f, 2.2f); Fade(ps, new Color(0.62f, 0.56f, 0.46f), 0.3f);
+            });
+            Save("PF_VFX_A3_FlagRip", go =>
+            {
+                var ps = PS(go, alpha, 3f, 2f, 0.15f, 30, new Color(0.6f, 0.22f, 0.17f, 1f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 14); Gravity(ps, 0.15f);
+                var main = ps.main; main.startRotation = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Box; sh.scale = new Vector3(0.9f, 0.7f, 0.05f);
+                var n = ps.noise; n.enabled = true; n.strength = 0.8f; n.frequency = 0.6f;
+                var rot = ps.rotationOverLifetime; rot.enabled = true; rot.z = new ParticleSystem.MinMaxCurve(-3f, 3f);
+                Fade(ps, new Color(0.6f, 0.22f, 0.17f), 1f);
+            });
+            Save("PF_VFX_A3_BloodMist", go =>
+            {
+                var ps = PS(go, alpha, 0.5f, 1.2f, 0.05f, 30, new Color(0.26f, 0.1f, 0.09f, 0.8f), ParticleSystemSimulationSpace.World);
+                Burst(ps, 12); Gravity(ps, 0.3f);
+                var sh = ps.shape; sh.shapeType = ParticleSystemShapeType.Sphere; sh.radius = 0.08f;
+                Grow(ps, 1f, 2f); Fade(ps, new Color(0.26f, 0.1f, 0.09f), 0.8f);
             });
         }
 

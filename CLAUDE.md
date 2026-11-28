@@ -36,6 +36,7 @@ Docs/                    日常用法.md（给人看的操作手册）、asset_s
                          interiors.md、act1_assets.md（第一幕 P0/P1 资产与场景接入）、act2_assets.md、act3_enemies.md、act45_assets.md、
                          ming_buildings_house.md、ming_buildings_civic.md、建模缺口_完成情况.md（缺口清单逐节对照）
                          第二幕_策划对照与建模缺口.md（A 的第二幕对照）、act2_text.md、act2_site.md、act2_anim.md、act2_city_lod.md
+                         第三幕_建模清单.md / .xlsx（第三幕派单与验收表）、act3_assets.md（第三幕补充建模的完成情况与接入说明）
                          策划/文本：入谱_第二幕_筑堡_策划案_v1.md、入谱_第一幕_人物文本.md、入谱_美术建模清单.md、
                          入谱_当前建模缺口清单.md、第一幕_队友README.md
   Docs/private/          原始策划案 PDF、B 执行手册（只读原件，同样公开入库）
@@ -61,7 +62,7 @@ Builds/                  构建输出（忽略）
 - **命名前缀**：资产名用 `NPC_` / `CH_` / `EN_` / `BOSS_` / `BLD_` / `PROP_` / `ENV_`。其他类型：`PF_` prefab、`M_` 材质、`T_` 贴图、`AN_` 动画片段、`VO_` / `SFX_` / `BGM_` 音频。贴图后缀用 `_D` / `_N` / `_ORM` / `_Mask`。
 - **材质颜色**：要设置在 **Principled BSDF 的 Base Color** 或贴图上。Blender 的 Viewport Display 颜色（`diffuse_color`）不会导出，进团结后会变成白色。
 - **人形骨架**：Characters、Enemies、Bosses 都设为 Humanoid（导入器自动处理），共用 Mixamo 动画。动画文件命名为 `<模型>@<动作>.fbx`，文件名含 idle / walk / run / loop 的自动循环。
-- **动画事件名**（与 A 约定）：`AttackHit` `PhaseChange` `Stagger` `Death` `Footstep`。
+- **动画事件名**（与 A 约定）：`AttackHit` `PhaseChange` `Stagger` `Death` `Footstep`。FBX 带不了事件，统一写在 `Data/anim_events.json`（帧号 24 fps，也可覆盖循环），团结菜单 入谱 > 人物 > 写入动画事件（`RupuAnimEvents.ApplyCLI`）写进 clip；接收挂 `Rupu.RupuAnimEventRelay`。
 - **风格**：低模、纸纹、低饱和度。角色不做写实脸，表情靠贴图切换。
 - **色板**：民国灰绿 `#5E6B5A`、明代暖褐 `#8A5A3B`、纸色 `#E8DCC8`、火色 `#C4552E`、水色 `#4F6B6A`。
 - **贴图与音频**：贴图 1024 或 2048 的 PNG。音频 48kHz；VO 单声道 -16 LUFS，SFX -18，BGM -20。
@@ -96,7 +97,7 @@ Tools/mac/serve_build.sh               # 在 VMware 内网发布 zip，VM 里用
 - 程序化白模由 `Tools/blender/build_yongchang.py` 生成，已存在的 .blend 默认跳过（保护手改）；`--force` 会覆盖。
 - 碰撞约定：`COL_*` 只做碰撞，`NOCOL_*` 不加碰撞。
 - 人物（见 Docs/characters.md）：`Tools/blender/rupu_char.py` 程序化生成，骨骼用团结 Humanoid 标准名；共用动画 `CH_WangYan_1941@Idle/Walk/Run` + 控制器 `AC_Humanoid_Locomotion`（Speed 参数）；场景摆放在 `era_kits.json` 的 `cast`。
-- 各幕生成模块（每幕一个文件，由 build_yongchang.py 统一导入）：`rupu_act1p1` `rupu_ming_house` `rupu_ming_civic` `rupu_act2` `rupu_enemy` `rupu_act45`；第二幕补缺口另有 `rupu_a2_sand/text/site/anim/city`（排在后面，同名配方覆盖＝包装已有资产；包装时从 `build_yongchang.RECIPES` 取原配方，不要直接调原模块函数）；明代建筑导出时自动生成 LOD（`--no-lod` 关）；人物扩展用 `rupu_char` 的 `HAIR_HOOKS/EXTRA_HOOKS/GESTURE_HOOKS`，不必改 rupu_char.py。共用动作自动收进 `AC_Humanoid_Locomotion`；敌人/Boss 动作在 `AC_Combat`（`RupuCharacters.ControllersCLI`）。
+- 各幕生成模块（每幕一个文件，由 build_yongchang.py 统一导入）：`rupu_act1p1` `rupu_ming_house` `rupu_ming_civic` `rupu_act2` `rupu_enemy` `rupu_act45`；第二幕补缺口另有 `rupu_a2_sand/text/site/anim/city`（排在后面，同名配方覆盖＝包装已有资产；包装时从 `build_yongchang.RECIPES` 取原配方，不要直接调原模块函数）；第三幕补缺口是 `rupu_a3_cast/props/env/text`（见 Docs/act3_assets.md，预览图 `rupu_a3_shots.py`）；明代建筑导出时自动生成 LOD（`--no-lod` 关）；人物扩展用 `rupu_char` 的 `HAIR_HOOKS/EXTRA_HOOKS/GESTURE_HOOKS`，不必改 rupu_char.py。共用动作自动收进 `AC_Humanoid_Locomotion`；敌人/Boss 动作在 `AC_Combat`（`RupuCharacters.ControllersCLI`）。
 - 第一幕（见 Docs/act1_assets.md）：道具/街市 `Tools/blender/rupu_act1.py`；共用动作 `CH_WangYan_1941@<动作>` 是控制器里的同名状态，脚本 `CrossFade` 进入；NPC 挂 `Act1ClanActor`；特效 `RupuVfx`（`PF_VFX_*`，URP 粒子材质存成资产）；场景 `Act1RocSceneBuilder.Create`。人形动作片段的根运动一律烘进姿势。
 
 ## 注意事项（踩过的坑）

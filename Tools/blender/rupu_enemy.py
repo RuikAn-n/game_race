@@ -743,7 +743,7 @@ BS_CAST = {
                         extras=["en_pot_belt"],
                         desc="赤焰（火船头目，第 4 波 · 东水门）：1.92 m 壮汉，锈红乱发络腮胡、褪红无袖短褂、前臂缠布；背火罐架"),
     "BOSS_Guiwo": dict(H=1.86, outfit="robe", top="M_BS_GW_Robe", skirt="M_BS_GW_Hakama", pants="M_BS_GW_Hakama", flare=1.22,
-                       hem=0.07, shoe="M_BS_GW_Armor", boot=True, wrap="M_BS_GW_Armor", glove="M_BS_GW_Armor",
+                       hem=0.07, skirt_knee=True, shoe="M_BS_GW_Armor", boot=True, wrap="M_BS_GW_Armor", glove="M_BS_GW_Armor",
                        skin="M_BS_GW_Skin", sash="M_BS_GW_Lace", bulk=1.15, hair="en_topknot", hair_mat="M_EN_Hair",
                        band="M_BS_GW_Lace", brow_tilt=22, trim="M_BS_GW_Lace", extras=["en_sheath"],
                        desc="鬼倭（倭酋，第 8 波 · 环海楼/瓮城）：1.86 m，黑漆大铠红绳缀、金锹形盔、赤鬼面具、背指物旗"),
@@ -1286,7 +1286,32 @@ def build_clip(model, fn, clip):
         D, off = poser.pose(sp)
         key_D(rig, poser, f, D, off, prevq)
     bpy.ops.object.mode_set(mode="OBJECT")
+    kf = [f for f, _ in keys]
+    ground_keys(rig, sorted(set(kf) | set(range(0, total + 1, 3))))
     scene.frame_set(0)
+
+
+def ground_keys(rig, frames, tol=0.02):
+    """落地修正（第三幕清单 §2.1）：逐关键帧量全部网格最低点，低于地面 tol 以上的把髋抬到刚好贴地（只抬不压）。
+    跪地 / 倒地 / 被处决片段里身体不再沉进地面；站姿片段不受影响。"""
+    scene = bpy.context.scene
+    meshes = [o for o in scene.objects if o.type == "MESH" and not o.name.startswith("REF_")]
+    hb = rig.pose.bones["Hips"]
+    for f in frames:
+        scene.frame_set(f)
+        dg = bpy.context.evaluated_depsgraph_get()
+        mz = 1e9
+        for o in meshes:
+            ev = o.evaluated_get(dg)
+            me = ev.to_mesh()
+            if len(me.vertices):
+                mz = min(mz, min((ev.matrix_world @ v.co).z for v in me.vertices))
+            ev.to_mesh_clear()
+        if mz < -tol:
+            loc = hb.location.copy()
+            loc.y -= mz
+            hb.location = loc
+            hb.keyframe_insert("location", frame=f)
 
 
 def _recipes_anim():

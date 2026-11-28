@@ -1,0 +1,684 @@
+{
+ "_doc": "动画事件 + 循环设置的唯一数据源（帧号 = 24 fps 原帧）。团结：入谱 > 人物 > 写入动画事件（RupuAnimEvents.ApplyCLI）把它写进各 FBX 的 clip 导入设置；接收方挂 Rupu.RupuAnimEventRelay（每个事件名一个同名方法，转成 C# 事件 OnEvent(string)）。约定名：AttackHit PhaseChange Stagger Death Footstep；其余（Parry Execute CannonFire Ignite DrumHit Splash Plant Lever Grab Give Accuse Receive PryEffort BeamFall Sleeve）是建议名。loop=true 表示文件名里没有 idle/walk/run/loop 但要循环。",
+ "fps": 24,
+ "clips": {
+  "CH_WangYan_1941@A3_AguiFear": {
+   "events": [],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_AguiRun": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     12
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_AguiSpear": {
+   "events": [
+    [
+     "AttackHit",
+     16
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_AllyCarry": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     16
+    ]
+   ],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_AllyDeath": {
+   "events": [
+    [
+     "Death",
+     24
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_AllyFight": {
+   "events": [
+    [
+     "AttackHit",
+     14
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_AllyFlee": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     14
+    ]
+   ],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_AllyShield": {
+   "events": [
+    [
+     "AttackHit",
+     21
+    ]
+   ],
+   "loop": false
+  },
+  "CH_WangYan_1941@A3_AllyShoot": {
+   "events": [
+    [
+     "AttackHit",
+     28
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_BeatDrum": {
+   "events": [
+    [
+     "DrumHit",
+     6
+    ],
+    [
+     "DrumHit",
+     18
+    ]
+   ],
+   "loop": false
+  },
+  "CH_WangYan_1941@A3_CannonFire": {
+   "events": [
+    [
+     "CannonFire",
+     18
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_CarryBucket": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     16
+    ]
+   ],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_CivCarry": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     16
+    ]
+   ],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_CivChildCry": {
+   "events": [],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_CivGrieve": {
+   "events": [],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_CivHide": {
+   "events": [],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_CivPanic": {
+   "events": [],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_CivReceive": {
+   "events": [
+    [
+     "Receive",
+     9
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_CivRun": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     12
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_CombatRun": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     12
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_CombatWalk": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     16
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_Death": {
+   "events": [
+    [
+     "Death",
+     26
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_ElderAccuse": {
+   "events": [
+    [
+     "Accuse",
+     9
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_Execute": {
+   "events": [
+    [
+     "Execute",
+     24
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_HelpUp": {
+   "events": [
+    [
+     "Grab",
+     9
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_Hit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_LightFuse": {
+   "events": [
+    [
+     "Ignite",
+     9
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_Lookout": {
+   "events": [],
+   "loop": true
+  },
+  "CH_WangYan_1941@A3_Parry": {
+   "events": [
+    [
+     "Parry",
+     4
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_PlantFlag": {
+   "events": [
+    [
+     "Plant",
+     14
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_PullLever": {
+   "events": [
+    [
+     "Lever",
+     15
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_ShugaoKey": {
+   "events": [
+    [
+     "Give",
+     18
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_SpearHeavy": {
+   "events": [
+    [
+     "AttackHit",
+     28
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_SpearSweep": {
+   "events": [
+    [
+     "AttackHit",
+     18
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_SpearThrust1": {
+   "events": [
+    [
+     "AttackHit",
+     12
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_SpearThrust2": {
+   "events": [
+    [
+     "AttackHit",
+     11
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_ThrowWater": {
+   "events": [
+    [
+     "Splash",
+     15
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_PryBeam": {
+   "events": [
+    [
+     "PryEffort",
+     24
+    ],
+    [
+     "PryEffort",
+     38
+    ],
+    [
+     "BeamFall",
+     44
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_FireCannon": {
+   "events": [
+    [
+     "Ignite",
+     16
+    ],
+    [
+     "AttackHit",
+     30
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_SpearThrust": {
+   "events": [
+    [
+     "AttackHit",
+     12
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_SpearSweep": {
+   "events": [
+    [
+     "AttackHit",
+     15
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_SpearParry": {
+   "events": [
+    [
+     "Parry",
+     5
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_SpearHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_MilitiaCharge": {
+   "events": [
+    [
+     "Footstep",
+     16
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_MilitiaSlash": {
+   "events": [
+    [
+     "AttackHit",
+     11
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A2_ElderObject": {
+   "events": [
+    [
+     "Sleeve",
+     14
+    ]
+   ]
+  },
+  "EN_Wokou_Sword_A@EN_SwordAttack1": {
+   "events": [
+    [
+     "AttackHit",
+     14
+    ]
+   ]
+  },
+  "EN_Wokou_Sword_A@EN_SwordAttack2": {
+   "events": [
+    [
+     "AttackHit",
+     9
+    ]
+   ]
+  },
+  "EN_Wokou_Sword_A@EN_SwordHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "EN_Wokou_Sword_A@EN_SwordDeath": {
+   "events": [
+    [
+     "Death",
+     24
+    ]
+   ]
+  },
+  "EN_Wokou_Archer_A@EN_BowShoot": {
+   "events": [
+    [
+     "AttackHit",
+     28
+    ]
+   ]
+  },
+  "EN_Wokou_Archer_A@EN_BowHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "EN_Wokou_Archer_A@EN_BowDeath": {
+   "events": [
+    [
+     "Death",
+     24
+    ]
+   ]
+  },
+  "EN_Wokou_FirePot_A@EN_PotThrow": {
+   "events": [
+    [
+     "AttackHit",
+     17
+    ]
+   ]
+  },
+  "EN_Wokou_FirePot_A@EN_PotHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "EN_Wokou_FirePot_A@EN_PotDeath": {
+   "events": [
+    [
+     "Death",
+     24
+    ]
+   ]
+  },
+  "EN_Wokou_Shield_A@EN_ShieldBash": {
+   "events": [
+    [
+     "AttackHit",
+     21
+    ]
+   ]
+  },
+  "EN_Wokou_Shield_A@EN_ShieldWalk": {
+   "events": [
+    [
+     "Footstep",
+     0
+    ],
+    [
+     "Footstep",
+     16
+    ]
+   ]
+  },
+  "EN_Wokou_Shield_A@EN_ShieldHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "EN_Wokou_Shield_A@EN_ShieldDeath": {
+   "events": [
+    [
+     "Death",
+     24
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanAxeChop": {
+   "events": [
+    [
+     "AttackHit",
+     18
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanAxeCombo3": {
+   "events": [
+    [
+     "AttackHit",
+     15
+    ],
+    [
+     "AttackHit",
+     25
+    ],
+    [
+     "AttackHit",
+     44
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanAxeSpin": {
+   "events": [
+    [
+     "AttackHit",
+     16
+    ],
+    [
+     "AttackHit",
+     22
+    ],
+    [
+     "AttackHit",
+     28
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanPotThrow": {
+   "events": [
+    [
+     "AttackHit",
+     17
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanLeap": {
+   "events": [
+    [
+     "AttackHit",
+     28
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanPhaseChange": {
+   "events": [
+    [
+     "PhaseChange",
+     20
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanWeakHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "BOSS_Chiyan@BS_ChiyanExecuted": {
+   "events": [
+    [
+     "Death",
+     30
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoCombo3": {
+   "events": [
+    [
+     "AttackHit",
+     15
+    ],
+    [
+     "AttackHit",
+     23
+    ],
+    [
+     "AttackHit",
+     46
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoIaiDash": {
+   "events": [
+    [
+     "AttackHit",
+     14
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoNaginataSweep": {
+   "events": [
+    [
+     "AttackHit",
+     18
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoNaginataThrust": {
+   "events": [
+    [
+     "AttackHit",
+     16
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoNodachiCleave": {
+   "events": [
+    [
+     "AttackHit",
+     26
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoPhaseChange": {
+   "events": [
+    [
+     "PhaseChange",
+     20
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoWeakHit": {
+   "events": [
+    [
+     "Stagger",
+     3
+    ]
+   ]
+  },
+  "BOSS_Guiwo@BS_GuiwoExecuted": {
+   "events": [
+    [
+     "Death",
+     30
+    ]
+   ]
+  },
+  "CH_WangYan_1941@A3_CloseGate": {
+   "events": [],
+   "loop": false
+  },
+  "CH_WangYan_1941@A3_AllyCheer": {
+   "events": [],
+   "loop": false
+  },
+  "CH_WangYan_1941@A3_ElderBook": {
+   "events": [],
+   "loop": false
+  }
+ }
+}

@@ -1048,6 +1048,10 @@ for _m in ("rupu_act1p1", "rupu_ming_house", "rupu_ming_civic", "rupu_act2", "ru
 for _m in ("rupu_a2_sand", "rupu_a2_text", "rupu_a2_site", "rupu_a2_anim", "rupu_a2_city"):
     if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), _m + ".py")):
         RECIPES.update(importlib.import_module(_m).recipes())
+# 第三幕补缺口（Docs/第三幕_建模清单.md）：人物/动作、道具、战场、文字贴图（文字模块排最后，包装前面的配方）
+for _m in ("rupu_a3_cast", "rupu_a3_props", "rupu_a3_env", "rupu_a3_text"):
+    if os.path.exists(os.path.join(os.path.dirname(os.path.abspath(__file__)), _m + ".py")):
+        RECIPES.update(importlib.import_module(_m).recipes())
 
 
 # ====================================================================== 驱动

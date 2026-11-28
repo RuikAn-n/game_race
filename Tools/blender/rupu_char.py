@@ -310,6 +310,24 @@ def skirt_weight(J, z_hip):
     return f
 
 
+def skirt_weight_knee(J, z_hip, amount=0.85):
+    """裙/袴下摆：膝盖以下逐渐改跟小腿（跪地时下摆随小腿贴地，不被大腿带进地里）。c["skirt_knee"]=True 时用。"""
+    base = skirt_weight(J, z_hip)
+    zk = (J["kneeL"].z + J["kneeR"].z) / 2
+
+    def f(p):
+        w = base(p)
+        if p.z >= zk:
+            return w
+        t = min(1.0, (zk - p.z) / max(1e-6, zk - 0.04)) * amount
+        out = {k: v * (1 - t) for k, v in w.items()}
+        side = max(-1.0, min(1.0, p.x / 0.04))
+        out["LeftLowerLeg"] = out.get("LeftLowerLeg", 0.0) + t * (0.5 + 0.5 * side)
+        out["RightLowerLeg"] = out.get("RightLowerLeg", 0.0) + t * (0.5 - 0.5 * side)
+        return out
+    return f
+
+
 def spine_y(J, z):
     """躯干中心线随高度的 Y 偏移（驼背）。"""
     pts = [(J["hips"].z, J["hips"].y), (J["chest"].z, J["chest"].y), (J["chest_t"].z, J["chest_t"].y), (J["neck"].z, J["neck"].y)]
@@ -397,7 +415,8 @@ def build_body(S, J, H, c):
         rr = [(Vector((0, 0, zr)), 0.095 * h * bulk, 0.066 * h * bulk), (Vector((0, 0.002 * h, 0.40 * h)), 0.108 * h * fl, 0.075 * h * fl),
               (Vector((0, 0.004 * h, 0.24 * h)), 0.12 * h * fl, 0.083 * h * fl),
               (Vector((0, 0.006 * h, c.get("hem", 0.075) * h)), 0.128 * h * fl, 0.088 * h * fl)]
-        S.add(*rings_mesh(rr, seg=12, cap0=False, cap1=False), c.get("skirt", top), skirt_weight(J, zr))
+        sw = skirt_weight_knee(J, zr) if c.get("skirt_knee") else skirt_weight(J, zr)
+        S.add(*rings_mesh(rr, seg=12, cap0=False, cap1=False), c.get("skirt", top), sw)
         # 长衫右衽开襟线
         S.add(*box((0.035 * h, spine_y(J, 0.66 * h) - 0.066 * h * bulk, 0.66 * h), (0.006 * h, 0.004 * h, 0.2 * h), rot=_rz(0.0)),
               c.get("trim", "M_CH_Eye"), torso_weight(J))
